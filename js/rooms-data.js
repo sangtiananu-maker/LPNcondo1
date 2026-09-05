@@ -44,7 +44,7 @@ const ROOMS_DATA = {
             "nameTh": "ตลาดนกฮูก (Owl Market)",
             "nameEn": "Owl Night Market",
             "badge": "ตลาดกลางคืนยอดฮิต",
-            "distance": "850 m",
+            "distance": "600 m",
             "descTh": "ตลาดนัดกลางคืนขวัญใจคนนนทบุรี สตรีทฟู้ดแน่น ร้านอาหารดัง เสื้อผ้าแฟชั่น และของใช้หลากหลาย",
             "url": "https://maps.app.goo.gl/9HkRcNZ8htrZDeh88",
             "image": "assets/images/places/owl_market.jpg"
