@@ -280,6 +280,14 @@ button {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
+/* Guard against legacy cached elements */
+.hero-slide-floating-card {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 /* Slider Arrow Controls */
 .slider-arrow {
   position: absolute;
