@@ -2057,47 +2057,76 @@ button {
 }
 
 .lightbox-bottom-bar {
-  padding: 14px 20px;
-  padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
-  background: linear-gradient(0deg, rgba(14, 18, 23, 0.88) 0%, transparent 100%);
+  padding: 8px 18px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+  background: linear-gradient(0deg, rgba(14, 18, 23, 0.95) 0%, rgba(14, 18, 23, 0.7) 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 12px;
   color: #FFFFFF;
   z-index: 10;
+  min-height: 48px;
 }
 
 .lightbox-info {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  flex: 1;
 }
 
 .lightbox-unit-name {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
 }
 
 .lightbox-unit-price {
-  font-size: 0.82rem;
+  font-size: 0.76rem;
+  font-weight: 600;
   color: var(--color-gold);
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
-.lightbox-zoom-hint {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.65);
-  margin-top: 3px;
-  display: flex;
+.lightbox-inquire-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  background: linear-gradient(135deg, #07D95D 0%, #05B34B 100%);
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 6px 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 3px 10px rgba(6, 199, 85, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.lightbox-inquire-btn:hover {
+  background: linear-gradient(135deg, #06C755 0%, #049B40 100%);
+  transform: translateY(-1px);
+}
+
+.lightbox-inquire-btn:active {
+  transform: scale(0.96);
 }
 
 @media (max-width: 520px) {
   .lightbox-top-bar {
-    padding: 10px 14px;
+    padding: 8px 12px;
   }
   .lightbox-top-left {
     gap: 6px;
@@ -2117,62 +2146,42 @@ button {
   }
   .lightbox-zoom-btn.lightbox-zoom-reset {
     font-size: 0.68rem;
-    min-width: 42px;
-    padding: 0 4px;
+    min-width: 40px;
+    padding: 0 3px;
   }
   .lightbox-counter {
     font-size: 0.72rem;
-    padding: 3px 9px;
+    padding: 3px 8px;
   }
   .lightbox-close-btn {
     width: 32px;
     height: 32px;
   }
   .lightbox-close-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
   .lightbox-bottom-bar {
-    padding: 10px 14px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+    padding: 6px 12px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom, 6px));
+    gap: 8px;
+    min-height: 44px;
   }
   .lightbox-unit-name {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
   }
   .lightbox-unit-price {
-    font-size: 0.76rem;
-  }
-  .lightbox-zoom-hint {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
   }
   .lightbox-inquire-btn {
-    font-size: 0.76rem;
-    padding: 6px 14px;
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    gap: 4px;
   }
-}
-
-.lightbox-inquire-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, #07D95D 0%, #05B34B 100%);
-  color: #FFFFFF;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 16px rgba(6, 199, 85, 0.4), inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
-  transition: all var(--transition-fast);
-}
-
-.lightbox-inquire-btn:hover {
-  background: linear-gradient(135deg, #06C755 0%, #049B40 100%);
-  box-shadow: 0 6px 20px rgba(6, 199, 85, 0.5), inset 0 1px 1.5px rgba(255, 255, 255, 0.75);
-}
-
-.lightbox-inquire-btn:active {
-  transform: scale(0.96);
+  .lightbox-inquire-btn svg {
+    width: 13px;
+    height: 13px;
+  }
 }
 
 /* --------------------------------------------------------------------------

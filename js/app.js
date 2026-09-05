@@ -552,29 +552,9 @@ function initLightbox() {
       isDragging = false;
       modal.classList.remove('is-dragging');
 
-      // Double-Tap detection
-      const now = Date.now();
-      const timeSinceLastTap = now - lastTapTime;
-      const changedTouch = e.changedTouches[0];
-      const moveDistance = Math.hypot(
-        changedTouch.clientX - touchStartX,
-        changedTouch.clientY - touchStartY
-      );
-
-      if (timeSinceLastTap < 320 && moveDistance < 25) {
-        // Double-tap triggered!
-        lastTapTime = 0;
-        if (currentScale > 1.05) {
-          resetLightboxZoom(true);
-        } else {
-          setLightboxZoom(2.5, true);
-        }
-        return;
-      }
-      lastTapTime = now;
-
       // Handle swipe navigation when at 1x
-      if (currentScale <= 1.05 && isTouchSwiping) {
+      const changedTouch = e.changedTouches[0];
+      if (currentScale <= 1.05 && isTouchSwiping && changedTouch) {
         const diffX = touchStartX - changedTouch.clientX;
         const diffY = touchStartY - changedTouch.clientY;
         if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
@@ -637,17 +617,6 @@ function initLightbox() {
       modal.classList.remove('is-dragging');
       clampLightboxTranslations();
       applyLightboxTransform(true);
-    }
-  });
-
-  // Desktop Double-Click
-  stage.addEventListener('dblclick', (e) => {
-    if (e.target.closest('button, a')) return;
-    e.preventDefault();
-    if (currentScale > 1.05) {
-      resetLightboxZoom(true);
-    } else {
-      setLightboxZoom(2.5, true);
     }
   });
 }
@@ -807,9 +776,11 @@ function updateLightboxContent() {
   const unitPriceEl = document.getElementById('lightboxUnitPrice');
   const inquireBtn = document.getElementById('lightboxInquireBtn');
 
+  const roomTitle = photo.unitNameTh || photo.unitName || 'ห้องพัก';
+
   if (imgEl) {
     imgEl.src = photo.src;
-    imgEl.alt = `${photo.unitName} photo ${currentLightboxIndex + 1}`;
+    imgEl.alt = `${roomTitle} photo ${currentLightboxIndex + 1}`;
   }
 
   if (counterEl) {
@@ -817,15 +788,15 @@ function updateLightboxContent() {
   }
 
   if (unitNameEl) {
-    unitNameEl.textContent = `${photo.unitName} (${photo.unitNameEn})`;
+    unitNameEl.textContent = roomTitle;
   }
 
   if (unitPriceEl) {
-    unitPriceEl.textContent = `฿${photo.price} / เดือน • รีโนเวทใหม่เอี่ยมพร้อมอยู่`;
+    unitPriceEl.textContent = `฿${photo.price} / เดือน`;
   }
 
   if (inquireBtn) {
-    const textMsg = encodeURIComponent(`สวัสดีครับ สนใจเช่าคอนโด Lumpini Condotown Rattanathibet ${photo.unitName} (ราคา ${photo.price}.-/เดือน) สะดวกขอนัดดูห้องครับ`);
+    const textMsg = encodeURIComponent(`สวัสดีครับ สนใจเช่าคอนโด Lumpini Condotown Rattanathibet ${roomTitle} (ราคา ${photo.price}.-/เดือน) สะดวกขอนัดดูห้องครับ`);
     inquireBtn.href = `${ROOMS_DATA.project.contact.lineUrl}?text=${textMsg}`;
   }
 }
