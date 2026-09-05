@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initGallery();
+  initGalleryScrollControls();
   initLightbox();
   initVlogPlayer();
 });
@@ -321,6 +322,8 @@ function applyFilter(filter) {
 
   // Render gallery photos
   grid.innerHTML = '';
+  grid.scrollLeft = 0; // Reset horizontal scroll to start
+
   photos.forEach((photo, idx) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
@@ -338,8 +341,65 @@ function applyFilter(filter) {
   });
 
   if (indicator) {
-    indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (แตะที่รูปเพื่อดูภาพขยายเต็มจอ)`;
+    indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (เลื่อนแนวนอน 3 แถว • แตะรูปเพื่อดูภาพขยาย)`;
   }
+}
+
+/* Horizontal Gallery Scroll Controls & Desktop Drag */
+function initGalleryScrollControls() {
+  const grid = document.getElementById('galleryGrid');
+  const prevBtn = document.getElementById('galleryScrollPrev');
+  const nextBtn = document.getElementById('galleryScrollNext');
+  if (!grid) return;
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: -420, behavior: 'smooth' });
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: 420, behavior: 'smooth' });
+    });
+  }
+
+  // Desktop Mouse Drag-to-Scroll
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasDragged = false;
+
+  grid.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX - grid.offsetLeft;
+    scrollLeft = grid.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDown = false;
+  });
+
+  grid.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - grid.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(walk) > 6) {
+      hasDragged = true;
+    }
+    grid.scrollLeft = scrollLeft - walk;
+  });
+
+  // Prevent opening lightbox if user was dragging
+  grid.addEventListener('click', (e) => {
+    if (hasDragged) {
+      e.stopPropagation();
+      e.preventDefault();
+      hasDragged = false;
+    }
+  }, true);
 }
 
 

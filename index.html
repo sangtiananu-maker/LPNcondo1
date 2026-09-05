@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=1.5">
+  <link rel="stylesheet" href="css/style.css?v=1.6">
 </head>
 <body>
 
@@ -351,15 +351,32 @@
         <!-- Active Room Detail Box (Dynamically shown) -->
         <div class="active-unit-summary" id="activeUnitSummary"></div>
 
-        <!-- Gallery Grid -->
-        <div class="gallery-grid" id="galleryGrid">
-          <!-- Gallery photos injected by app.js -->
+        <!-- Gallery Horizontal Scroll Wrapper (3 Rows with Liquid Glass Nav Controls) -->
+        <div class="gallery-scroll-wrapper">
+          <button type="button" class="gallery-nav-arrow prev" id="galleryScrollPrev" aria-label="เลื่อนรูปภาพไปทางซ้าย">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+
+          <!-- Gallery Grid (3 Rows, Smooth Horizontal Scrolling) -->
+          <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery photos injected by app.js -->
+          </div>
+
+          <button type="button" class="gallery-nav-arrow next" id="galleryScrollNext" aria-label="เลื่อนรูปภาพไปทางขวา">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
         </div>
 
-        <!-- Counter Indicator -->
-        <p class="photo-count-indicator" id="galleryCountIndicator">
-          กำลังโหลดรูปภาพ...
-        </p>
+        <!-- Horizontal Swipe Hint & Counter Indicator -->
+        <div class="gallery-bottom-bar">
+          <span class="gallery-swipe-hint">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg>
+            <span>เลื่อนแนวนอนเพื่อดูรูปเพิ่มเติม (เรียง 3 แถว)</span>
+          </span>
+          <p class="photo-count-indicator" id="galleryCountIndicator">
+            กำลังโหลดรูปภาพ...
+          </p>
+        </div>
       </div>
     </section>
 
@@ -829,7 +846,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=1.5"></script>
-  <script src="js/app.js?v=1.5"></script>
+  <script src="js/rooms-data.js?v=1.6"></script>
+  <script src="js/app.js?v=1.6"></script>
 </body>
 </html>
