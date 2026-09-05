@@ -26,28 +26,22 @@ function initHeroSlider() {
 
   if (!track || !heroSlides || heroSlides.length === 0) return;
 
-  // Build slides into track
+  // Build slides into track (Clean Photos ONLY - 100% Unobstructed!)
   track.innerHTML = '';
   dotsContainer.innerHTML = '';
 
   heroSlides.forEach((slide, index) => {
     const slideEl = document.createElement('div');
     slideEl.className = 'hero-slide';
+    slideEl.setAttribute('role', 'group');
+    slideEl.setAttribute('aria-label', `${slide.unitNameTh} photo ${index + 1}`);
     slideEl.innerHTML = `
       <img src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
-      <div class="hero-slide-floating-card">
-        <div class="hero-slide-meta">
-          <span class="hero-badge-tag">${slide.badge}</span>
-          <span class="hero-price-tag">฿${slide.price} / เดือน</span>
-        </div>
-        <h3 class="hero-slide-title">${slide.unitNameTh}</h3>
-        <p class="hero-slide-caption">${slide.captionTh}</p>
-        <button class="hero-slide-btn" onclick="filterByUnit('${slide.unitId}', true)">
-          <span>ดูภาพทั้งหมดของห้องนี้</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-      </div>
     `;
+    // Clicking photo navigates directly to that room's gallery
+    slideEl.addEventListener('click', () => {
+      filterByUnit(slide.unitId, true);
+    });
     track.appendChild(slideEl);
 
     // Indicator Dot
@@ -58,9 +52,12 @@ function initHeroSlider() {
     dotsContainer.appendChild(dot);
   });
 
+  // Initial update of room details bar below photo
+  updateHeroDetails();
+
   // Buttons
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
 
   // Auto slide
   startSlideShow();
@@ -112,6 +109,33 @@ function updateSlideTrack() {
   dots.forEach((d, idx) => {
     d.classList.toggle('active', idx === currentHeroSlide);
   });
+
+  // Synchronize room info bar below the photo
+  updateHeroDetails();
+}
+
+function updateHeroDetails() {
+  const slide = heroSlides[currentHeroSlide];
+  if (!slide) return;
+
+  const badgeEl = document.getElementById('heroDetailBadge');
+  const priceEl = document.getElementById('heroDetailPrice');
+  const titleEl = document.getElementById('heroDetailTitle');
+  const captionEl = document.getElementById('heroDetailCaption');
+  const btnEl = document.getElementById('heroDetailBtn');
+  const counterEl = document.getElementById('heroSlideCounter');
+
+  if (badgeEl) badgeEl.textContent = slide.badge;
+  if (priceEl) priceEl.textContent = `฿${slide.price} / เดือน`;
+  if (titleEl) titleEl.textContent = slide.unitNameTh;
+  if (captionEl) captionEl.textContent = slide.captionTh;
+  if (counterEl) counterEl.textContent = `${currentHeroSlide + 1} / ${heroSlides.length}`;
+  if (btnEl) {
+    btnEl.onclick = (e) => {
+      e.stopPropagation();
+      filterByUnit(slide.unitId, true);
+    };
+  }
 }
 
 function nextSlide() {
