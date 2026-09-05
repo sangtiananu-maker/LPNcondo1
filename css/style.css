@@ -169,16 +169,19 @@ button {
 }
 
 .hero-subtitle-tag {
-  display: inline-block;
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--color-wood-dark);
   background: var(--color-sand);
   padding: 4px 14px;
   border-radius: var(--radius-pill);
   margin-bottom: 0.5rem;
+  white-space: nowrap;
 }
 
 .hero-title {
@@ -193,9 +196,12 @@ button {
     margin-bottom: 0.9rem;
   }
   .hero-subtitle-tag {
-    font-size: 0.68rem;
-    padding: 3px 12px;
+    font-size: clamp(0.56rem, 2.5vw, 0.66rem);
+    letter-spacing: 0.03em;
+    padding: 3px 10px;
     margin-bottom: 0.4rem;
+    white-space: nowrap;
+    max-width: 100%;
   }
   .hero-title {
     font-size: clamp(1.12rem, 5.1vw, 1.35rem);
@@ -663,6 +669,29 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .feature-banner {
+    padding: 1.15rem;
+    margin: 1.25rem auto 2rem;
+  }
+  .banner-sparkle-tag {
+    font-size: clamp(0.6rem, 2.7vw, 0.74rem);
+    letter-spacing: 0.04em;
+    gap: 5px;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  .banner-sparkle-tag svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  .banner-heading {
+    font-size: 1.15rem;
+  }
 }
 
 .banner-heading {
@@ -726,6 +755,27 @@ button {
 .section-subtitle {
   font-size: 0.9rem;
   color: var(--color-slate);
+}
+
+@media (max-width: 640px) {
+  .section-head {
+    margin-bottom: 1.25rem;
+    padding: 0 4px;
+  }
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-size: clamp(0.95rem, 4.3vw, 1.35rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    margin-bottom: 0.3rem;
+  }
+  .section-subtitle {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
 }
 
 .pricing-grid {
@@ -1862,6 +1912,7 @@ button {
 .sticky-info {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .sticky-label {
@@ -1869,14 +1920,65 @@ button {
   color: var(--color-slate);
   font-weight: 600;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .sticky-price {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--color-primary);
-  font-family: var(--font-en);
-  line-height: 1.1;
+  font-family: var(--font-th), var(--font-en);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .sticky-contact-bar {
+    width: calc(100% - 16px);
+    bottom: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom, 12px));
+    padding: 6px 10px;
+    border-radius: var(--radius-lg);
+  }
+  .sticky-contact-content {
+    gap: 8px;
+  }
+  .sticky-info {
+    flex-shrink: 0;
+  }
+  .sticky-label {
+    font-size: 0.62rem;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .sticky-price {
+    font-size: clamp(0.85rem, 3.4vw, 1.02rem);
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .sticky-actions {
+    gap: 5px;
+  }
+  .btn-cta-phone {
+    padding: 7px 10px;
+    font-size: 0.74rem;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .btn-cta-phone svg {
+    width: 14px;
+    height: 14px;
+  }
+  .btn-cta-line {
+    padding: 7px 11px;
+    font-size: 0.78rem;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .btn-cta-line svg {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .sticky-actions {
