@@ -20,7 +20,6 @@ const heroSlides = ROOMS_DATA.heroHighlights;
 
 function initHeroSlider() {
   const track = document.getElementById('heroTrack');
-  const dotsContainer = document.getElementById('sliderDots');
   const prevBtn = document.getElementById('sliderPrev');
   const nextBtn = document.getElementById('sliderNext');
   const sliderContainer = document.querySelector('.hero-slider-container');
@@ -29,7 +28,6 @@ function initHeroSlider() {
 
   // Build slides into track (Clean Photos ONLY - 100% Unobstructed!)
   track.innerHTML = '';
-  dotsContainer.innerHTML = '';
 
   heroSlides.forEach((slide, index) => {
     const slideEl = document.createElement('div');
@@ -44,13 +42,6 @@ function initHeroSlider() {
       filterByUnit(slide.unitId, true);
     });
     track.appendChild(slideEl);
-
-    // Indicator Dot
-    const dot = document.createElement('span');
-    dot.className = `dot ${index === 0 ? 'active' : ''}`;
-    dot.setAttribute('aria-label', `Slide ${index + 1}`);
-    dot.addEventListener('click', () => goToSlide(index));
-    dotsContainer.appendChild(dot);
   });
 
   // Initial update of room details bar below photo
@@ -102,14 +93,10 @@ function initHeroSlider() {
 
 function updateSlideTrack() {
   const track = document.getElementById('heroTrack');
-  const dots = document.querySelectorAll('.slider-dots .dot');
 
   if (track) {
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
   }
-  dots.forEach((d, idx) => {
-    d.classList.toggle('active', idx === currentHeroSlide);
-  });
 
   // Synchronize room info bar below the photo
   updateHeroDetails();

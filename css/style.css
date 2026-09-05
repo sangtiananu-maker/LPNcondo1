@@ -324,16 +324,20 @@ button {
 .hero-counter-badge {
   display: inline-flex;
   align-items: center;
-  font-size: 0.72rem;
+  justify-content: center;
+  font-size: 0.74rem;
   font-weight: 700;
-  color: #FFFFFF;
-  background: rgba(18, 24, 32, 0.65);
-  backdrop-filter: blur(16px) saturate(190%);
-  -webkit-backdrop-filter: blur(16px) saturate(190%);
-  padding: 4px 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(18px) saturate(190%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%);
+  padding: 4px 13px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12),
+              inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.04);
   letter-spacing: 0.04em;
 }
 
@@ -457,21 +461,6 @@ button {
     white-space: nowrap;
     flex-shrink: 0;
   }
-
-  .slider-dots {
-    gap: 3.5px;
-    padding: 3px 6px;
-    flex-shrink: 0;
-  }
-
-  .dot {
-    width: 4px;
-    height: 4px;
-  }
-
-  .dot.active {
-    width: 11px;
-  }
 }
 
 .hero-info-top-row {
@@ -524,35 +513,6 @@ button {
   box-shadow: 0 3px 10px rgba(179, 134, 97, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
   white-space: nowrap;
   flex-shrink: 0;
-}
-
-/* Mini Liquid Dynamic Island Dots Capsule */
-.slider-dots {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  padding: 5px 10px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.95);
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(28, 34, 41, 0.3);
-  transition: var(--transition-fast);
-  cursor: pointer;
-}
-
-.dot.active {
-  width: 16px;
-  border-radius: 10px;
-  background: var(--color-primary);
 }
 
 .hero-info-main-row {
