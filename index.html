@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#FAF8F5">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
+  <title>Lumpini Condotown Rattanathibet | ลุมพินี คอนโดทาวน์ รัตนาธิเบศร์ คอนโดปล่อยเช่า รีโนเวทใหม่ พร้อมอยู่</title>
+  <meta name="description" content="คอนโดปล่อยเช่า Lumpini Condotown Rattanathibet (ลุมพินี คอนโดทาวน์ รัตนาธิเบศร์) ใกล้ Central Northville และ MRT แยกนนทบุรี 1 รีโนเวทใหม่เอี่ยม สไตล์ Minimal Scandinavian เริ่มต้น 6,500.-/เดือน">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Site Header
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="brand-logo">
+        <span class="brand-title">LUMPINI CONDOTOWN</span>
+        <span class="brand-sub">รัตนาธิเบศร์ (Rattanathibet)</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- =======================================================================
+         Hero Highlights Slideshow (Smooth Sliding Track & Crystal Clear Natural Light)
+         ======================================================================= -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-header">
+          <span class="hero-subtitle-tag">Scandinavian Warm Minimal • Renovated 100%</span>
+          <h1 class="hero-title">คอนโดปล่อยเช่าสภาพใหม่เอี่ยม</h1>
+          <p class="hero-desc">สภาพใหม่เอี่ยม รีโนเวทเสร็จพร้อมเข้าอยู่ ใกล้ Central Northville และ MRT แยกนนทบุรี 1 แต่งครบสไตล์มินิมอล ลากกระเป๋าเข้าอยู่ได้ทันที</p>
+        </div>
+
+        <!-- Slideshow Container with Smooth Track -->
+        <div class="hero-slider-container">
+          <div class="hero-slider-track" id="heroTrack">
+            <!-- Populated dynamically by app.js -->
+          </div>
+
+          <!-- Slider Arrow Controls -->
+          <button class="slider-arrow prev" id="sliderPrev" aria-label="ภาพก่อนหน้า">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="slider-arrow next" id="sliderNext" aria-label="ภาพถัดไป">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+
+          <!-- Slider Dots -->
+          <div class="slider-dots" id="sliderDots"></div>
+        </div>
+
+        <!-- Sparkle Banner -->
+        <div class="feature-banner">
+          <div class="banner-content">
+            <span class="banner-sparkle-tag">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.6-6.2 4.6 2.4-7.3-6.2-4.5h7.6z"/></svg>
+              Newly Renovated • Move-in Ready
+            </span>
+            <h2 class="banner-heading">สภาพใหม่กริบ 100% ทั้งห้องและเครื่องใช้ไฟฟ้า</h2>
+            <p class="banner-desc">ทุกอย่างตกแต่งใหม่หมดจดสไตล์ Minimal Scandinavian เฟอร์นิเจอร์และเครื่องใช้ไฟฟ้าครบชุด ไม่ต้องซื้อเพิ่ม ปลอดภัยด้วย Digital Door Lock 4 ระบบ</p>
+            <div class="banner-pills">
+              <span class="banner-pill">✨ Digital Door Lock 4 ระบบ</span>
+              <span class="banner-pill">❄️ แอร์ Inverter เบอร์ 5</span>
+              <span class="banner-pill">📺 Smart TV รองรับ Netflix</span>
+              <span class="banner-pill">🧺 เครื่องซักผ้าส่วนตัวในห้อง</span>
+              <span class="banner-pill">🧊 ตู้เย็น 2 ประตู Inverter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Room Rates & Types Comparison
+         ======================================================================= -->
+    <section class="pricing-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Room Types & Monthly Rates</span>
+          <h2 class="section-title">ประเภทห้องและอัตราค่าเช่า</h2>
+          <p class="section-subtitle">เลือกรูปแบบห้องที่ลงตัวกับไลฟ์สไตล์ของคุณ</p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- 1 Bedroom Card -->
+          <div class="pricing-card featured">
+            <span class="popular-badge">ยอดนิยม • แนะนำ</span>
+            <div class="card-top">
+              <div>
+                <span class="card-badge">28.32 ตร.ม. (sq.m.)</span>
+                <h3 style="font-size: 1.25rem; margin-top: 6px;">1 Bedroom</h3>
+                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">กั้นห้องนอนแยกเป็นสัดส่วน (3 ห้องให้เลือก)</p>
+              </div>
+            </div>
+
+            <div class="pricing-amount">
+              <span class="price-val">7,500</span>
+              <span class="price-unit">บาท / เดือน</span>
+            </div>
+
+            <p class="pricing-info-text">
+              ห้องนอนกั้นประตูกระจกบานเลื่อนแยกชัดเจนจากห้องนั่งเล่น ไม่ใช่ Studio ให้ความเป็นส่วนตัวสูงสุด ห้องนั่งเล่นกว้าง โซนครัวแยก ระเบียงส่วนตัว
+            </p>
+
+            <ul class="card-specs-list">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>กั้นห้องนอน 1 ห้อง + ห้องนั่งเล่น 1 ห้อง แยกสัดส่วน</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>Digital Door Lock 4 ระบบ (สแกนนิ้ว/รหัส/การ์ด/กุญแจ)</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>เครื่องใช้ไฟฟ้าครบ: แอร์ Inverter, ทีวี, ตู้เย็น, ไมโครเวฟ</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>มีเครื่องซักผ้าส่วนตัวในห้อง + เครื่องทำน้ำอุ่น</span>
+              </li>
+            </ul>
+
+            <button class="btn-card-action btn-primary-action" onclick="filterByType('1bed', true)">
+              <span>ดูรูปห้อง 1 Bedroom ทั้งหมด</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <!-- Studio Card -->
+          <div class="pricing-card">
+            <div class="card-top">
+              <div>
+                <span class="card-badge">25.08 ตร.ม. (sq.m.)</span>
+                <h3 style="font-size: 1.25rem; margin-top: 6px;">Studio Suite</h3>
+                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">ห้องสตูดิโอแต่งครบ โปร่งโล่ง (2 ห้องให้เลือก)</p>
+              </div>
+            </div>
+
+            <div class="pricing-amount">
+              <span class="price-val">6,500</span>
+              <span class="price-unit">บาท / เดือน</span>
+            </div>
+
+            <p class="pricing-info-text">
+              สตูดิโอสไตล์โอเพ่นสเปซ โปร่งสบาย คุ้มค่าที่สุด จัดสัดส่วนฟังก์ชันมุมพักผ่อน มุมโต๊ะทำงาน และแพนทรีครัวอย่างประณีต แสงธรรมชาติอบอุ่น
+            </p>
+
+            <ul class="card-specs-list">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>สเปซเปิดโล่ง โปร่งสบาย ไม่อึดอัด</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>Digital Door Lock 4 ระบบ มั่นใจความปลอดภัย</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>แอร์ Inverter ประหยัดไฟ, Smart TV, ตู้เย็น 2 ประตู</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>มีเครื่องซักผ้าส่วนตัวในห้อง + เครื่องทำน้ำอุ่น</span>
+              </li>
+            </ul>
+
+            <button class="btn-card-action btn-outline-action" onclick="filterByType('studio', true)">
+              <span>ดูรูปห้อง Studio ทั้งหมด</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Room Tour Video Vlog (iOS Liquid Glass Video Showcase)
+         ======================================================================= -->
+    <section class="video-vlog-section" id="vlog">
+      <div class="container">
+        <div class="video-vlog-layout">
+          <!-- Text Column -->
+          <div class="video-vlog-info">
+            <span class="section-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 4px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Room Tour Vlog
+            </span>
+            <h2 class="section-title">วิดีโอพาทัวร์ห้องจริง</h2>
+            <p class="section-subtitle">
+              ชมบรรยากาศห้องจริงแบบพาโนรามา สัมผัสฟังก์ชันการใช้งาน แสงธรรมชาติ และการตกแต่งครบเซ็ตก่อนนัดดูสถานที่จริง
+            </p>
+
+            <div class="vlog-highlights-list">
+              <div class="vlog-highlight-item">
+                <span class="vlog-check-icon">✓</span>
+                <span>ถ่ายจากห้องจริง บรรยากาศจริง 100%</span>
+              </div>
+              <div class="vlog-highlight-item">
+                <span class="vlog-check-icon">✓</span>
+                <span>รีโนเวทใหม่เอี่ยม เฟอร์นิเจอร์ + เครื่องใช้ไฟฟ้าครบเซ็ต</span>
+              </div>
+              <div class="vlog-highlight-item">
+                <span class="vlog-check-icon">✓</span>
+                <span>บรรยากาศเงียบสงบ วิวโปร่งโล่ง ลมพัดสบายตลอดวัน</span>
+              </div>
+            </div>
+
+            <div class="vlog-actions-row">
+              <a href="https://vt.tiktok.com/ZSqLWewQT/" target="_blank" rel="noopener" class="btn-tiktok-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.48 6.3 6.3 0 0 0 1.86-4.48v-6.9a8.16 8.16 0 0 0 4.91 1.63v-3.7z"/>
+                </svg>
+                <span>รับชมบน TikTok</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a href="#gallery" class="btn-view-rooms-link">
+                <span>เลือกดูภาพถ่ายแต่ละห้อง</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Video Device Column (iOS Liquid Glass Smartphone Mockup) -->
+          <div class="video-vlog-player-wrap">
+            <div class="video-ambient-glow"></div>
+            <div class="video-glass-phone-card" id="vlogPlayerCard">
+              <!-- Video Element -->
+              <video 
+                id="vlogVideo" 
+                class="vlog-video-element" 
+                src="assets/videos/vlog.mp4" 
+                playsinline 
+                loop 
+                muted 
+                preload="metadata"
+                aria-label="วิดีโอพาทัวร์คอนโดลุมพินี">
+              </video>
+
+              <!-- Top Liquid Glass Controls -->
+              <div class="video-top-bar">
+                <span class="video-badge-pill">
+                  <span class="pulse-dot"></span>
+                  Vlog Tour
+                </span>
+                <button type="button" class="btn-sound-toggle" id="vlogSoundToggle" aria-label="เปิด/ปิดเสียง">
+                  <svg id="iconSoundMuted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                  <svg id="iconSoundUnmuted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                  <span id="textSoundToggle">เปิดเสียง</span>
+                </button>
+              </div>
+
+              <!-- Center Play/Pause Ripple Indicator -->
+              <div class="video-play-indicator" id="vlogPlayIndicator">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+
+              <!-- Bottom Liquid Glass Bar -->
+              <div class="video-bottom-bar">
+                <div class="video-caption-text">
+                  <div class="video-room-title">ลุมพินี คอนโดทาวน์ รัตนาธิเบศร์</div>
+                  <div class="video-room-sub">เริ่มต้น 6,500 - 7,500.-/เดือน</div>
+                </div>
+                <a href="https://vt.tiktok.com/ZSqLWewQT/" target="_blank" rel="noopener" class="video-tiktok-mini-btn" aria-label="เปิดดูบน TikTok">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.48 6.3 6.3 0 0 0 1.86-4.48v-6.9a8.16 8.16 0 0 0 4.91 1.63v-3.7z"/>
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+              </div>
+
+              <!-- Thin Liquid Progress Bar -->
+              <div class="video-progress-track">
+                <div class="video-progress-fill" id="vlogProgressFill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Interactive Room Filter & Gallery
+         ======================================================================= -->
+    <section class="gallery-section" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Interactive Unit Photo Gallery</span>
+          <h2 class="section-title">แกลเลอรี่รูปภาพแต่ละห้อง</h2>
+          <p class="section-subtitle">แตะเลือกห้องที่ต้องการดู หรือแตะที่รูปเพื่อเปิดดูภาพความละเอียดสูงแบบเต็มจอ</p>
+        </div>
+
+        <!-- Sticky Filter Tab Bar -->
+        <div class="filter-bar-sticky">
+          <div class="filter-scroll-wrapper" id="filterContainer">
+            <!-- Filter buttons injected by app.js -->
+          </div>
+        </div>
+
+        <!-- Active Room Detail Box (Dynamically shown) -->
+        <div class="active-unit-summary" id="activeUnitSummary"></div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Gallery photos injected by app.js -->
+        </div>
+
+        <!-- Counter Indicator -->
+        <p class="photo-count-indicator" id="galleryCountIndicator">
+          กำลังโหลดรูปภาพ...
+        </p>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         In-Unit Appliances & Amenities
+         ======================================================================= -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Full Modern Amenities</span>
+          <h2 class="section-title">เครื่องใช้ไฟฟ้าและสิ่งอำนวยความสะดวกในห้อง</h2>
+          <p class="section-subtitle">ครบครันทุกความต้องการ พร้อมเข้าอยู่ได้ทันทีโดยไม่ต้องซื้ออะไรเพิ่ม</p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Item 1 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="feature-title-th">Digital Door Lock 4 ระบบ</div>
+            <div class="feature-title-en">สแกนลายนิ้วมือ, กดรหัส, คีย์การ์ด, กุญแจสำรอง สะดวกและปลอดภัยสูงสุด</div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+            </div>
+            <div class="feature-title-th">แอร์ Inverter ประหยัดไฟ</div>
+            <div class="feature-title-en">เครื่องปรับอากาศระบบ Inverter เย็นเร็ว เงียบสนิท ประหยัดไฟเบอร์ 5</div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+            </div>
+            <div class="feature-title-th">Smart TV จอใหญ่</div>
+            <div class="feature-title-en">เชื่อมต่ออินเทอร์เน็ต ดู Netflix, YouTube, Disney+ เพลิดเพลินได้ทันที</div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="20" x="3" y="2" rx="2"/><circle cx="12" cy="13" r="5"/><path d="M12 8v1"/></svg>
+            </div>
+            <div class="feature-title-th">เครื่องซักผ้าส่วนตัวในห้อง</div>
+            <div class="feature-title-en">ซักผ้าได้สะดวกสบายที่ระเบียงห้อง ไม่ต้องเดินลงไปหยอดเหรียญรวม</div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="4" x2="20" y1="10" y2="10"/><line x1="8" x2="8" y1="6" y2="6"/><line x1="8" x2="8" y1="14" y2="14"/></svg>
+            </div>
+            <div class="feature-title-th">ตู้เย็น 2 ประตู Inverter</div>
+            <div class="feature-title-en">ช่องฟรีซแยกชัดเจน ขนาดใหญ่ แช่อาหารและเครื่องดื่มได้อย่างจุใจ</div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="feature-item-card">
+            <div class="feature-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            </div>
+            <div class="feature-title-th">ไมโครเวฟ & เครื่องทำน้ำอุ่น</div>
+            <div class="feature-title-en">อุ่นอาหารสะดวก พร้อมระบบทำน้ำอุ่นติดตั้งได้มาตรฐาน ปลอดภัย</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Project Common Facilities (ส่วนกลางโครงการ)
+         ======================================================================= -->
+    <section class="facilities-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Project Facilities & Amenities</span>
+          <h2 class="section-title">สิ่งอำนวยความสะดวก & ส่วนกลางของโครงการ</h2>
+          <p class="section-subtitle">พื้นที่ส่วนกลางขนาดใหญ่ ร่มรื่น ครบครัน ตอบโจทย์ชีวิตคนรุ่นใหม่</p>
+        </div>
+
+        <div class="facilities-grid">
+          <!-- 1. สระว่ายน้ำ -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M2 16c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/><path d="M2 20c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/><circle cx="12" cy="7" r="3"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">สระว่ายน้ำกลางแจ้ง</span>
+              <span class="facility-name-en">Swimming Pool</span>
+              <p class="facility-desc">สระว่ายน้ำส่วนกลางขนาดใหญ่สำหรับออกกำลังกายและพักผ่อนในวันสบายๆ</p>
+            </div>
+          </div>
+
+          <!-- 2. ฟิตเนส -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 5v14"/><path d="M18 5v14"/><path d="M2 9h4"/><path d="M2 15h4"/><path d="M18 9h4"/><path d="M18 15h4"/><path d="M6 12h12"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">ห้องออกกำลังกาย (ฟิตเนส)</span>
+              <span class="facility-name-en">Fitness Center</span>
+              <p class="facility-desc">อุปกรณ์ออกกำลังกายครบครัน ทั้งสายคาร์ดิโอ ลู่วิ่ง และเวทเทรนนิ่ง</p>
+            </div>
+          </div>
+
+          <!-- 3. สวนหย่อม / สนามเด็กเล่น -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 10v12"/><path d="M12 14c-3 0-5 2-5 5"/><path d="M12 17c3 0 5 1.5 5 4"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">สนามเด็กเล่น / สวนหย่อม</span>
+              <span class="facility-name-en">Gardens & Playground</span>
+              <p class="facility-desc">พื้นที่สีเขียวพักผ่อนระหว่างอาคาร ร่มรื่น เงียบสงบ ปลอดโปร่ง</p>
+            </div>
+          </div>
+
+          <!-- 4. ห้องสมุด / ห้องประชุม -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">ห้องสมุด / ห้องประชุมอเนกประสงค์</span>
+              <span class="facility-name-en">Library & Co-working</span>
+              <p class="facility-desc">พื้นที่เงียบสงบสำหรับนั่งอ่านหนังสือ ทำงาน หรือประชุมงานอเนกประสงค์</p>
+            </div>
+          </div>
+
+          <!-- 5. 7-Eleven & ร้านซักรีด -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">7-Eleven & ร้านค้าภายในโครงการ</span>
+              <span class="facility-name-en">7-Eleven & In-project Shops</span>
+              <p class="facility-desc">สะดวกสบายด้วย 7-Eleven ในโครงการ ร้านอาหาร และร้านซักรีด</p>
+            </div>
+          </div>
+
+          <!-- 6. ระบบรักษาความปลอดภัย -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">ระบบ รปภ. 24 ชม. & กล้อง CCTV</span>
+              <span class="facility-name-en">24/7 Security & Key Card</span>
+              <p class="facility-desc">เข้า-ออกโครงการด้วย Access Key Card กล้องวงจรปิดรอบทิศทาง ปลอดภัย</p>
+            </div>
+          </div>
+
+          <!-- 7. ที่จอดรถ -->
+          <div class="facility-card">
+            <div class="facility-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <div class="facility-info">
+              <span class="facility-name-th">ที่จอดรถรอบอาคาร</span>
+              <span class="facility-name-en">Ample Parking Area</span>
+              <p class="facility-desc">รองรับการจอดรถรอบอาคารอย่างเป็นระเบียบ ทั้งรถยนต์และมอเตอร์ไซค์</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Prime Location & Google Maps (ทำเลที่ตั้ง & สถานที่สำคัญใกล้เคียง พร้อมภาพถ่ายและระยะทาง)
+         ======================================================================= -->
+    <section class="location-section" id="location">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Prime Location & Google Maps</span>
+          <h2 class="section-title">ทำเลที่ตั้งและการเดินทาง</h2>
+          <p class="section-subtitle">เดินทางสะดวกสบาย ติดถนนใหญ่ ใกล้รถไฟฟ้าและศูนย์การค้าชั้นนำ</p>
+        </div>
+
+        <!-- Main Condo Location Card with Photo -->
+        <div class="main-location-card">
+          <div class="main-location-img-wrap">
+            <img src="assets/images/places/condo.jpg" alt="Lumpini Condotown Rattanathibet">
+          </div>
+          <div class="main-location-content">
+            <span class="main-location-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              ตำแหน่งที่ตั้งโครงการ (Condo Location)
+            </span>
+            <h3 class="main-location-title">Lumpini Condotown Rattanathibet</h3>
+            <p class="main-location-address">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-wood); flex-shrink: 0;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>ถ.รัตนาธิเบศร์ ต.บางกระสอ อ.เมืองนนทบุรี จ.นนทบุรี</span>
+            </p>
+            <p style="font-size: 0.86rem; color: var(--color-slate); line-height: 1.5;">
+              โครงการคุณภาพริมถนนใหญ่รัตนาธิเบศร์ บรรยากาศร่มรื่น สระว่ายน้ำ ฟิตเนส และ 7-Eleven ในโครงการ เดินทางเชื่อมต่อเข้าเมืองสะดวกทุกเส้นทาง
+            </p>
+            <a href="https://maps.app.goo.gl/dJXGfceHbDbG9FBs9" target="_blank" rel="noopener" class="btn-open-map">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              <span>เปิด Google Maps พิกัดคอนโด</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nearby Highlights Grid with Photos & Gimmick Distance Badges -->
+        <div class="nearby-grid">
+          <!-- 1. รถไฟฟ้าสายสีม่วง สถานีแยกนนทบุรี 1 (400 m) -->
+          <div class="nearby-card highlighted">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/mrt.jpg" alt="รถไฟฟ้าสายสีม่วง สถานีแยกนนทบุรี 1" loading="lazy">
+              <span class="nearby-distance-badge">📍 400 m</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">✨ เดินทางสะดวกมากๆ</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">รถไฟฟ้าสายสีม่วง สถานีแยกนนทบุรี 1</h4>
+                <p class="nearby-desc">ใกล้สถานีรถไฟฟ้าสายสีม่วง เชื่อมต่อตรงสู่เตาปูน บางซื่อ และใจกลางเมืองได้อย่างรวดเร็ว ไร้ปัญหารถติด</p>
+              </div>
+              <a href="https://maps.app.goo.gl/yZ5fWSLtTkPPcmB17" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Little Walk รัตนาธิเบศร์ (500 m) -->
+          <div class="nearby-card">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/little_walk.jpg" alt="Little Walk รัตนาธิเบศร์" loading="lazy">
+              <span class="nearby-distance-badge">📍 500 m</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">คอมมูนิตี้มอลล์</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">Little Walk รัตนาธิเบศร์</h4>
+                <p class="nearby-desc">คอมมูนิตี้มอลล์สไตล์มินิมอล ร้านอาหารชื่อดัง ซูเปอร์มาร์เก็ต คาเฟ่ และร้านสะดวกซื้อ แวะได้สะดวกก่อนกลับห้อง</p>
+              </div>
+              <a href="https://maps.app.goo.gl/hP9eREKZKDKwccBz9" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. Central Northville (750 m) -->
+          <div class="nearby-card">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/central_northville.jpg" alt="Central Northville" loading="lazy">
+              <span class="nearby-distance-badge">📍 750 m</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">ห้างสรรพสินค้าชั้นนำ</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">Central Northville</h4>
+                <p class="nearby-desc">ศูนย์การค้าเซ็นทรัล นอร์ธวิลล์ แหล่งรวมร้านค้า แบรนด์แฟชั่น ซูเปอร์มาร์เก็ต และโรงภาพยนตร์ครบครัน</p>
+              </div>
+              <a href="https://maps.app.goo.gl/8HheULWMw27cHVDV6" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 4. ตลาดนกฮูก (850 m) -->
+          <div class="nearby-card">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/owl_market.jpg" alt="ตลาดนกฮูก (Owl Market)" loading="lazy">
+              <span class="nearby-distance-badge">📍 850 m</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">ตลาดกลางคืนยอดฮิต</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">ตลาดนกฮูก (Owl Market)</h4>
+                <p class="nearby-desc">ตลาดนัดกลางคืนขวัญใจคนนนทบุรี สตรีทฟู้ดแน่น ร้านอาหารดัง เสื้อผ้าแฟชั่น และของใช้หลากหลาย เปิดทุกเย็น</p>
+              </div>
+              <a href="https://maps.app.goo.gl/9HkRcNZ8htrZDeh88" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 5. ตลาดต้นสัก (900 m) -->
+          <div class="nearby-card">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/tonsak_market.jpg" alt="ตลาดต้นสัก (Tonsak Market)" loading="lazy">
+              <span class="nearby-distance-badge">📍 900 m</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">ศูนย์รวมของกินอร่อย</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">ตลาดต้นสัก (Tonsak Market)</h4>
+                <p class="nearby-desc">ฟู้ดมาร์เก็ตระดับพรีเมียม สะอาด ปลอดโปร่ง แหล่งรวมร้านเด็ดมิชลินและของกินเลื่องชื่อติดริมถนนสนามบินน้ำ</p>
+              </div>
+              <a href="https://maps.app.goo.gl/F72hiefFZ2LgwB4V8" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 6. โรงพยาบาลพระนั่งเกล้า (1.2 km) -->
+          <div class="nearby-card">
+            <div class="nearby-img-wrap">
+              <img src="assets/images/places/hospital.jpg" alt="โรงพยาบาลพระนั่งเกล้า" loading="lazy">
+              <span class="nearby-distance-badge">📍 1.2 km</span>
+            </div>
+            <div class="nearby-body">
+              <div>
+                <div class="nearby-tag-row">
+                  <span class="nearby-badge">สถานพยาบาลชั้นนำ</span>
+                </div>
+                <h4 class="nearby-name-th" style="margin-top: 4px;">โรงพยาบาลพระนั่งเกล้า</h4>
+                <p class="nearby-desc">โรงพยาบาลศูนย์ขนาดใหญ่ ใกล้โครงการ เดินทางสะดวก อุ่นใจในทุกสถานการณ์ฉุกเฉินและการดูแลสุขภาพ</p>
+              </div>
+              <a href="https://maps.app.goo.gl/CqkCLPxZrZF3yhtV6" target="_blank" rel="noopener" class="nearby-link-btn">
+                <span>ดูแผนที่บน Google Maps</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Rental Terms & Conditions
+         ======================================================================= -->
+    <section class="terms-section">
+      <div class="container">
+        <div class="terms-card">
+          <span class="section-tag">Lease Terms & Details</span>
+          <h2 class="section-title">เงื่อนไขและรายละเอียดการเช่า</h2>
+          <p class="section-subtitle">ชัดเจน โปร่งใส ไม่มีค่าใช้จ่ายแอบแฝง</p>
+
+          <div class="terms-grid">
+            <div class="term-item">
+              <div class="term-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="term-text-th">สัญญาเช่าขั้นต่ำ 1 ปี (1-Year Contract)</div>
+                <div class="term-text-en">มัดจำประกัน 2 เดือน + จ่ายค่าเช่าล่วงหน้า 1 เดือน พร้อมเข้าอยู่ทันที</div>
+              </div>
+            </div>
+
+            <div class="term-item">
+              <div class="term-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>
+              </div>
+              <div>
+                <div class="term-text-th">ค่าที่จอดรถของโครงการ (ถ้ามี)</div>
+                <div class="term-text-en">รถยนต์ 200.- / เดือน | มอเตอร์ไซค์ 50.- / เดือน</div>
+              </div>
+            </div>
+
+            <div class="term-item">
+              <div class="term-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div>
+                <div class="term-text-th">ค่าน้ำและค่าไฟฟ้า</div>
+                <div class="term-text-en">ค่าไฟคิดเรทบ้าน (จ่ายตรงการไฟฟ้า) / ค่าน้ำจ่ายตรงกับนิติบุคคล</div>
+              </div>
+            </div>
+
+            <div class="term-item">
+              <div class="term-icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <div class="term-text-th">นัดหมายชมห้องจริง</div>
+                <div class="term-text-en">สะดวกนัดดูห้องจริงทุกวัน โทรแจ้งล่วงหน้าได้เลยครับ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       Interactive Fullscreen Lightbox Modal
+       ========================================================================= -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="ภาพขยาย">
+    <div class="lightbox-top-bar">
+      <span class="lightbox-counter" id="lightboxCounter">1 / 64</span>
+      <button class="lightbox-close-btn" id="lightboxClose" aria-label="ปิดภาพขยาย">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="lightbox-main-stage" id="lightboxStage">
+      <button class="lightbox-nav-btn prev" id="lightboxPrev" aria-label="ภาพก่อนหน้า">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+
+      <div class="lightbox-image-wrap">
+        <img id="lightboxImg" src="" alt="ห้องพักคอนโดลุมพินี">
+      </div>
+
+      <button class="lightbox-nav-btn next" id="lightboxNext" aria-label="ภาพถัดไป">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="lightbox-bottom-bar">
+      <div class="lightbox-info">
+        <span class="lightbox-unit-name" id="lightboxUnitName">ห้อง 1 Bedroom</span>
+        <span class="lightbox-unit-price" id="lightboxUnitPrice">฿7,500 / เดือน</span>
+      </div>
+      <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener" class="lightbox-inquire-btn" id="lightboxInquireBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.92 1.76 5.51 4.5 6.99-.2.72-.73 2.65-.84 3.06-.13.51.19.5.4.36.16-.11 2.22-1.52 3.12-2.14.9.25 1.84.39 2.82.39 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/></svg>
+        <span>สอบถามห้องนี้ทาง LINE</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Sticky Bottom Contact Bar (Mobile-First CTA)
+       ========================================================================= -->
+  <div class="sticky-contact-bar">
+    <div class="sticky-contact-content">
+      <div class="sticky-info">
+        <span class="sticky-label">ราคาค่าเช่า</span>
+        <span class="sticky-price">เริ่มต้น 6,500.-</span>
+      </div>
+      <div class="sticky-actions">
+        <a href="tel:0800239930" class="btn-cta-phone">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>โทรติดต่อ</span>
+        </a>
+        <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener" class="btn-cta-line">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.92 1.76 5.51 4.5 6.99-.2.72-.73 2.65-.84 3.06-.13.51.19.5.4.36.16-.11 2.22-1.52 3.12-2.14.9.25 1.84.39 2.82.39 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/></svg>
+          <span>แชท LINE</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Site Footer
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-title">Lumpini Condotown Rattanathibet (ลุมพินี คอนโดทาวน์ รัตนาธิเบศร์)</div>
+      <div class="footer-contact-details">
+        <p>โทรสอบถาม / นัดดูห้อง: <a href="tel:0800239930">080-023-9930</a></p>
+        <p>Line ID: <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener">sangtian5243</a></p>
+        <p>ทำเล: ติด ถ.รัตนาธิเบศร์ นนทบุรี ใกล้ Central Northville & MRT แยกนนทบุรี 1</p>
+      </div>
+      <p class="footer-copy">© 2025 Lumpini Condotown Rattanathibet Gallery. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Standard relative scripts, completely compatible with direct file:// opening -->
+  <script src="js/rooms-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

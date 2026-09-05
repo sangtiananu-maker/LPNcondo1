@@ -1,0 +1,9 @@
+﻿# Raw original camera photos & videos (already processed into assets/)
+Pictures/
+scripts/
+Rules.txt
+
+# OS system files
+.DS_Store
+Thumbs.db
+desktop.ini
