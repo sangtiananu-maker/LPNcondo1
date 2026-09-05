@@ -125,120 +125,120 @@ const ROOMS_DATA = {
   heroHighlights: [
   {
     "src": "assets/images/web/chalida/chalida_01.jpg",
-    "unitId": "chalida",
-    "unitNameTh": "ห้อง 1 Bedroom (Chalida)",
-    "unitNameEn": "1 Bedroom Suite (Chalida)",
+    "unitId": "celida",
+    "unitNameTh": "ห้อง 1 Bedroom (Celida)",
+    "unitNameEn": "1 Bedroom Suite (Celida)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Chalida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Chalida) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Celida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Celida) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/chalida/chalida_02.jpg",
-    "unitId": "chalida",
-    "unitNameTh": "ห้อง 1 Bedroom (Chalida)",
-    "unitNameEn": "1 Bedroom Suite (Chalida)",
+    "unitId": "celida",
+    "unitNameTh": "ห้อง 1 Bedroom (Celida)",
+    "unitNameEn": "1 Bedroom Suite (Celida)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Chalida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Chalida) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Celida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Celida) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/paisarn/paisarn_01.jpg",
-    "unitId": "paisarn",
-    "unitNameTh": "ห้อง 1 Bedroom (Paisarn)",
-    "unitNameEn": "1 Bedroom Suite (Paisarn)",
+    "unitId": "pisa",
+    "unitNameTh": "ห้อง 1 Bedroom (Pisa)",
+    "unitNameEn": "1 Bedroom Suite (Pisa)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Paisarn) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Paisarn) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Pisa) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Pisa) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/paisarn/paisarn_02.jpg",
-    "unitId": "paisarn",
-    "unitNameTh": "ห้อง 1 Bedroom (Paisarn)",
-    "unitNameEn": "1 Bedroom Suite (Paisarn)",
+    "unitId": "pisa",
+    "unitNameTh": "ห้อง 1 Bedroom (Pisa)",
+    "unitNameEn": "1 Bedroom Suite (Pisa)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Paisarn) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Paisarn) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Pisa) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Pisa) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/prasert/prasert_02.jpg",
-    "unitId": "prasert",
-    "unitNameTh": "ห้อง 1 Bedroom (Prasert)",
-    "unitNameEn": "1 Bedroom Suite (Prasert)",
+    "unitId": "praso",
+    "unitNameTh": "ห้อง 1 Bedroom (Praso)",
+    "unitNameEn": "1 Bedroom Suite (Praso)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Prasert) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Prasert) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Praso) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Praso) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/prasert/prasert_03.jpg",
-    "unitId": "prasert",
-    "unitNameTh": "ห้อง 1 Bedroom (Prasert)",
-    "unitNameEn": "1 Bedroom Suite (Prasert)",
+    "unitId": "praso",
+    "unitNameTh": "ห้อง 1 Bedroom (Praso)",
+    "unitNameEn": "1 Bedroom Suite (Praso)",
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Prasert) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
-    "captionEn": "1 Bedroom Suite (Prasert) - 28.32 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง 1 Bedroom (Praso) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionEn": "1 Bedroom Suite (Praso) - 28.32 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/theerawut/theerawut_01.jpg",
-    "unitId": "theerawut",
-    "unitNameTh": "ห้อง Studio (Theerawut)",
-    "unitNameEn": "Studio Suite (Theerawut)",
+    "unitId": "terra",
+    "unitNameTh": "ห้อง Studio (Terra)",
+    "unitNameEn": "Studio Suite (Terra)",
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Theerawut) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
-    "captionEn": "Studio Suite (Theerawut) - 25.08 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง Studio (Terra) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionEn": "Studio Suite (Terra) - 25.08 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/theerawut/theerawut_02.jpg",
-    "unitId": "theerawut",
-    "unitNameTh": "ห้อง Studio (Theerawut)",
-    "unitNameEn": "Studio Suite (Theerawut)",
+    "unitId": "terra",
+    "unitNameTh": "ห้อง Studio (Terra)",
+    "unitNameEn": "Studio Suite (Terra)",
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Theerawut) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
-    "captionEn": "Studio Suite (Theerawut) - 25.08 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง Studio (Terra) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionEn": "Studio Suite (Terra) - 25.08 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/pichet/pichet_01.jpg",
-    "unitId": "pichet",
-    "unitNameTh": "ห้อง Studio (Pichet)",
-    "unitNameEn": "Studio Suite (Pichet)",
+    "unitId": "piquette",
+    "unitNameTh": "ห้อง Studio (Piquette)",
+    "unitNameEn": "Studio Suite (Piquette)",
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Pichet) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
-    "captionEn": "Studio Suite (Pichet) - 25.08 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง Studio (Piquette) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionEn": "Studio Suite (Piquette) - 25.08 ตร.ม. (sq.m.)"
   },
   {
     "src": "assets/images/web/pichet/pichet_02.jpg",
-    "unitId": "pichet",
-    "unitNameTh": "ห้อง Studio (Pichet)",
-    "unitNameEn": "Studio Suite (Pichet)",
+    "unitId": "piquette",
+    "unitNameTh": "ห้อง Studio (Piquette)",
+    "unitNameEn": "Studio Suite (Piquette)",
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Pichet) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
-    "captionEn": "Studio Suite (Pichet) - 25.08 ตร.ม. (sq.m.)"
+    "captionTh": "ห้อง Studio (Piquette) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionEn": "Studio Suite (Piquette) - 25.08 ตร.ม. (sq.m.)"
   }
 ],
   units: [
   {
-    "id": "chalida",
-    "nameTh": "ห้อง 1 Bedroom (Chalida)",
-    "nameEn": "1 Bedroom Suite (Chalida)",
+    "id": "celida",
+    "nameTh": "ห้อง 1 Bedroom (Celida)",
+    "nameEn": "1 Bedroom Suite (Celida)",
     "type": "1bed",
     "typeLabelTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "typeLabelEn": "1 Bedroom (Separate Bedroom)",
@@ -251,10 +251,10 @@ const ROOMS_DATA = {
     "descriptionEn": "Spacious 1-bedroom with partitioned glass door, modern Scandinavian warm wood style, fully furnished with all electrical appliances. Move-in ready after complete renovation.",
     "photos": [
       {
-        "id": "chalida_1",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_1",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_01.jpg",
@@ -264,10 +264,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_2",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_2",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_02.jpg",
@@ -277,10 +277,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_3",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_3",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_03.jpg",
@@ -290,10 +290,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_4",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_4",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_04.jpg",
@@ -303,10 +303,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_5",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_5",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_05.jpg",
@@ -316,10 +316,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_6",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_6",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_06.jpg",
@@ -329,10 +329,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_7",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_7",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_07.jpg",
@@ -342,10 +342,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_8",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_8",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_08.jpg",
@@ -355,10 +355,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_9",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_9",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_09.jpg",
@@ -368,10 +368,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_10",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_10",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_10.jpg",
@@ -381,10 +381,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_11",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_11",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_11.jpg",
@@ -394,10 +394,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "chalida_12",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_12",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_12.jpg",
@@ -407,10 +407,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "chalida_13",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_13",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_13.jpg",
@@ -420,10 +420,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "chalida_14",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_14",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_14.jpg",
@@ -433,10 +433,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "chalida_15",
-        "unitId": "chalida",
-        "unitName": "ห้อง 1 Bedroom (Chalida)",
-        "unitNameEn": "1 Bedroom Suite (Chalida)",
+        "id": "celida_15",
+        "unitId": "celida",
+        "unitName": "ห้อง 1 Bedroom (Celida)",
+        "unitNameEn": "1 Bedroom Suite (Celida)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/chalida/chalida_15.jpg",
@@ -451,9 +451,9 @@ const ROOMS_DATA = {
     "photoCount": 15
   },
   {
-    "id": "paisarn",
-    "nameTh": "ห้อง 1 Bedroom (Paisarn)",
-    "nameEn": "1 Bedroom Suite (Paisarn)",
+    "id": "pisa",
+    "nameTh": "ห้อง 1 Bedroom (Pisa)",
+    "nameEn": "1 Bedroom Suite (Pisa)",
     "type": "1bed",
     "typeLabelTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "typeLabelEn": "1 Bedroom (Separate Bedroom)",
@@ -466,10 +466,10 @@ const ROOMS_DATA = {
     "descriptionEn": "Comfortable 28.32 sq.m. 1-bedroom layout with separated living room, bedroom, and kitchen. Abundant natural light and cozy Scandinavian atmosphere.",
     "photos": [
       {
-        "id": "paisarn_1",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_1",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_01.jpg",
@@ -479,10 +479,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_2",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_2",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_02.jpg",
@@ -492,10 +492,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_3",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_3",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_03.jpg",
@@ -505,10 +505,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_4",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_4",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_04.jpg",
@@ -518,10 +518,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_5",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_5",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_05.jpg",
@@ -531,10 +531,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_6",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_6",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_06.jpg",
@@ -544,10 +544,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "paisarn_7",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_7",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_07.jpg",
@@ -557,10 +557,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "paisarn_8",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_8",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_08.jpg",
@@ -570,10 +570,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "paisarn_9",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_9",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_09.jpg",
@@ -583,10 +583,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_10",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_10",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_10.jpg",
@@ -596,10 +596,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "paisarn_11",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_11",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_11.jpg",
@@ -609,10 +609,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_12",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_12",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_12.jpg",
@@ -622,10 +622,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_13",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_13",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_13.jpg",
@@ -635,10 +635,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "paisarn_14",
-        "unitId": "paisarn",
-        "unitName": "ห้อง 1 Bedroom (Paisarn)",
-        "unitNameEn": "1 Bedroom Suite (Paisarn)",
+        "id": "pisa_14",
+        "unitId": "pisa",
+        "unitName": "ห้อง 1 Bedroom (Pisa)",
+        "unitNameEn": "1 Bedroom Suite (Pisa)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/paisarn/paisarn_14.jpg",
@@ -653,9 +653,9 @@ const ROOMS_DATA = {
     "photoCount": 14
   },
   {
-    "id": "prasert",
-    "nameTh": "ห้อง 1 Bedroom (Prasert)",
-    "nameEn": "1 Bedroom Suite (Prasert)",
+    "id": "praso",
+    "nameTh": "ห้อง 1 Bedroom (Praso)",
+    "nameEn": "1 Bedroom Suite (Praso)",
     "type": "1bed",
     "typeLabelTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "typeLabelEn": "1 Bedroom (Separate Bedroom)",
@@ -668,10 +668,10 @@ const ROOMS_DATA = {
     "descriptionEn": "Fully renovated 1-bedroom suite featuring warm wood accents, cozy lighting, practical zoning, and 4-system Digital Door Lock for superior safety.",
     "photos": [
       {
-        "id": "prasert_1",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_1",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_01.jpg",
@@ -681,10 +681,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "prasert_2",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_2",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_02.jpg",
@@ -694,10 +694,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_3",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_3",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_03.jpg",
@@ -707,10 +707,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_4",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_4",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_04.jpg",
@@ -720,10 +720,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_5",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_5",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_05.jpg",
@@ -733,10 +733,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_6",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_6",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_06.jpg",
@@ -746,10 +746,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_7",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_7",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_07.jpg",
@@ -759,10 +759,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_8",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_8",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_08.jpg",
@@ -772,10 +772,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_9",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_9",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_09.jpg",
@@ -785,10 +785,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "prasert_10",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_10",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_10.jpg",
@@ -798,10 +798,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "prasert_11",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_11",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_11.jpg",
@@ -811,10 +811,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "prasert_12",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_12",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_12.jpg",
@@ -824,10 +824,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "prasert_13",
-        "unitId": "prasert",
-        "unitName": "ห้อง 1 Bedroom (Prasert)",
-        "unitNameEn": "1 Bedroom Suite (Prasert)",
+        "id": "praso_13",
+        "unitId": "praso",
+        "unitName": "ห้อง 1 Bedroom (Praso)",
+        "unitNameEn": "1 Bedroom Suite (Praso)",
         "unitType": "1bed",
         "price": "7,500",
         "src": "assets/images/web/prasert/prasert_13.jpg",
@@ -842,9 +842,9 @@ const ROOMS_DATA = {
     "photoCount": 13
   },
   {
-    "id": "theerawut",
-    "nameTh": "ห้อง Studio (Theerawut)",
-    "nameEn": "Studio Suite (Theerawut)",
+    "id": "terra",
+    "nameTh": "ห้อง Studio (Terra)",
+    "nameEn": "Studio Suite (Terra)",
     "type": "studio",
     "typeLabelTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "typeLabelEn": "Studio Suite (Open-Plan)",
@@ -857,10 +857,10 @@ const ROOMS_DATA = {
     "descriptionEn": "Cozy 25.08 sq.m. studio with smart space utilization, bright Scandinavian palette, fully fitted with Inverter AC, washing machine, and Smart TV.",
     "photos": [
       {
-        "id": "theerawut_1",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_1",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_01.jpg",
@@ -870,10 +870,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_2",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_2",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_02.jpg",
@@ -883,10 +883,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_3",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_3",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_03.jpg",
@@ -896,10 +896,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_4",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_4",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_04.jpg",
@@ -909,10 +909,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_5",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_5",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_05.jpg",
@@ -922,10 +922,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_6",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_6",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_06.jpg",
@@ -935,10 +935,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "theerawut_7",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_7",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_07.jpg",
@@ -948,10 +948,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "theerawut_8",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_8",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_08.jpg",
@@ -961,10 +961,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_9",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_9",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_09.jpg",
@@ -974,10 +974,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_10",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_10",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_10.jpg",
@@ -987,10 +987,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "theerawut_11",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_11",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_11.jpg",
@@ -1000,10 +1000,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "theerawut_12",
-        "unitId": "theerawut",
-        "unitName": "ห้อง Studio (Theerawut)",
-        "unitNameEn": "Studio Suite (Theerawut)",
+        "id": "terra_12",
+        "unitId": "terra",
+        "unitName": "ห้อง Studio (Terra)",
+        "unitNameEn": "Studio Suite (Terra)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/theerawut/theerawut_12.jpg",
@@ -1018,9 +1018,9 @@ const ROOMS_DATA = {
     "photoCount": 12
   },
   {
-    "id": "pichet",
-    "nameTh": "ห้อง Studio (Pichet)",
-    "nameEn": "Studio Suite (Pichet)",
+    "id": "piquette",
+    "nameTh": "ห้อง Studio (Piquette)",
+    "nameEn": "Studio Suite (Piquette)",
     "type": "studio",
     "typeLabelTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "typeLabelEn": "Studio Suite (Open-Plan)",
@@ -1033,10 +1033,10 @@ const ROOMS_DATA = {
     "descriptionEn": "Brand new renovated studio suite in pristine condition. Well-defined living, sleeping, and kitchen spaces. High-value living at just 6,500 THB/month.",
     "photos": [
       {
-        "id": "pichet_1",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_1",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_01.jpg",
@@ -1046,10 +1046,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_2",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_2",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_02.jpg",
@@ -1059,10 +1059,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_3",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_3",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_03.jpg",
@@ -1072,10 +1072,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_4",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_4",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_04.jpg",
@@ -1085,10 +1085,10 @@ const ROOMS_DATA = {
         "isLandscape": false
       },
       {
-        "id": "pichet_5",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_5",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_05.jpg",
@@ -1098,10 +1098,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_6",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_6",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_06.jpg",
@@ -1111,10 +1111,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_7",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_7",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_07.jpg",
@@ -1124,10 +1124,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_8",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_8",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_08.jpg",
@@ -1137,10 +1137,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_9",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_9",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_09.jpg",
@@ -1150,10 +1150,10 @@ const ROOMS_DATA = {
         "isLandscape": true
       },
       {
-        "id": "pichet_10",
-        "unitId": "pichet",
-        "unitName": "ห้อง Studio (Pichet)",
-        "unitNameEn": "Studio Suite (Pichet)",
+        "id": "piquette_10",
+        "unitId": "piquette",
+        "unitName": "ห้อง Studio (Piquette)",
+        "unitNameEn": "Studio Suite (Piquette)",
         "unitType": "studio",
         "price": "6,500",
         "src": "assets/images/web/pichet/pichet_10.jpg",
