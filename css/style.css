@@ -187,6 +187,28 @@ button {
   letter-spacing: -0.01em;
 }
 
+@media (max-width: 640px) {
+  .hero-header {
+    padding: 0 4px;
+    margin-bottom: 0.9rem;
+  }
+  .hero-subtitle-tag {
+    font-size: 0.68rem;
+    padding: 3px 12px;
+    margin-bottom: 0.4rem;
+  }
+  .hero-title {
+    font-size: clamp(1.12rem, 5.1vw, 1.35rem);
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+  .hero-desc {
+    font-size: 0.82rem;
+    line-height: 1.48;
+  }
+}
+
 .hero-desc {
   font-size: 0.92rem;
   color: var(--color-slate);
@@ -402,8 +424,47 @@ button {
 
 @media (max-width: 640px) {
   .hero-slide-info-panel {
-    padding: 0.95rem 1.05rem;
-    gap: 9px;
+    padding: 0.85rem 0.95rem;
+    gap: 8px;
+  }
+
+  .hero-info-top-row {
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .hero-info-tags {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .hero-badge-tag {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hero-price-tag {
+    font-size: 0.74rem;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .slider-dots {
+    gap: 3.5px;
+    padding: 3px 6px;
+    flex-shrink: 0;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .dot.active {
+    width: 11px;
   }
 }
 
@@ -418,6 +479,8 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 
 /* Liquid Obsidian Capsule */
@@ -435,6 +498,8 @@ button {
   letter-spacing: 0.02em;
   border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Liquid Amber Gold Capsule */
@@ -451,6 +516,8 @@ button {
   border-radius: var(--radius-pill);
   border: 1px solid rgba(194, 162, 122, 0.38);
   box-shadow: 0 3px 10px rgba(179, 134, 97, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Mini Liquid Dynamic Island Dots Capsule */
