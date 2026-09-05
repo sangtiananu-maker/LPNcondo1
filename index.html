@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=1.1">
+  <link rel="stylesheet" href="css/style.css?v=1.2">
 </head>
 <body>
 
@@ -44,47 +44,62 @@
           <p class="hero-desc">สภาพใหม่เอี่ยม รีโนเวทเสร็จพร้อมเข้าอยู่ ใกล้ Central Northville และ MRT แยกนนทบุรี 1 แต่งครบสไตล์มินิมอล ลากกระเป๋าเข้าอยู่ได้ทันที</p>
         </div>
 
-        <!-- Slideshow Showcase Card (Clean Photo on Top, Details Below) -->
-        <div class="hero-showcase-card">
-          <!-- 1. Pure Photo Viewport (100% Unobstructed Image) -->
-          <div class="hero-slider-container">
-            <div class="hero-slider-track" id="heroTrack">
-              <!-- Populated dynamically by app.js (clean photos only) -->
-            </div>
-
-            <!-- Top Counter Chip -->
-            <div class="hero-photo-top-bar">
-              <span class="hero-counter-badge" id="heroSlideCounter">1 / 5</span>
-            </div>
-
-            <!-- Slider Arrow Controls -->
-            <button class="slider-arrow prev" id="sliderPrev" aria-label="ภาพก่อนหน้า">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <button class="slider-arrow next" id="sliderNext" aria-label="ภาพถัดไป">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-          </div>
-
-          <!-- 2. Room Details Bar (Positioned BELOW the photo - NEVER blocks the image) -->
-          <div class="hero-slide-info-panel" id="heroSlideInfoPanel">
-            <div class="hero-info-top-row">
-              <div class="hero-info-tags">
-                <span class="hero-badge-tag" id="heroDetailBadge">1 Bedroom</span>
-                <span class="hero-price-tag" id="heroDetailPrice">฿7,500 / เดือน</span>
+        <!-- Slideshow Showcase Card (iOS Liquid Glass Frame with Ambient Glow) -->
+        <div class="hero-showcase-wrapper">
+          <div class="hero-showcase-ambient-glow"></div>
+          <div class="hero-showcase-card">
+            <!-- 1. Pure Photo Viewport (100% Unobstructed Image) -->
+            <div class="hero-slider-container">
+              <div class="hero-slider-track" id="heroTrack">
+                <!-- Populated dynamically by app.js (clean photos only) -->
               </div>
-              <div class="slider-dots" id="sliderDots"></div>
-            </div>
 
-            <div class="hero-info-main-row">
-              <div class="hero-info-text-group">
-                <h3 class="hero-slide-title" id="heroDetailTitle">ห้อง 1 Bedroom (Chalida)</h3>
-                <p class="hero-slide-caption" id="heroDetailCaption">ห้อง 1 ห้องนอน กั้นเป็นสัดส่วน แต่งครบสไตล์มินิมอล</p>
+              <!-- Top Glass HUD Bar (Anchored to top corners - never blocks photo) -->
+              <div class="hero-photo-top-bar">
+                <span class="hero-status-pill">
+                  <span class="hero-status-dot"></span>
+                  <span>ภาพห้องจริง 100%</span>
+                </span>
+                <span class="hero-counter-badge" id="heroSlideCounter">1 / 5</span>
               </div>
-              <button class="hero-slide-btn" id="heroDetailBtn" aria-label="ดูภาพทั้งหมดของห้องนี้">
-                <span>ดูภาพทั้งหมดของห้องนี้</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+
+              <!-- iOS Liquid Glass Slider Arrow Controls -->
+              <button class="slider-arrow prev" id="sliderPrev" aria-label="ภาพก่อนหน้า">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
               </button>
+              <button class="slider-arrow next" id="sliderNext" aria-label="ภาพถัดไป">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+
+              <!-- Bottom Glass Quick Hint -->
+              <div class="hero-photo-bottom-bar">
+                <span class="hero-tap-hint-pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                  <span>แตะเพื่อเปิดอัลบั้ม</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- 2. Liquid Glass Info Deck (Positioned BELOW the photo) -->
+            <div class="hero-slide-info-panel" id="heroSlideInfoPanel">
+              <div class="hero-info-top-row">
+                <div class="hero-info-tags">
+                  <span class="hero-badge-tag" id="heroDetailBadge">1 Bedroom</span>
+                  <span class="hero-price-tag" id="heroDetailPrice">฿7,500 / เดือน</span>
+                </div>
+                <div class="slider-dots" id="sliderDots"></div>
+              </div>
+
+              <div class="hero-info-main-row">
+                <div class="hero-info-text-group">
+                  <h3 class="hero-slide-title" id="heroDetailTitle">ห้อง 1 Bedroom (Chalida)</h3>
+                  <p class="hero-slide-caption" id="heroDetailCaption">ห้อง 1 ห้องนอน กั้นเป็นสัดส่วน แต่งครบสไตล์มินิมอล</p>
+                </div>
+                <button class="hero-slide-btn" id="heroDetailBtn" aria-label="ดูภาพทั้งหมดของห้องนี้">
+                  <span>ดูภาพทั้งหมดของห้องนี้</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -818,7 +833,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=1.1"></script>
-  <script src="js/app.js?v=1.1"></script>
+  <script src="js/rooms-data.js?v=1.2"></script>
+  <script src="js/app.js?v=1.2"></script>
 </body>
 </html>
