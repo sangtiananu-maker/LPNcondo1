@@ -391,7 +391,7 @@ function applyFilter(filter) {
   });
 
   if (indicator) {
-    indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (เลื่อนแนวนอน 3 แถว • แตะรูปเพื่อดูภาพขยาย)`;
+    indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (แตะรูปเพื่อดูภาพขยาย)`;
   }
 }
 
