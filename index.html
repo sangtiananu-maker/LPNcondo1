@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.3">
 </head>
 <body>
 
@@ -67,6 +67,10 @@
              - On Mobile: Positioned cleanly OUTSIDE below the 4:3 photo -->
         <div class="hero-floating-glass-card" onclick="event.stopPropagation()">
           <div class="hero-floating-header">
+            <div class="hero-status-row">
+              <span class="live-status-badge"><span class="live-dot"></span> มีผู้เช่าแล้วทุกห้อง (Fully Occupied)</span>
+              <span class="direct-owner-badge">🛡️ เจ้าของดูแลโดยตรง • ไม่ผ่านนายหน้า</span>
+            </div>
             <span class="hero-subtitle-tag">Scandinavian Warm Minimal • Renovated 100%</span>
             <h1 class="hero-title">คอนโดปล่อยเช่าสภาพใหม่เอี่ยม</h1>
             <p class="hero-desc">สภาพใหม่เอี่ยม รีโนเวทเสร็จพร้อมเข้าอยู่ ใกล้ Central Northville และ MRT แยกนนทบุรี 1 แต่งครบสไตล์มินิมอล ลากกระเป๋าเข้าอยู่ได้ทันที</p>
@@ -80,6 +84,7 @@
               <div class="hero-info-tags">
                 <span class="hero-badge-tag" id="heroDetailBadge">1 Bedroom</span>
                 <span class="hero-price-tag" id="heroDetailPrice">฿7,500 / เดือน</span>
+                <span class="hero-occupied-badge">🔴 มีผู้เช่าแล้ว</span>
               </div>
             </div>
 
@@ -108,6 +113,8 @@
             <h2 class="banner-heading">สภาพใหม่กริบ 100% ทั้งห้องและเครื่องใช้ไฟฟ้า</h2>
             <p class="banner-desc">ทุกอย่างตกแต่งใหม่หมดจดสไตล์ Minimal Scandinavian เฟอร์นิเจอร์และเครื่องใช้ไฟฟ้าครบชุด ไม่ต้องซื้อเพิ่ม ปลอดภัยด้วย Digital Door Lock 4 ระบบ</p>
             <div class="banner-pills">
+              <span class="banner-pill banner-pill-owner">🛡️ เจ้าของดูแลโดยตรง ไม่ผ่านนายหน้า</span>
+              <span class="banner-pill banner-pill-status"><span class="live-dot"></span> สถานะ: มีผู้เช่าครบแล้วทุกห้อง</span>
               <span class="banner-pill">✨ Digital Door Lock 4 ระบบ</span>
               <span class="banner-pill">❄️ แอร์ Inverter เบอร์ 5</span>
               <span class="banner-pill">📺 Smart TV รองรับ Netflix</span>
@@ -138,7 +145,11 @@
               <div>
                 <span class="card-badge">28.32 ตร.ม. (sq.m.)</span>
                 <h3 style="font-size: 1.25rem; margin-top: 6px;">1 Bedroom</h3>
-                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">กั้นห้องนอนแยกเป็นสัดส่วน (3 ห้องให้เลือก)</p>
+                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600; margin-bottom: 4px;">กั้นห้องนอนแยกเป็นสัดส่วน</p>
+                <div class="card-status-row">
+                  <span class="card-status-badge"><span class="live-dot"></span> มีผู้เช่าแล้ว (Fully Occupied)</span>
+                  <span class="card-owner-chip">🛡️ เจ้าของดูแลโดยตรง</span>
+                </div>
               </div>
             </div>
 
@@ -182,7 +193,11 @@
               <div>
                 <span class="card-badge">25.08 ตร.ม. (sq.m.)</span>
                 <h3 style="font-size: 1.25rem; margin-top: 6px;">Studio Suite</h3>
-                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">ห้องสตูดิโอแต่งครบ โปร่งโล่ง (2 ห้องให้เลือก)</p>
+                <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600; margin-bottom: 4px;">ห้องสตูดิโอแต่งครบ โปร่งโล่ง</p>
+                <div class="card-status-row">
+                  <span class="card-status-badge"><span class="live-dot"></span> มีผู้เช่าแล้ว (Fully Occupied)</span>
+                  <span class="card-owner-chip">🛡️ เจ้าของดูแลโดยตรง</span>
+                </div>
               </div>
             </div>
 
@@ -219,6 +234,18 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </div>
+        </div>
+
+        <!-- Direct Owner & Waitlist Notice -->
+        <div class="pricing-trust-notice">
+          <div class="notice-icon">🛡️</div>
+          <div class="notice-text">
+            <strong>ห้องมีผู้เช่าครบทุกห้อง • ดูแลโดยเจ้าของโดยตรง 100% (No Agent Fee)</strong>
+            <p>หากสนใจลงชื่อรอห้องว่างรอบถัดไป หรือสอบถามคิวหลุดจอง สามารถทัก LINE สอบถามเจ้าของห้องได้โดยตรงครับ</p>
+          </div>
+          <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener" class="btn-line-inquire-direct">
+            <span>💬 ทัก LINE สอบถามคิวว่าง</span>
+          </a>
         </div>
       </div>
     </section>
@@ -829,9 +856,12 @@
     <div class="lightbox-bottom-bar">
       <div class="lightbox-info">
         <span class="lightbox-unit-name" id="lightboxUnitName">ห้อง 1 Bedroom</span>
-        <span class="lightbox-unit-price" id="lightboxUnitPrice">฿7,500 / เดือน</span>
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+          <span class="lightbox-unit-price" id="lightboxUnitPrice">฿7,500 / เดือน</span>
+          <span class="lightbox-status-pill">🔴 มีผู้เช่าแล้ว</span>
+        </div>
       </div>
-      <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener" class="lightbox-inquire-btn" id="lightboxInquireBtn" aria-label="ทัก LINE สอบถามห้องนี้">
+      <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener" class="lightbox-inquire-btn" id="lightboxInquireBtn" aria-label="ทัก LINE สอบถามห้องนี้">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.92 1.76 5.51 4.5 6.99-.2.72-.73 2.65-.84 3.06-.13.51.19.5.4.36.16-.11 2.22-1.52 3.12-2.14.9.25 1.84.39 2.82.39 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/></svg>
         <span>ทัก LINE</span>
       </a>
@@ -844,7 +874,7 @@
   <div class="sticky-contact-bar">
     <div class="sticky-contact-content">
       <div class="sticky-info">
-        <span class="sticky-label">ราคาค่าเช่า</span>
+        <div class="sticky-status-indicator"><span class="live-dot"></span> มีผู้เช่าแล้วทุกห้อง</div>
         <span class="sticky-price">เริ่มต้น 6,500.-</span>
       </div>
       <div class="sticky-actions">
@@ -852,7 +882,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span>โทรติดต่อ</span>
         </a>
-        <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener" class="btn-cta-line">
+        <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener" class="btn-cta-line">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.92 1.76 5.51 4.5 6.99-.2.72-.73 2.65-.84 3.06-.13.51.19.5.4.36.16-.11 2.22-1.52 3.12-2.14.9.25 1.84.39 2.82.39 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/></svg>
           <span>แชท LINE</span>
         </a>
@@ -868,7 +898,7 @@
       <div class="footer-title">Lumpini Condotown Rattanathibet (ลุมพินี คอนโดทาวน์ รัตนาธิเบศร์)</div>
       <div class="footer-contact-details">
         <p>โทรสอบถาม / นัดดูห้อง: <a href="tel:0800239930">080-023-9930</a></p>
-        <p>Line ID: <a href="https://line.me/ti/p/~sangtian5243" target="_blank" rel="noopener">sangtian5243</a></p>
+        <p>Line ID: <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener">sangtian5243</a></p>
         <p>ทำเล: ติด ถ.รัตนาธิเบศร์ นนทบุรี ใกล้ Central Northville & MRT แยกนนทบุรี 1</p>
       </div>
       <p class="footer-copy">© 2025 Lumpini Condotown Rattanathibet Gallery. All rights reserved.</p>
@@ -876,7 +906,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=3.2"></script>
-  <script src="js/app.js?v=3.2"></script>
+  <script src="js/rooms-data.js?v=3.3"></script>
+  <script src="js/app.js?v=3.3"></script>
 </body>
 </html>

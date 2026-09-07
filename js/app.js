@@ -348,6 +348,7 @@ function applyFilter(filter) {
   // Show / update active unit summary box
   if (selectedUnit && summaryBox) {
     summaryBox.classList.add('show');
+    const prefilledLineUrl = `https://line.me/ti/p/~sangtian5243?text=${encodeURIComponent("สนใจเช่าห้อง ห้องยังว่างอยู่ไหมครับ/ค่ะ")}`;
     summaryBox.innerHTML = `
       <div class="unit-detail-header">
         <div>
@@ -358,11 +359,18 @@ function applyFilter(filter) {
       </div>
       <p class="unit-detail-desc">${selectedUnit.descriptionTh}</p>
       <div class="unit-detail-tags">
+        <span class="detail-tag tag-occupied">🔴 มีผู้เช่าแล้ว</span>
+        <span class="detail-tag tag-owner">🛡️ เจ้าของดูแลโดยตรง</span>
         <span class="detail-tag">✨ รีโนเวทใหม่ 100%</span>
         <span class="detail-tag">🔒 Digital Door Lock</span>
         <span class="detail-tag">📺 Smart TV</span>
         <span class="detail-tag">🧺 เครื่องซักผ้าในห้อง</span>
         <span class="detail-tag">❄️ แอร์ + ตู้เย็น Inverter</span>
+      </div>
+      <div>
+        <a href="${prefilledLineUrl}" target="_blank" rel="noopener" class="unit-line-btn">
+          💬 ทัก LINE สอบถามสถานะห้องนี้
+        </a>
       </div>
     `;
   } else if (summaryBox) {
@@ -846,7 +854,7 @@ function updateLightboxContent() {
   }
 
   if (inquireBtn) {
-    const textMsg = encodeURIComponent(`สวัสดีครับ สนใจเช่าคอนโด Lumpini Condotown Rattanathibet ${roomTitle} (ราคา ${photo.price}.-/เดือน) สะดวกขอนัดดูห้องครับ`);
+    const textMsg = encodeURIComponent("สนใจเช่าห้อง ห้องยังว่างอยู่ไหมครับ/ค่ะ");
     inquireBtn.href = `${ROOMS_DATA.project.contact.lineUrl}?text=${textMsg}`;
   }
 }
@@ -964,3 +972,34 @@ window.filterByType = filterByType;
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.initVlogPlayer = initVlogPlayer;
+
+/* ==========================================================================
+   LINE Pre-filled Message Clipboard & Toast Helper
+   ========================================================================== */
+const LINE_PREFILLED_MSG = "สนใจเช่าห้อง ห้องยังว่างอยู่ไหมครับ/ค่ะ";
+
+function showLineCopyToast() {
+  let toast = document.getElementById('lineCopyToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'lineCopyToast';
+    toast.className = 'line-copy-toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `<span>📋 คัดลอกข้อความ: <em>"${LINE_PREFILLED_MSG}"</em> เรียบร้อย</span>`;
+  toast.classList.add('show');
+  clearTimeout(window.lineToastTimer);
+  window.lineToastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
+
+document.addEventListener('click', function(e) {
+  const lineLink = e.target.closest('a[href*="line.me"]');
+  if (lineLink) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(LINE_PREFILLED_MSG).catch(() => {});
+    }
+    showLineCopyToast();
+  }
+});

@@ -3063,3 +3063,283 @@ button {
   color: #64748B;
   margin-top: 1rem;
 }
+
+/* ==========================================================================
+   Live Availability Badges & Direct Owner Tags
+   ========================================================================== */
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: #EF4444;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.7);
+  animation: liveDotPulse 2s infinite ease-in-out;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.hero-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.live-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #991B1B;
+  background: rgba(254, 242, 242, 0.95);
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.12);
+}
+
+.direct-owner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #1E3A8A;
+  background: rgba(239, 246, 255, 0.95);
+  border: 1px solid rgba(147, 197, 253, 0.6);
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.12);
+}
+
+.hero-occupied-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(254, 242, 242, 0.92);
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  color: #991B1B;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+
+.banner-pill-owner {
+  background: rgba(239, 246, 255, 0.9) !important;
+  color: #1E3A8A !important;
+  border-color: rgba(147, 197, 253, 0.6) !important;
+}
+
+.banner-pill-status {
+  background: rgba(254, 242, 242, 0.9) !important;
+  color: #991B1B !important;
+  border-color: rgba(248, 113, 113, 0.5) !important;
+}
+
+/* Pricing Card Status */
+.card-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.card-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #991B1B;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.card-owner-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1E3A8A;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Pricing Section Trust & Waitlist Banner */
+.pricing-trust-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(240, 247, 251, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border: 1px solid rgba(163, 190, 207, 0.6);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.35rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 16px rgba(45, 75, 95, 0.08);
+  flex-wrap: wrap;
+}
+
+.pricing-trust-notice .notice-icon {
+  font-size: 1.7rem;
+  flex-shrink: 0;
+}
+
+.pricing-trust-notice .notice-text {
+  flex: 1;
+  min-width: 240px;
+  font-size: 0.85rem;
+  color: var(--color-slate-dark);
+  line-height: 1.45;
+}
+
+.pricing-trust-notice .notice-text strong {
+  display: block;
+  color: var(--color-primary);
+  font-size: 0.94rem;
+  margin-bottom: 2px;
+}
+
+.pricing-trust-notice .notice-text p {
+  margin: 0;
+  color: var(--color-slate);
+  font-size: 0.82rem;
+}
+
+.btn-line-inquire-direct {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #06C755;
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.btn-line-inquire-direct:hover {
+  background: #05b34c;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(6, 199, 85, 0.4);
+}
+
+/* Gallery Unit Tags & LINE Action */
+.detail-tag.tag-occupied {
+  background: #FEF2F2;
+  border-color: #FECACA;
+  color: #991B1B;
+  font-weight: 700;
+}
+
+.detail-tag.tag-owner {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1E3A8A;
+  font-weight: 700;
+}
+
+.unit-line-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #06C755;
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  margin-top: 10px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 3px 10px rgba(6, 199, 85, 0.25);
+  text-decoration: none;
+}
+
+.unit-line-btn:hover {
+  background: #05b34c;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* Sticky dock status */
+.sticky-status-indicator {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #DC2626;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+/* Lightbox occupied pill */
+.lightbox-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(254, 242, 242, 0.9);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #991B1B;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Floating Toast Notification for LINE clipboard feedback */
+.line-copy-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(20, 25, 31, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 99999;
+  pointer-events: none;
+  white-space: nowrap;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.line-copy-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.line-copy-toast em {
+  color: #7ED957;
+  font-style: normal;
+  font-weight: 700;
+}
