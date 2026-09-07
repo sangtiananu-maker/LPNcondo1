@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=3.3">
+  <link rel="stylesheet" href="css/style.css?v=3.4">
 </head>
 <body>
 
@@ -37,10 +37,25 @@
          Hero Highlights Slideshow (Seamless Edge-to-Edge & Full-Top Viewport)
          ======================================================================= -->
     <section class="hero-section seamless-hero">
+      <!-- Optical Horizontal Motion Blur Filter for Push Transitions -->
+      <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">
+        <defs>
+          <filter id="motionBlurX" x="-50%" y="-20%" width="200%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5 0" />
+          </filter>
+        </defs>
+      </svg>
+
       <!-- Dedicated showcase stage for slideshow & vertically centered floating details -->
       <div class="hero-showcase-stage">
         <!-- 1. Full-Bleed Seamless Photo Viewport -->
         <div class="hero-slider-container">
+          <!-- Ambient Cross-Fade Backdrop (Stationary, Non-sliding, Soft slow fade) -->
+          <div class="hero-ambient-backdrop" id="heroAmbientBackdrop" aria-hidden="true">
+            <div class="hero-ambient-layer active" id="heroAmbientA"></div>
+            <div class="hero-ambient-layer" id="heroAmbientB"></div>
+          </div>
+
           <div class="hero-slider-track" id="heroTrack">
             <!-- Populated dynamically by app.js (clean photos only) -->
           </div>
@@ -906,7 +921,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=3.3"></script>
-  <script src="js/app.js?v=3.3"></script>
+  <script src="js/rooms-data.js?v=3.4"></script>
+  <script src="js/app.js?v=3.4"></script>
 </body>
 </html>

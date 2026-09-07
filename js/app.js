@@ -38,10 +38,12 @@ function initHeaderScroll() {
 }
 
 /* ==========================================================================
-   Hero Highlights Slideshow (Smooth Horizontal Slide Track)
+   Hero Highlights Slideshow (Push Transition with Motion Blur & Ambient Fade)
    ========================================================================== */
 let currentHeroSlide = 0;
 let heroSlideTimer = null;
+let motionBlurTimer = null;
+let currentAmbientTarget = 'A';
 const heroSlides = ROOMS_DATA.heroHighlights;
 
 function scrollToHeroDetails() {
@@ -62,8 +64,20 @@ function initHeroSlider() {
   const prevBtn = document.getElementById('sliderPrev');
   const nextBtn = document.getElementById('sliderNext');
   const sliderContainer = document.querySelector('.hero-slider-container');
+  const ambientA = document.getElementById('heroAmbientA');
+  const ambientB = document.getElementById('heroAmbientB');
 
   if (!track || !heroSlides || heroSlides.length === 0) return;
+
+  // Initialize Stationary Ambient Blur Backdrop (Layer A active)
+  if (ambientA) {
+    ambientA.style.backgroundImage = `url("${heroSlides[0].src}")`;
+    ambientA.classList.add('active');
+  }
+  if (ambientB) {
+    ambientB.classList.remove('active');
+  }
+  currentAmbientTarget = 'A';
 
   // Build slides into track (Clean Photos ONLY - 100% Unobstructed!)
   track.innerHTML = '';
@@ -75,12 +89,11 @@ function initHeroSlider() {
 
   heroSlides.forEach((slide, index) => {
     const slideEl = document.createElement('div');
-    slideEl.className = 'hero-slide';
+    slideEl.className = index === 0 ? 'hero-slide is-active' : 'hero-slide';
     slideEl.setAttribute('role', 'button');
     slideEl.setAttribute('tabindex', '0');
     slideEl.setAttribute('aria-label', `ภาพห้อง ${slide.unitNameTh} - แตะเพื่อดูรายละเอียดด้านล่าง`);
     slideEl.innerHTML = `
-      <img class="hero-slide-bg-blur" src="${slide.src}" alt="" aria-hidden="true" loading="${index === 0 ? 'eager' : 'lazy'}">
       <div class="hero-slide-fg-wrap">
         <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
       </div>
@@ -156,9 +169,44 @@ function initHeroSlider() {
 
 function updateSlideTrack() {
   const track = document.getElementById('heroTrack');
+  const slide = heroSlides[currentHeroSlide];
+  if (!slide) return;
 
+  // 1. Foreground Push Transition with Optical Motion Blur
   if (track) {
+    track.classList.add('is-sliding');
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
+
+    if (motionBlurTimer) clearTimeout(motionBlurTimer);
+    motionBlurTimer = setTimeout(() => {
+      track.classList.remove('is-sliding');
+    }, 620);
+
+    const slides = track.querySelectorAll('.hero-slide');
+    slides.forEach((s, idx) => {
+      if (idx === currentHeroSlide) {
+        s.classList.add('is-active');
+      } else {
+        s.classList.remove('is-active');
+      }
+    });
+  }
+
+  // 2. Stationary Ambient Background Cross-Fade (Zero sliding, pure slow fade)
+  const ambientA = document.getElementById('heroAmbientA');
+  const ambientB = document.getElementById('heroAmbientB');
+  if (ambientA && ambientB) {
+    if (currentAmbientTarget === 'A') {
+      ambientB.style.backgroundImage = `url("${slide.src}")`;
+      ambientB.classList.add('active');
+      ambientA.classList.remove('active');
+      currentAmbientTarget = 'B';
+    } else {
+      ambientA.style.backgroundImage = `url("${slide.src}")`;
+      ambientA.classList.add('active');
+      ambientB.classList.remove('active');
+      currentAmbientTarget = 'A';
+    }
   }
 
   // Synchronize room info bar below the photo
@@ -206,7 +254,7 @@ function goToSlide(index) {
 
 function startSlideShow() {
   stopSlideShow();
-  heroSlideTimer = setInterval(nextSlide, 4500);
+  heroSlideTimer = setInterval(nextSlide, 5000);
 }
 
 function stopSlideShow() {
