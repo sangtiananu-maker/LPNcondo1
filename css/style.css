@@ -1808,7 +1808,7 @@ button {
 }
 
 .nearby-card.highlighted {
-  border: 2px solid #818CF8;
+  border: 2px solid var(--color-nordic-blue);
 }
 
 .nearby-img-wrap {
@@ -1830,30 +1830,41 @@ button {
   transform: scale(1.05);
 }
 
-/* Gimmick iOS Liquid Glass Distance Badge */
+/* Nordic Blue-Gray Liquid Glass Distance Badge (#a3becf palette) */
 .nearby-distance-badge {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(20, 25, 31, 0.68);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.88) 0%, rgba(104, 143, 168, 0.80) 50%, rgba(163, 190, 207, 0.75) 100%);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
   color: #FFFFFF;
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 4px 11px;
+  padding: 4px 12px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 14px rgba(45, 75, 95, 0.25), inset 0 1px 1.5px rgba(255, 255, 255, 0.75);
+  display: inline-flex;
   align-items: center;
   gap: 4px;
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.35);
+  letter-spacing: 0.02em;
+  z-index: 2;
+  transition: all var(--transition-fast);
+}
+
+.nearby-card:hover .nearby-distance-badge {
+  background: linear-gradient(135deg, rgba(58, 92, 114, 0.95) 0%, rgba(90, 128, 152, 0.90) 50%, rgba(148, 178, 198, 0.88) 100%);
+  border-color: #FFFFFF;
+  box-shadow: 0 6px 18px rgba(45, 75, 95, 0.32), inset 0 1.5px 2px #FFFFFF;
+  transform: translateY(-1px);
 }
 
 .nearby-card.highlighted .nearby-distance-badge {
-  background: rgba(79, 70, 229, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(58, 92, 114, 0.95) 0%, rgba(90, 128, 152, 0.90) 50%, rgba(163, 190, 207, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(45, 75, 95, 0.3), inset 0 1.5px 2px #FFFFFF;
 }
 
 .nearby-body {
@@ -1884,8 +1895,9 @@ button {
 }
 
 .nearby-card.highlighted .nearby-badge {
-  background: #E0E7FF;
-  color: #3730A3;
+  background: rgba(163, 190, 207, 0.22);
+  color: var(--color-nordic-blue-deep);
+  border: 1px solid rgba(163, 190, 207, 0.4);
 }
 
 .nearby-name-th {
