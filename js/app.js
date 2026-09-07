@@ -44,6 +44,19 @@ let currentHeroSlide = 0;
 let heroSlideTimer = null;
 const heroSlides = ROOMS_DATA.heroHighlights;
 
+function scrollToHeroDetails() {
+  const target = document.getElementById('featureBanner') || document.querySelector('.feature-banner') || document.querySelector('.hero-banner-container');
+  if (!target) return;
+  const header = document.querySelector('.site-header');
+  const headerHeight = header ? header.offsetHeight : 62;
+  const targetRect = target.getBoundingClientRect();
+  const targetTop = targetRect.top + window.pageYOffset - headerHeight - 16;
+  window.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: 'smooth'
+  });
+}
+
 function initHeroSlider() {
   const track = document.getElementById('heroTrack');
   const prevBtn = document.getElementById('sliderPrev');
@@ -55,20 +68,33 @@ function initHeroSlider() {
   // Build slides into track (Clean Photos ONLY - 100% Unobstructed!)
   track.innerHTML = '';
 
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isSwiping = false;
+  let hasSwiped = false;
+
   heroSlides.forEach((slide, index) => {
     const slideEl = document.createElement('div');
     slideEl.className = 'hero-slide';
-    slideEl.setAttribute('role', 'group');
-    slideEl.setAttribute('aria-label', `${slide.unitNameTh} photo ${index + 1}`);
+    slideEl.setAttribute('role', 'button');
+    slideEl.setAttribute('tabindex', '0');
+    slideEl.setAttribute('aria-label', `ภาพห้อง ${slide.unitNameTh} - แตะเพื่อดูรายละเอียดด้านล่าง`);
     slideEl.innerHTML = `
       <img class="hero-slide-bg-blur" src="${slide.src}" alt="" aria-hidden="true" loading="${index === 0 ? 'eager' : 'lazy'}">
       <div class="hero-slide-fg-wrap">
         <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
       </div>
     `;
-    // Clicking photo navigates directly to that room's gallery
+    // Clicking/tapping photo scrolls down to feature details banner
     slideEl.addEventListener('click', () => {
-      filterByUnit(slide.unitId, true);
+      if (hasSwiped) return;
+      scrollToHeroDetails();
+    });
+    slideEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToHeroDetails();
+      }
     });
     track.appendChild(slideEl);
   });
@@ -88,15 +114,21 @@ function initHeroSlider() {
     sliderContainer.addEventListener('mouseleave', startSlideShow);
 
     // Mobile Touch Swipe Handling
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let isSwiping = false;
-
     sliderContainer.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      hasSwiped = false;
       isSwiping = true;
       stopSlideShow();
+    }, { passive: true });
+
+    sliderContainer.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      if (Math.abs(currentX - touchStartX) > 12 || Math.abs(currentY - touchStartY) > 12) {
+        hasSwiped = true;
+      }
     }, { passive: true });
 
     sliderContainer.addEventListener('touchend', (e) => {
@@ -109,6 +141,7 @@ function initHeroSlider() {
 
       // Only trigger if horizontal swipe is dominant and > 35px
       if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+        hasSwiped = true;
         if (diffX > 0) {
           nextSlide();
         } else {
@@ -116,6 +149,7 @@ function initHeroSlider() {
         }
       }
       startSlideShow();
+      setTimeout(() => { hasSwiped = false; }, 300);
     }, { passive: true });
   }
 }

@@ -758,6 +758,7 @@ button {
    Quick Highlights Banner
    -------------------------------------------------------------------------- */
 .feature-banner {
+  scroll-margin-top: 80px;
   background: linear-gradient(135deg, #20262E 0%, #2F3946 100%);
   border-radius: var(--radius-lg);
   color: #FFFFFF;
