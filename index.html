@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=2.4">
+  <link rel="stylesheet" href="css/style.css?v=2.5">
 </head>
 <body>
 
@@ -66,36 +66,38 @@
             <span>แตะรูปเพื่อเปิดดูอัลบั้มห้องนี้</span>
           </span>
         </div>
+      </div>
 
-        <!-- 2. Floating Liquid Glass Card (~25% width on desktop) in front of the photo -->
-        <div class="hero-floating-glass-card" onclick="event.stopPropagation()">
-          <div class="hero-floating-header">
-            <span class="hero-subtitle-tag">Scandinavian Warm Minimal • Renovated 100%</span>
-            <h1 class="hero-title">คอนโดปล่อยเช่าสภาพใหม่เอี่ยม</h1>
-            <p class="hero-desc">สภาพใหม่เอี่ยม รีโนเวทเสร็จพร้อมเข้าอยู่ ใกล้ Central Northville และ MRT แยกนนทบุรี 1 แต่งครบสไตล์มินิมอล ลากกระเป๋าเข้าอยู่ได้ทันที</p>
+      <!-- 2. Room Details Card:
+           - On Desktop: Floats in front of photo at ~25% on the left
+           - On Mobile: Positioned cleanly OUTSIDE below the 4:3 photo -->
+      <div class="hero-floating-glass-card" onclick="event.stopPropagation()">
+        <div class="hero-floating-header">
+          <span class="hero-subtitle-tag">Scandinavian Warm Minimal • Renovated 100%</span>
+          <h1 class="hero-title">คอนโดปล่อยเช่าสภาพใหม่เอี่ยม</h1>
+          <p class="hero-desc">สภาพใหม่เอี่ยม รีโนเวทเสร็จพร้อมเข้าอยู่ ใกล้ Central Northville และ MRT แยกนนทบุรี 1 แต่งครบสไตล์มินิมอล ลากกระเป๋าเข้าอยู่ได้ทันที</p>
+        </div>
+
+        <div class="hero-floating-divider"></div>
+
+        <!-- Active Room Info Deck integrated inside the card -->
+        <div class="hero-slide-info-panel" id="heroSlideInfoPanel">
+          <div class="hero-info-top-row">
+            <div class="hero-info-tags">
+              <span class="hero-badge-tag" id="heroDetailBadge">1 Bedroom</span>
+              <span class="hero-price-tag" id="heroDetailPrice">฿7,500 / เดือน</span>
+            </div>
           </div>
 
-          <div class="hero-floating-divider"></div>
-
-          <!-- Active Room Info Deck integrated inside the floating glass card -->
-          <div class="hero-slide-info-panel" id="heroSlideInfoPanel">
-            <div class="hero-info-top-row">
-              <div class="hero-info-tags">
-                <span class="hero-badge-tag" id="heroDetailBadge">1 Bedroom</span>
-                <span class="hero-price-tag" id="heroDetailPrice">฿7,500 / เดือน</span>
-              </div>
+          <div class="hero-info-main-row">
+            <div class="hero-info-text-group">
+              <h3 class="hero-slide-title" id="heroDetailTitle">ห้อง 1 Bedroom (Celida)</h3>
+              <p class="hero-slide-caption" id="heroDetailCaption">ห้อง 1 ห้องนอน กั้นเป็นสัดส่วน แต่งครบสไตล์มินิมอล</p>
             </div>
-
-            <div class="hero-info-main-row">
-              <div class="hero-info-text-group">
-                <h3 class="hero-slide-title" id="heroDetailTitle">ห้อง 1 Bedroom (Celida)</h3>
-                <p class="hero-slide-caption" id="heroDetailCaption">ห้อง 1 ห้องนอน กั้นเป็นสัดส่วน แต่งครบสไตล์มินิมอล</p>
-              </div>
-              <button class="hero-slide-btn" id="heroDetailBtn" aria-label="ดูภาพทั้งหมดของห้องนี้">
-                <span>ดูภาพทั้งหมดของห้องนี้</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </button>
-            </div>
+            <button class="hero-slide-btn" id="heroDetailBtn" aria-label="ดูภาพทั้งหมดของห้องนี้">
+              <span>ดูภาพทั้งหมดของห้องนี้</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -874,7 +876,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=2.4"></script>
-  <script src="js/app.js?v=2.4"></script>
+  <script src="js/rooms-data.js?v=2.5"></script>
+  <script src="js/app.js?v=2.5"></script>
 </body>
 </html>

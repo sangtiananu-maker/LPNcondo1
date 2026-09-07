@@ -4,12 +4,38 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initHeaderScroll();
   initHeroSlider();
   initGallery();
   initGalleryScrollControls();
   initLightbox();
   initVlogPlayer();
 });
+
+/* ==========================================================================
+   Dynamic Transparent / Liquid Glass Navbar Scroll
+   ========================================================================== */
+function initHeaderScroll() {
+  const header = document.querySelector('.site-header');
+  const slider = document.querySelector('.hero-slider-container');
+  if (!header) return;
+
+  const updateHeader = () => {
+    // When the bottom of the slideshow reaches near the header, transition to liquid glass bar
+    const sliderBottom = slider ? slider.getBoundingClientRect().bottom : 300;
+    const headerHeight = header.offsetHeight || 60;
+
+    if (sliderBottom <= headerHeight + 10) {
+      header.classList.add('header-scrolled');
+    } else {
+      header.classList.remove('header-scrolled');
+    }
+  };
+
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  window.addEventListener('resize', updateHeader, { passive: true });
+  updateHeader();
+}
 
 /* ==========================================================================
    Hero Highlights Slideshow (Smooth Horizontal Slide Track)
