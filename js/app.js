@@ -38,11 +38,10 @@ function initHeaderScroll() {
 }
 
 /* ==========================================================================
-   Hero Highlights Slideshow (Push Transition with Motion Blur & Ambient Fade)
+   Hero Highlights Slideshow (Pure Soft Focus Transition & Ambient Fade)
    ========================================================================== */
 let currentHeroSlide = 0;
 let heroSlideTimer = null;
-let motionBlurTimer = null;
 let currentAmbientTarget = 'A';
 const heroSlides = ROOMS_DATA.heroHighlights;
 
@@ -172,15 +171,9 @@ function updateSlideTrack() {
   const slide = heroSlides[currentHeroSlide];
   if (!slide) return;
 
-  // 1. Foreground Push Transition with Optical Motion Blur
+  // 1. Foreground Push Transition (Clean, slow, graceful glide with soft optical rack focus)
   if (track) {
-    track.classList.add('is-sliding');
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
-
-    if (motionBlurTimer) clearTimeout(motionBlurTimer);
-    motionBlurTimer = setTimeout(() => {
-      track.classList.remove('is-sliding');
-    }, 620);
 
     const slides = track.querySelectorAll('.hero-slide');
     slides.forEach((s, idx) => {
@@ -254,7 +247,7 @@ function goToSlide(index) {
 
 function startSlideShow() {
   stopSlideShow();
-  heroSlideTimer = setInterval(nextSlide, 5000);
+  heroSlideTimer = setInterval(nextSlide, 6500);
 }
 
 function stopSlideShow() {
