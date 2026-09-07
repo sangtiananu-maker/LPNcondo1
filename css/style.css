@@ -22,6 +22,10 @@
   --color-line-green-dark: #05A847;
   --color-blue-map: #2563EB;
   --color-phone: #1C2229;
+  --color-nordic-blue: #a3becf;
+  --color-nordic-blue-deep: #476b82;
+  --color-nordic-blue-mid: #688fa8;
+  --color-nordic-blue-light: #b9d2e1;
 
   /* Typography */
   --font-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -470,11 +474,11 @@ button {
   flex-wrap: nowrap;
 }
 
-/* Liquid Obsidian Capsule */
+/* Nordic Blue-Gray Liquid Capsule (#a3becf palette) */
 .hero-badge-tag {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg, rgba(28, 34, 41, 0.72) 0%, rgba(45, 55, 72, 0.62) 100%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.92) 0%, rgba(104, 143, 168, 0.86) 50%, rgba(163, 190, 207, 0.82) 100%);
   backdrop-filter: blur(20px) saturate(200%);
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   color: #FFFFFF;
@@ -483,10 +487,11 @@ button {
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   letter-spacing: 0.02em;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 14px rgba(45, 75, 95, 0.22), inset 0 1px 1.5px rgba(255, 255, 255, 0.75);
   white-space: nowrap;
   flex-shrink: 0;
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.35);
 }
 
 /* Liquid Amber Gold Capsule */
@@ -534,36 +539,38 @@ button {
   margin: 0;
 }
 
-/* Liquid Obsidian CTA Button */
+/* Nordic Blue-Gray Liquid CTA Button (#a3becf palette) */
 .hero-slide-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: linear-gradient(135deg, rgba(28, 34, 41, 0.85) 0%, rgba(45, 55, 72, 0.72) 100%);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.94) 0%, rgba(104, 143, 168, 0.88) 50%, rgba(163, 190, 207, 0.84) 100%);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
   color: #FFFFFF;
   font-size: 0.82rem;
   font-weight: 600;
   padding: 9px 18px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   white-space: nowrap;
-  box-shadow: 0 6px 18px rgba(28, 34, 41, 0.22), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 18px rgba(45, 75, 95, 0.25), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
   transition: all var(--transition-fast);
   width: 100%;
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.3);
 }
 
 .hero-slide-btn:hover {
-  background: linear-gradient(135deg, rgba(140, 95, 58, 0.92) 0%, rgba(179, 134, 97, 0.85) 100%);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(58, 92, 114, 0.98) 0%, rgba(90, 128, 152, 0.94) 50%, rgba(148, 178, 198, 0.92) 100%);
+  border-color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(140, 95, 58, 0.35), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 24px rgba(45, 75, 95, 0.35), inset 0 1.5px 2px #FFFFFF;
 }
 
 .hero-slide-btn:active {
   transform: scale(0.97);
+  background: linear-gradient(135deg, rgba(50, 80, 100, 0.98) 0%, rgba(78, 112, 134, 0.95) 100%);
 }
 
 .hero-banner-container {
@@ -1031,20 +1038,21 @@ button {
 }
 
 .btn-primary-action {
-  background: linear-gradient(135deg, rgba(28, 34, 41, 0.88) 0%, rgba(45, 55, 72, 0.76) 100%);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.94) 0%, rgba(104, 143, 168, 0.88) 50%, rgba(163, 190, 207, 0.84) 100%);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(28, 34, 41, 0.18), inset 0 1px 1.5px rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 6px 18px rgba(45, 75, 95, 0.25), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.3);
 }
 
 .btn-primary-action:hover, .btn-primary-action:active {
-  background: linear-gradient(135deg, rgba(140, 95, 58, 0.92) 0%, rgba(179, 134, 97, 0.85) 100%);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(58, 92, 114, 0.98) 0%, rgba(90, 128, 152, 0.94) 50%, rgba(148, 178, 198, 0.92) 100%);
+  border-color: #FFFFFF;
   color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(140, 95, 58, 0.25), inset 0 1.5px 2px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 24px rgba(45, 75, 95, 0.35), inset 0 1.5px 2px #FFFFFF;
 }
 
 .btn-outline-action {
@@ -1116,11 +1124,11 @@ button {
 }
 
 .filter-btn:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.18) 100%);
-  border-color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(163, 190, 207, 0.35) 0%, rgba(255, 255, 255, 0.45) 100%);
+  border-color: rgba(163, 190, 207, 0.7);
   color: var(--color-primary);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1.5px 2px #FFFFFF;
+  box-shadow: 0 4px 16px rgba(71, 107, 130, 0.12), inset 0 1.5px 2px #FFFFFF;
 }
 
 .filter-btn:active {
@@ -1128,14 +1136,15 @@ button {
 }
 
 .filter-btn.active {
-  background: linear-gradient(135deg, rgba(28, 34, 41, 0.58) 0%, rgba(45, 55, 72, 0.46) 100%);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.92) 0%, rgba(104, 143, 168, 0.85) 50%, rgba(163, 190, 207, 0.8) 100%);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 6px 20px rgba(28, 34, 41, 0.2),
-              inset 0 1.5px 2px rgba(255, 255, 255, 0.5),
-              inset 0 -1px 1.5px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 6px 20px rgba(45, 75, 95, 0.25),
+              inset 0 1.5px 2px rgba(255, 255, 255, 0.75),
+              inset 0 -1px 1.5px rgba(35, 60, 78, 0.2);
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.3);
 }
 
 .filter-btn .count-badge {
@@ -1146,9 +1155,10 @@ button {
 }
 
 .filter-btn.active .count-badge {
-  background-color: rgba(255, 255, 255, 0.22);
+  background-color: rgba(255, 255, 255, 0.25);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
 }
 
 /* Active Room Detail Box */
@@ -2576,7 +2586,7 @@ button {
 }
 
 .btn-cta-phone {
-  background: linear-gradient(135deg, rgba(28, 34, 41, 0.75) 0%, rgba(45, 55, 72, 0.65) 100%);
+  background: linear-gradient(135deg, rgba(71, 107, 130, 0.94) 0%, rgba(104, 143, 168, 0.88) 50%, rgba(163, 190, 207, 0.84) 100%);
   backdrop-filter: blur(20px) saturate(200%);
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   color: #FFFFFF;
@@ -2588,20 +2598,22 @@ button {
   align-items: center;
   gap: 6px;
   white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 16px rgba(45, 75, 95, 0.22), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
   transition: all var(--transition-fast);
+  text-shadow: 0 1px 2px rgba(25, 45, 60, 0.3);
 }
 
 .btn-cta-phone:hover {
-  background: linear-gradient(135deg, rgba(140, 95, 58, 0.88) 0%, rgba(179, 134, 97, 0.8) 100%);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(58, 92, 114, 0.98) 0%, rgba(90, 128, 152, 0.94) 50%, rgba(148, 178, 198, 0.92) 100%);
+  border-color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(140, 95, 58, 0.35), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 24px rgba(45, 75, 95, 0.35), inset 0 1.5px 2px #FFFFFF;
 }
 
 .btn-cta-phone:active {
   transform: scale(0.96);
+  background: linear-gradient(135deg, rgba(50, 80, 100, 0.98) 0%, rgba(78, 112, 134, 0.95) 100%);
 }
 
 .btn-cta-line {
