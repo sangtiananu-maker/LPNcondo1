@@ -35,7 +35,10 @@ function initHeroSlider() {
     slideEl.setAttribute('role', 'group');
     slideEl.setAttribute('aria-label', `${slide.unitNameTh} photo ${index + 1}`);
     slideEl.innerHTML = `
-      <img src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
+      <img class="hero-slide-bg-blur" src="${slide.src}" alt="" aria-hidden="true" loading="${index === 0 ? 'eager' : 'lazy'}">
+      <div class="hero-slide-fg-wrap">
+        <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
+      </div>
     `;
     // Clicking photo navigates directly to that room's gallery
     slideEl.addEventListener('click', () => {

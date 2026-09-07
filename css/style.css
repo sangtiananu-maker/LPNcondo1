@@ -113,16 +113,16 @@ button {
    Header & Top Navigation (iOS Ultra-Translucent Frosted Glass Navbar)
    -------------------------------------------------------------------------- */
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 90;
-  background: linear-gradient(180deg, rgba(14, 18, 23, 0.58) 0%, rgba(14, 18, 23, 0.2) 65%, transparent 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 20px rgba(28, 34, 41, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   transition: var(--transition-normal);
 }
 
@@ -146,17 +146,17 @@ button {
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.04em;
-  color: #FFFFFF;
+  color: var(--color-primary);
   text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: none;
 }
 
 .brand-sub {
   font-size: 0.72rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  color: var(--color-wood-dark);
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -198,24 +198,74 @@ button {
   height: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #121820;
 }
 
-.hero-slide img {
-  width: 100%;
-  height: 100%;
+/* Ambient Blurred Backdrop (Fills entire screen width & height seamlessly) */
+.hero-slide-bg-blur {
+  position: absolute;
+  inset: -32px;
+  width: calc(100% + 64px);
+  height: calc(100% + 64px);
   object-fit: cover;
   object-position: center;
+  filter: blur(36px) brightness(0.78) saturate(135%);
+  -webkit-filter: blur(36px) brightness(0.78) saturate(135%);
+  transform: scale(1.06);
+  pointer-events: none;
+  z-index: 1;
   display: block;
 }
 
-/* Vignette Overlay: subtle gradient to ensure crystal clear contrast without masking the room */
+/* Foreground Container: Displays original ratio uncropped photo */
+.hero-slide-fg-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 40px 24px 440px; /* Leaves room on left for 25% floating card on desktop */
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.hero-slide-fg-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: auto;
+  transition: transform 0.3s ease;
+}
+
+.hero-slide:hover .hero-slide-fg-img {
+  transform: scale(1.012);
+}
+
+@media (max-width: 1140px) and (min-width: 769px) {
+  .hero-slide-fg-wrap {
+    padding: 72px 28px 24px 380px;
+  }
+}
+
+/* Vignette Overlay: Subtle light side gradient without any dark top shadow */
 .hero-photo-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background: linear-gradient(90deg, rgba(14, 18, 23, 0.46) 0%, rgba(14, 18, 23, 0.16) 38%, transparent 68%),
-              linear-gradient(180deg, rgba(14, 18, 23, 0.6) 0%, transparent 22%, transparent 75%, rgba(14, 18, 23, 0.35) 100%);
+  background: linear-gradient(90deg, rgba(14, 18, 23, 0.28) 0%, rgba(14, 18, 23, 0.08) 32%, transparent 60%);
 }
 
 /* Top Photo Counter Chip */
@@ -533,6 +583,15 @@ button {
     min-height: 540px;
   }
 
+  .hero-slide-fg-wrap {
+    padding: 64px 12px 280px 12px; /* Centers uncropped photo above bottom card */
+  }
+
+  .hero-slide-fg-img {
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
   .hero-floating-glass-card {
     left: 12px;
     right: 12px;
@@ -546,6 +605,17 @@ button {
     gap: 8px;
     border-radius: 20px;
     max-height: 58%;
+  }
+
+  .hero-subtitle-tag {
+    font-size: clamp(0.52rem, 2.3vw, 0.62rem);
+    letter-spacing: 0.02em;
+    padding: 3px 10px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
   }
 
   .hero-title {
@@ -601,6 +671,10 @@ button {
 
   .hero-photo-bottom-bar {
     display: none;
+  }
+
+  .filter-bar-sticky {
+    top: 56px;
   }
 }
 
@@ -921,7 +995,7 @@ button {
 
 .filter-bar-sticky {
   position: sticky;
-  top: 0;
+  top: 62px;
   z-index: 80;
   background-color: rgba(250, 248, 245, 0.45);
   backdrop-filter: blur(28px) saturate(210%) contrast(105%);
