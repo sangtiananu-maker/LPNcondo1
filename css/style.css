@@ -30,6 +30,8 @@
   /* Typography */
   --font-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-th: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-luxury: 'Cormorant Garamond', 'Cinzel', serif;
+  --font-display: 'Cinzel', 'Plus Jakarta Sans', sans-serif;
 
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(28, 34, 41, 0.04);
@@ -321,7 +323,7 @@ button {
     gap: 10px;
   }
   .hero-intro-card {
-    padding: 18px 16px;
+    padding: 0 0 6px 0;
   }
   .hero-room-card {
     padding: 14px 16px;
@@ -433,51 +435,73 @@ button {
   cursor: default;
 }
 
-/* Box 1: General Condo Overview Card (Top card on Desktop, below photo details on Mobile) */
+/* Box 1: General Condo Overview (Desktop: Impactful Frameless Editorial Focal Point) */
 .hero-intro-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.56) 100%);
-  backdrop-filter: blur(16px) saturate(180%) contrast(102%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(102%);
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18),
-              0 4px 14px rgba(0, 0, 0, 0.06),
-              inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
-  border-radius: 22px;
-  padding: 22px 22px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0 0 8px 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .hero-subtitle-tag {
   align-self: flex-start;
-  font-size: 0.68rem;
+  font-family: var(--font-en);
+  font-size: 0.72rem;
   font-weight: 700;
   color: #FFFFFF;
-  background: linear-gradient(135deg, rgba(140, 95, 58, 0.92) 0%, rgba(179, 134, 97, 0.85) 100%);
-  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(30, 48, 64, 0.88) 0%, rgba(71, 107, 130, 0.82) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 5px 14px;
   border-radius: var(--radius-pill);
-  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(140, 95, 58, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
   margin-bottom: 2px;
 }
 
 .hero-title {
-  font-size: clamp(1.3rem, 1.7vw, 1.65rem);
+  font-family: var(--font-th), var(--font-en);
+  font-size: clamp(2.1rem, 2.9vw, 2.85rem);
   font-weight: 800;
-  color: var(--color-primary);
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  letter-spacing: -0.025em;
+  line-height: 1.16;
   margin: 0;
+  color: #0F1722;
+  text-shadow: 0 2px 24px rgba(255, 255, 255, 0.95),
+               0 1px 2px rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-title-highlight {
+  display: inline-block;
+  background: linear-gradient(135deg, #1C2D3D 0%, #35536D 38%, #8C5F3A 75%, #B38661 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  position: relative;
+  width: fit-content;
+  filter: drop-shadow(0 2px 16px rgba(255, 255, 255, 0.85));
 }
 
 .hero-desc {
-  font-size: 0.84rem;
-  color: var(--color-slate);
-  line-height: 1.45;
+  font-size: 0.95rem;
+  color: #2D3A49;
+  line-height: 1.55;
   margin: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95),
+               0 1px 2px rgba(255, 255, 255, 0.9);
+  max-width: 440px;
 }
 
 /* Box 2: Room Details Card (Bottom card on Desktop, immediately below photo on Mobile) */
@@ -773,7 +797,7 @@ button {
     padding: 9px 16px;
   }
 
-  /* Mobile: 3. General Condo Overview Card (Positioned cleanly below the room details card) */
+  /* Mobile: 3. General Condo Overview (Seamless editorial focal section below room card) */
   .hero-intro-card {
     order: 3;
     position: relative;
@@ -784,14 +808,14 @@ button {
     transform: none;
     width: calc(100% - 24px);
     max-width: 520px;
-    margin: 12px auto 0 auto;
-    border-radius: 18px;
-    padding: 16px 16px;
-    background: rgba(255, 255, 255, 0.90);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.92);
-    box-shadow: 0 6px 20px rgba(28, 34, 41, 0.05), inset 0 1.5px 2px #FFFFFF;
+    margin: 16px auto 4px auto;
+    border-radius: 0;
+    padding: 10px 4px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -799,9 +823,9 @@ button {
   }
 
   .hero-subtitle-tag {
-    font-size: clamp(0.52rem, 2.3vw, 0.62rem);
-    letter-spacing: 0.02em;
-    padding: 3px 10px;
+    font-size: clamp(0.58rem, 2.6vw, 0.68rem);
+    letter-spacing: 0.05em;
+    padding: 4px 12px;
     white-space: nowrap;
     max-width: 100%;
     overflow: hidden;
@@ -810,18 +834,30 @@ button {
   }
 
   .hero-title {
-    font-size: 1.25rem;
+    font-size: clamp(1.45rem, 5.8vw, 1.85rem);
     font-weight: 800;
-    line-height: 1.25;
+    line-height: 1.2;
     margin: 0;
-    color: var(--color-primary);
+    color: #111827;
+    text-shadow: none;
+  }
+
+  .hero-title-highlight {
+    display: inline;
+    background: linear-gradient(135deg, #1C2D3D 0%, #35536D 40%, #8C5F3A 80%, #B38661 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: none;
   }
 
   .hero-desc {
-    font-size: 0.82rem;
-    line-height: 1.42;
+    font-size: 0.88rem;
+    line-height: 1.5;
     color: var(--color-slate);
     margin: 0;
+    text-shadow: none;
+    font-weight: 400;
   }
 
   .slider-arrow {
