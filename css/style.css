@@ -330,13 +330,13 @@ button {
   }
 }
 
-/* Vignette Overlay: Subtle light side gradient without any dark top shadow */
+/* Vignette Overlay: Gentle warm cinematic tone for crystal-clear readability behind left text */
 .hero-photo-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background: linear-gradient(90deg, rgba(14, 18, 23, 0.28) 0%, rgba(14, 18, 23, 0.08) 32%, transparent 60%);
+  background: linear-gradient(90deg, rgba(10, 14, 20, 0.42) 0%, rgba(10, 14, 20, 0.16) 36%, transparent 64%);
 }
 
 /* Top Photo Counter Chip */
@@ -435,7 +435,7 @@ button {
   cursor: default;
 }
 
-/* Box 1: General Condo Overview (Desktop: Impactful Frameless Editorial Focal Point) */
+/* Box 1: General Condo Overview (Desktop: Champagne & Radiant Gold Luxury Editorial Focal Point) */
 .hero-intro-card {
   background: transparent;
   border: none;
@@ -445,6 +445,23 @@ button {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
+}
+
+/* Warm Ambient Glow Aura behind the editorial title block */
+.hero-intro-card::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: -28px;
+  right: -24px;
+  bottom: -20px;
+  background: radial-gradient(ellipse at 35% 45%, rgba(20, 26, 34, 0.72) 0%, rgba(18, 24, 32, 0.48) 55%, transparent 80%);
+  filter: blur(28px);
+  -webkit-filter: blur(28px);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 32px;
 }
 
 .hero-subtitle-tag {
@@ -452,17 +469,17 @@ button {
   font-family: var(--font-en);
   font-size: 0.72rem;
   font-weight: 700;
-  color: #FFFFFF;
-  background: linear-gradient(135deg, rgba(30, 48, 64, 0.88) 0%, rgba(71, 107, 130, 0.82) 100%);
+  color: #F8F5EE;
+  background: linear-gradient(135deg, rgba(35, 48, 62, 0.92) 0%, rgba(68, 88, 108, 0.86) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 5px 14px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(226, 214, 188, 0.45);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
   margin-bottom: 2px;
 }
 
@@ -473,8 +490,10 @@ button {
   letter-spacing: -0.025em;
   line-height: 1.16;
   margin: 0;
-  color: #111827;
-  text-shadow: none;
+  /* Luminous Champagne Ivory */
+  color: #FAF6EE;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55),
+               0 0 28px rgba(255, 244, 222, 0.42);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -482,23 +501,28 @@ button {
 
 .hero-title-highlight {
   display: inline-block;
-  background: linear-gradient(135deg, #1C2D3D 0%, #35536D 40%, #8C5F3A 80%, #B38661 100%);
+  /* Radiant Warm Gold & Champagne Amber Gradient */
+  background: linear-gradient(135deg, #FFF6E5 0%, #F5DEB3 24%, #E5BA73 52%, #D49B55 80%, #F3D99F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: #35536D;
+  color: #E5BA73;
   font-weight: 800;
   position: relative;
   width: fit-content;
-  filter: drop-shadow(0 2px 8px rgba(255, 244, 215, 0.85));
+  /* Dual-tier Coolwhite & Champagne Gold Ambient Glow */
+  filter: drop-shadow(0 2px 12px rgba(255, 235, 195, 0.65))
+          drop-shadow(0 0 24px rgba(212, 155, 85, 0.45));
 }
 
 .hero-desc {
   font-size: 0.95rem;
-  color: #2D3A49;
+  color: #E3E9F0;
   line-height: 1.55;
   margin: 0;
-  font-weight: 500;
+  font-weight: 400;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.65),
+               0 1px 2px rgba(0, 0, 0, 0.85);
   max-width: 440px;
 }
 
