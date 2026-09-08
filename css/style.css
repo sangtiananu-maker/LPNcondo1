@@ -483,14 +483,15 @@ button {
 
 .hero-title-highlight {
   display: inline-block;
-  background: linear-gradient(135deg, #1C2D3D 0%, #35536D 38%, #8C5F3A 75%, #B38661 100%);
+  background: linear-gradient(135deg, #1C2D3D 0%, #35536D 40%, #8C5F3A 80%, #B38661 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
   position: relative;
   width: fit-content;
-  filter: drop-shadow(0 2px 16px rgba(255, 255, 255, 0.85));
+  filter: drop-shadow(0 2px 18px rgba(255, 248, 230, 0.95))
+          drop-shadow(0 0 10px rgba(247, 234, 203, 0.75));
 }
 
 .hero-desc {
