@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
+  initStickyContactBar();
   initHeroSlider();
   initGallery();
   initGalleryScrollControls();
@@ -35,6 +36,27 @@ function initHeaderScroll() {
   window.addEventListener('scroll', updateHeader, { passive: true });
   window.addEventListener('resize', updateHeader, { passive: true });
   updateHeader();
+}
+
+/* ==========================================================================
+   Sticky Bottom Contact Dock (Show only when scrolled past Hero, keep Hero 100% clean)
+   ========================================================================== */
+function initStickyContactBar() {
+  const stickyBar = document.querySelector('.sticky-contact-bar');
+  if (!stickyBar) return;
+
+  const updateStickyBar = () => {
+    // Show sticky bottom dock only when user scrolls down beyond the hero slideshow
+    if (window.scrollY > 160) {
+      stickyBar.classList.add('is-visible');
+    } else {
+      stickyBar.classList.remove('is-visible');
+    }
+  };
+
+  window.addEventListener('scroll', updateStickyBar, { passive: true });
+  window.addEventListener('resize', updateStickyBar, { passive: true });
+  updateStickyBar();
 }
 
 /* ==========================================================================
