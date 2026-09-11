@@ -131,7 +131,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Celida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Celida) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -142,7 +142,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Celida) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Celida) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -153,7 +153,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Pisa) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Pisa) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -164,7 +164,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Pisa) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Pisa) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -175,7 +175,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Praso) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Praso) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -186,7 +186,7 @@ const ROOMS_DATA = {
     "badge": "1 Bedroom",
     "size": "28.32 ตร.ม. (sq.m.)",
     "price": "7,500",
-    "captionTh": "ห้อง 1 Bedroom (Praso) - 1 ห้องนอน กั้นห้องแยกสัดส่วน",
+    "captionTh": "1 ห้องนอน กั้นห้องแยกสัดส่วน",
     "captionEn": "1 Bedroom Suite (Praso) - 28.32 ตร.ม. (sq.m.)"
   },
   {
@@ -197,7 +197,7 @@ const ROOMS_DATA = {
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Terra) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "captionEn": "Studio Suite (Terra) - 25.08 ตร.ม. (sq.m.)"
   },
   {
@@ -208,7 +208,7 @@ const ROOMS_DATA = {
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Terra) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "captionEn": "Studio Suite (Terra) - 25.08 ตร.ม. (sq.m.)"
   },
   {
@@ -219,7 +219,7 @@ const ROOMS_DATA = {
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Piquette) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "captionEn": "Studio Suite (Piquette) - 25.08 ตร.ม. (sq.m.)"
   },
   {
@@ -230,7 +230,7 @@ const ROOMS_DATA = {
     "badge": "Studio",
     "size": "25.08 ตร.ม. (sq.m.)",
     "price": "6,500",
-    "captionTh": "ห้อง Studio (Piquette) - ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
+    "captionTh": "ห้องสตูดิโอ แต่งครบ โปร่งโล่ง",
     "captionEn": "Studio Suite (Piquette) - 25.08 ตร.ม. (sq.m.)"
   }
 ],

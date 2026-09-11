@@ -39,24 +39,44 @@ function initHeaderScroll() {
 }
 
 /* ==========================================================================
-   Sticky Bottom Contact Dock (Show only when scrolled past Hero, keep Hero 100% clean)
+   Sticky Bottom Contact Dock (Show immediately unless obstructing slideshow)
    ========================================================================== */
-function initStickyContactBar() {
+function checkStickyBarVisibility() {
   const stickyBar = document.querySelector('.sticky-contact-bar');
   if (!stickyBar) return;
 
-  const updateStickyBar = () => {
-    // Show sticky bottom dock only when user scrolls down beyond the hero slideshow
-    if (window.scrollY > 160) {
-      stickyBar.classList.add('is-visible');
-    } else {
-      stickyBar.classList.remove('is-visible');
-    }
-  };
+  // If user scrolled down past the hero section, always show
+  if (window.scrollY > 200) {
+    stickyBar.classList.add('is-visible');
+    return;
+  }
 
-  window.addEventListener('scroll', updateStickyBar, { passive: true });
-  window.addEventListener('resize', updateStickyBar, { passive: true });
-  updateStickyBar();
+  // When near the top, check whether floating bar overlaps with active slideshow photo
+  const activeImg = document.querySelector('.hero-slide.is-active .hero-slide-fg-img') || document.querySelector('.hero-slide-fg-img');
+  if (activeImg) {
+    const barRect = stickyBar.getBoundingClientRect();
+    const imgRect = activeImg.getBoundingClientRect();
+
+    // Check geometric bounding-box overlap between floating bar and active photo
+    const horizontalOverlap = !(barRect.right < imgRect.left || barRect.left > imgRect.right);
+    const verticalOverlap = !(barRect.bottom < imgRect.top || barRect.top > imgRect.bottom);
+
+    if (horizontalOverlap && verticalOverlap) {
+      stickyBar.classList.remove('is-visible');
+      return;
+    }
+  }
+
+  // No obstruction detected with slideshow -> show immediately!
+  stickyBar.classList.add('is-visible');
+}
+
+function initStickyContactBar() {
+  window.addEventListener('scroll', checkStickyBarVisibility, { passive: true });
+  window.addEventListener('resize', checkStickyBarVisibility, { passive: true });
+  checkStickyBarVisibility();
+  requestAnimationFrame(checkStickyBarVisibility);
+  setTimeout(checkStickyBarVisibility, 300);
 }
 
 /* ==========================================================================
@@ -226,6 +246,9 @@ function updateSlideTrack() {
 
   // Synchronize room info bar below the photo
   updateHeroDetails();
+
+  // Re-verify sticky bar overlap on slide change
+  checkStickyBarVisibility();
 }
 
 function updateHeroDetails() {
@@ -242,7 +265,12 @@ function updateHeroDetails() {
   if (badgeEl) badgeEl.textContent = slide.badge;
   if (priceEl) priceEl.textContent = `฿${slide.price} / เดือน`;
   if (titleEl) titleEl.textContent = slide.unitNameTh;
-  if (captionEl) captionEl.textContent = slide.captionTh;
+  if (captionEl) {
+    let captionText = slide.captionTh || '';
+    // Strip redundant unit name prefix if present (e.g. "ห้อง 1 Bedroom (Celida) - ")
+    captionText = captionText.replace(/^.*?-\s*/, '');
+    captionEl.textContent = captionText;
+  }
   if (counterEl) counterEl.textContent = `${currentHeroSlide + 1} / ${heroSlides.length}`;
   if (btnEl) {
     btnEl.onclick = (e) => {

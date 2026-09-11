@@ -334,10 +334,12 @@ button {
   .hero-title {
     font-size: clamp(1.35rem, 2.1vw, 1.7rem);
     line-height: 1.18;
+    padding: 0 14px;
   }
   .hero-desc {
     font-size: 0.78rem;
     line-height: 1.4;
+    padding: 0 14px;
   }
   .hero-subtitle-tag {
     font-size: clamp(0.58rem, 0.78vw, 0.66rem);
@@ -525,6 +527,7 @@ button {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  padding: 0 20px;
   font-family: var(--font-th), var(--font-en);
   font-size: clamp(1.65rem, 2.3vw, 2.5rem);
   font-weight: 800;
@@ -556,6 +559,7 @@ button {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  padding: 0 20px;
   font-size: clamp(0.8rem, 0.96vw, 0.92rem);
   color: #2D3A49;
   line-height: 1.5;
@@ -912,6 +916,7 @@ button {
     margin: 0;
     color: #111827;
     text-shadow: none;
+    padding: 0 16px;
   }
 
   .hero-title-highlight {
@@ -930,6 +935,7 @@ button {
     margin: 0;
     text-shadow: none;
     font-weight: 400;
+    padding: 0 16px;
   }
 
   .slider-arrow {
