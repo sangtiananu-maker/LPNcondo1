@@ -443,25 +443,25 @@ function applyFilter(filter) {
     summaryBox.innerHTML = `
       <div class="unit-detail-header">
         <div>
-          <h3 class="unit-detail-title">${selectedUnit.nameTh}</h3>
+          <h3 class="unit-detail-title">${selectedUnit.nameTh}${selectedUnit.floorTh ? ` <span class="unit-detail-floor">${selectedUnit.floorTh}</span>` : ''}</h3>
           <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">${selectedUnit.typeLabelTh} • ขนาด ${selectedUnit.size}</p>
         </div>
         <div class="unit-detail-price">฿${selectedUnit.priceLabel} <span style="font-size: 0.8rem; color: var(--color-slate); font-weight: normal;">/ เดือน</span></div>
       </div>
       <p class="unit-detail-desc">${selectedUnit.descriptionTh}</p>
       <div class="unit-detail-tags">
-        <span class="detail-tag tag-occupied">🔴 มีผู้เช่าแล้ว</span>
-        <span class="detail-tag tag-owner">🛡️ เจ้าของดูแลโดยตรง</span>
         <span class="detail-tag">✨ รีโนเวทใหม่ 100%</span>
         <span class="detail-tag">🔒 Digital Door Lock</span>
         <span class="detail-tag">📺 Smart TV</span>
         <span class="detail-tag">🧺 เครื่องซักผ้าในห้อง</span>
         <span class="detail-tag">❄️ แอร์ + ตู้เย็น Inverter</span>
       </div>
-      <div>
+      <div class="unit-detail-actions-row">
         <a href="${prefilledLineUrl}" target="_blank" rel="noopener" class="unit-line-btn">
           💬 ทัก LINE สอบถามสถานะห้องนี้
         </a>
+        <span class="detail-tag tag-occupied">🔴 มีผู้เช่าแล้ว</span>
+        <span class="detail-tag tag-owner">🛡️ เจ้าของดูแลโดยตรง</span>
       </div>
     `;
   } else if (summaryBox) {

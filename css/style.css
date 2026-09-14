@@ -3507,6 +3507,30 @@ button {
   font-weight: 700;
 }
 
+.unit-detail-floor {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-wood-dark);
+  margin-left: 6px;
+}
+
+.unit-detail-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.unit-detail-actions-row .unit-line-btn {
+  margin-top: 0;
+}
+
+.unit-detail-actions-row .detail-tag {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+}
+
 .unit-line-btn {
   display: inline-flex;
   align-items: center;
@@ -3528,6 +3552,8 @@ button {
   color: #FFFFFF;
   transform: translateY(-1px);
 }
+
+
 
 /* Sticky dock status */
 .sticky-status-indicator {
