@@ -11,7 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initGalleryScrollControls();
   initLightbox();
   initVlogPlayer();
+  initDropboxMotion();
+  initLiquidGlassRefraction();
+  initGalleryAutoScroll();
 });
+
 
 /* ==========================================================================
    Dynamic Transparent / Liquid Glass Navbar Scroll
@@ -492,7 +496,13 @@ function applyFilter(filter) {
   if (indicator) {
     indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (แตะรูปเพื่อดูภาพขยาย)`;
   }
+
+  // Update gallery auto-scroll state based on active filter
+  if (typeof updateGalleryAutoScrollState === 'function') {
+    updateGalleryAutoScrollState(filter === 'all');
+  }
 }
+
 
 /* Horizontal Gallery Scroll Controls & Desktop Drag */
 function initGalleryScrollControls() {
@@ -503,12 +513,14 @@ function initGalleryScrollControls() {
 
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
+      pauseGalleryAutoScroll(20000);
       grid.scrollBy({ left: -420, behavior: 'smooth' });
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
+      pauseGalleryAutoScroll(20000);
       grid.scrollBy({ left: 420, behavior: 'smooth' });
     });
   }
@@ -524,6 +536,7 @@ function initGalleryScrollControls() {
     hasDragged = false;
     startX = e.pageX - grid.offsetLeft;
     scrollLeft = grid.scrollLeft;
+    pauseGalleryAutoScroll(20000);
   });
 
   window.addEventListener('mouseup', () => {
@@ -541,6 +554,10 @@ function initGalleryScrollControls() {
     grid.scrollLeft = scrollLeft - walk;
   });
 
+  grid.addEventListener('touchstart', () => {
+    pauseGalleryAutoScroll(20000);
+  }, { passive: true });
+
   // Prevent opening lightbox if user was dragging
   grid.addEventListener('click', (e) => {
     if (hasDragged) {
@@ -550,6 +567,7 @@ function initGalleryScrollControls() {
     }
   }, true);
 }
+
 
 
 /* ==========================================================================
@@ -883,6 +901,9 @@ function openLightbox(index) {
   if (!currentFilteredPhotos || currentFilteredPhotos.length === 0) return;
   currentLightboxIndex = index;
 
+  // Pause gallery auto-scroll and trigger 20s cooldown
+  pauseGalleryAutoScroll(20000);
+
   const modal = document.getElementById('lightboxModal');
   if (!modal) return;
 
@@ -891,6 +912,7 @@ function openLightbox(index) {
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+
 
 function closeLightbox() {
   const modal = document.getElementById('lightboxModal');
@@ -1094,3 +1116,213 @@ document.addEventListener('click', function(e) {
     showLineCopyToast();
   }
 });
+
+/* ==========================================================================
+   1. Dropbox-Style Motion System (Orchestrated Entrance & Scroll Reveals)
+   ========================================================================== */
+function initDropboxMotion() {
+  // Check reduced motion preference
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.dropbox-reveal, .dropbox-material-scale, .hero-entrance-stage, .hero-entrance-card').forEach(el => {
+      el.classList.add('is-revealed');
+    });
+    return;
+  }
+
+  // 1. Hero Orchestrated Entrance on First Paint
+  const heroStage = document.querySelector('.hero-showcase-stage');
+  const heroFloatingCol = document.querySelector('.hero-floating-column');
+  const featureBanner = document.querySelector('.feature-banner');
+
+  if (heroStage) heroStage.classList.add('hero-entrance-stage');
+  if (heroFloatingCol) heroFloatingCol.classList.add('hero-entrance-card');
+
+  // Trigger hero entrance via requestAnimationFrame
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      if (heroStage) heroStage.classList.add('is-revealed');
+      if (heroFloatingCol) heroFloatingCol.classList.add('is-revealed');
+    }, 60);
+  });
+
+  // 2. Identify Sections, Cards, and Elements for Scroll Reveal
+  const revealTargets = [
+    '.section-head',
+    '.pricing-card',
+    '.pricing-trust-notice',
+    '.video-vlog-layout',
+    '.feature-banner',
+    '.feature-item-card',
+    '.facility-card',
+    '.main-location-card',
+    '.nearby-card',
+    '.terms-card',
+    '.term-item'
+  ];
+
+  const elements = document.querySelectorAll(revealTargets.join(', '));
+  elements.forEach((el) => {
+    // Large container boxes use material canvas scale
+    if (el.matches('.feature-banner, .main-location-card, .terms-card, .pricing-trust-notice')) {
+      el.classList.add('dropbox-material-scale');
+    } else {
+      el.classList.add('dropbox-reveal');
+    }
+  });
+
+  // Apply Stagger indices to grid groups
+  const gridContainers = [
+    '.pricing-grid',
+    '.features-grid',
+    '.facilities-grid',
+    '.nearby-grid',
+    '.terms-grid'
+  ];
+
+  gridContainers.forEach(gridSel => {
+    const grid = document.querySelector(gridSel);
+    if (!grid) return;
+    const children = grid.querySelectorAll('.dropbox-reveal');
+    children.forEach((child, i) => {
+      child.classList.add('stagger-child');
+      child.style.setProperty('--stagger-i', i % 6);
+    });
+  });
+
+  // 3. High-Performance IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          obs.unobserve(entry.target); // Unobserve to liberate GPU memory
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -4% 0px',
+      threshold: 0.08
+    });
+
+    elements.forEach(el => observer.observe(el));
+  } else {
+    // Fallback if IntersectionObserver is unavailable
+    elements.forEach(el => el.classList.add('is-revealed'));
+  }
+}
+
+/* ==========================================================================
+   2. iOS Liquid Glass Optical Convex Lens Refraction on Scroll
+   ========================================================================== */
+function initLiquidGlassRefraction() {
+  let ticking = false;
+
+  const updateRefraction = () => {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight || 1000;
+    const progress = Math.min(1, Math.max(0, scrollY / docHeight));
+
+    // Calculate dynamic specular highlight angle: 120deg to 155deg as user scrolls
+    const angle = 125 + (progress * 30);
+    document.documentElement.style.setProperty('--lens-angle', `${angle.toFixed(1)}deg`);
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateRefraction);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateRefraction();
+}
+
+/* ==========================================================================
+   3. Gallery Continuous Marquee Auto-Scroll (Tab "ทุกห้อง" - 64 Photos only)
+   - Continuous subtle drift
+   - Seamless loop
+   - Pauses on hover, touch, or when opening any lightbox photo
+   - When paused by photo view, stays paused for 20 seconds before resuming
+   - Disabled on 1-bed, studio, or individual unit tabs
+   ========================================================================== */
+let galleryAutoScrollActive = true;
+let galleryAutoScrollRaf = null;
+let galleryPauseUntil = 0;
+let isUserInteractingGallery = false;
+
+function pauseGalleryAutoScroll(durationMs = 20000) {
+  galleryPauseUntil = Date.now() + durationMs;
+}
+
+function updateGalleryAutoScrollState(isAllTab) {
+  galleryAutoScrollActive = isAllTab;
+  const grid = document.getElementById('galleryGrid');
+  if (grid) {
+    if (galleryAutoScrollActive && Date.now() >= galleryPauseUntil && !isUserInteractingGallery) {
+      grid.classList.add('is-auto-scrolling');
+    } else {
+      grid.classList.remove('is-auto-scrolling');
+    }
+  }
+}
+
+function initGalleryAutoScroll() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  const scrollSpeed = 0.55; // Pixels per frame (buttery-smooth, calm editorial pace)
+
+  const stepAutoScroll = () => {
+    const now = Date.now();
+    const canScroll = galleryAutoScrollActive && (now >= galleryPauseUntil) && !isUserInteractingGallery;
+
+    if (canScroll) {
+      grid.classList.add('is-auto-scrolling');
+      const maxScroll = grid.scrollWidth - grid.clientWidth;
+
+      if (maxScroll > 10) {
+        // Increment scroll position
+        grid.scrollLeft += scrollSpeed;
+
+        // Seamless loop wrap: when reached near end, softly reset to beginning
+        if (grid.scrollLeft >= maxScroll - 2) {
+          grid.scrollLeft = 0;
+        }
+      }
+    } else {
+      grid.classList.remove('is-auto-scrolling');
+    }
+
+    galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
+  };
+
+  // Hover Pause
+  grid.addEventListener('mouseenter', () => {
+    isUserInteractingGallery = true;
+    grid.classList.remove('is-auto-scrolling');
+  });
+
+  grid.addEventListener('mouseleave', () => {
+    isUserInteractingGallery = false;
+  });
+
+  // Touch Interactions
+  grid.addEventListener('touchstart', () => {
+    isUserInteractingGallery = true;
+    pauseGalleryAutoScroll(20000);
+    grid.classList.remove('is-auto-scrolling');
+  }, { passive: true });
+
+  grid.addEventListener('touchend', () => {
+    isUserInteractingGallery = false;
+  }, { passive: true });
+
+  // Start continuous loop
+  galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
+}
+
+// Global exposure
+window.pauseGalleryAutoScroll = pauseGalleryAutoScroll;
+window.updateGalleryAutoScrollState = updateGalleryAutoScrollState;
+

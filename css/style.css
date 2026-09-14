@@ -52,7 +52,11 @@
   --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slide: 1.4s cubic-bezier(0.25, 1, 0.35, 1);
   --transition-ambient: 2.2s cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-dropbox: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --lens-angle: 135deg;
 }
+
 
 /* Reset & Base Setup */
 *, *::before, *::after {
@@ -403,21 +407,20 @@ button {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: #FFFFFF;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.32) 0%, rgba(240, 244, 250, 0.16) 60%, rgba(18, 24, 32, 0.12) 100%);
+  backdrop-filter: blur(8px) saturate(170%);
+  -webkit-backdrop-filter: blur(8px) saturate(170%);
   padding: 5px 14px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18),
-              0 0 12px rgba(255, 255, 255, 0.22),
-              inset 0 1.5px 2.5px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 4px 16px rgba(10, 15, 22, 0.18),
+              inset 0 1.8px 2.5px rgba(255, 255, 255, 0.95),
+              inset 0 -1.5px 2px rgba(15, 22, 30, 0.1);
   letter-spacing: 0.04em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* iOS Ultra-Translucent Liquid Glass Slider Arrow Lenses */
+/* iOS Liquid Glass Slider Arrow Lenses */
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -425,21 +428,21 @@ button {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.34) 0%, rgba(240, 244, 250, 0.18) 60%, rgba(18, 24, 32, 0.12) 100%);
+  backdrop-filter: blur(8px) saturate(170%);
+  -webkit-backdrop-filter: blur(8px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.85);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 20;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22),
-              0 0 14px rgba(255, 255, 255, 0.25),
-              inset 0 1.5px 2.5px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(10, 15, 22, 0.22),
+              inset 0 2px 3px rgba(255, 255, 255, 0.95),
+              inset 0 -2px 2.5px rgba(15, 22, 30, 0.15);
   transition: all var(--transition-fast);
 }
+
 
 .slider-arrow:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.12) 100%);
@@ -574,19 +577,26 @@ button {
 .hero-room-card {
   width: 100%;
   box-sizing: border-box;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.60) 100%);
-  backdrop-filter: blur(16px) saturate(180%) contrast(102%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(102%);
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18),
-              0 4px 14px rgba(0, 0, 0, 0.06),
-              inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+  /* Authentic iOS Liquid Glass: Subtle smoky dark tint + gentle 8px blur + convex lens curvature */
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.46) 0%, rgba(240, 244, 250, 0.26) 60%, rgba(18, 24, 32, 0.08) 100%);
+  backdrop-filter: blur(8px) saturate(170%) contrast(103%);
+  -webkit-backdrop-filter: blur(8px) saturate(170%) contrast(103%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
   border-radius: 22px;
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* Convex Lens Specular Bevels & Refraction Edge */
+  box-shadow: 0 16px 40px rgba(10, 15, 22, 0.16),
+              0 2px 8px rgba(0, 0, 0, 0.04),
+              inset 0 2px 3.5px rgba(255, 255, 255, 0.95),   /* Top specular highlight */
+              inset 0 -2px 3px rgba(15, 22, 30, 0.08),       /* Bottom convex curve */
+              inset 1px 0 2px rgba(255, 255, 255, 0.6),       /* Left lens refraction */
+              inset -1px 0 2px rgba(255, 255, 255, 0.35);     /* Right lens refraction */
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background 0.4s ease;
 }
+
 
 .hero-room-tags {
   display: flex;
@@ -834,11 +844,13 @@ button {
     margin: 10px auto 0 auto;
     border-radius: 18px;
     padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 24px rgba(28, 34, 41, 0.07), inset 0 1.5px 2px #FFFFFF;
+    background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.65) 0%, rgba(240, 244, 250, 0.45) 60%, rgba(18, 24, 32, 0.08) 100%);
+    backdrop-filter: blur(8px) saturate(170%);
+    -webkit-backdrop-filter: blur(8px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 28px rgba(10, 15, 22, 0.12),
+                inset 0 1.8px 3px rgba(255, 255, 255, 0.95),
+                inset 0 -1.5px 2px rgba(15, 22, 30, 0.06);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -1330,10 +1342,10 @@ button {
   white-space: nowrap;
   padding: 8px 16px;
   border-radius: var(--radius-pill);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.08) 100%);
-  backdrop-filter: blur(12px) saturate(170%);
-  -webkit-backdrop-filter: blur(12px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.45) 0%, rgba(240, 244, 250, 0.22) 60%, rgba(18, 24, 32, 0.05) 100%);
+  backdrop-filter: blur(8px) saturate(170%);
+  -webkit-backdrop-filter: blur(8px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
   color: var(--color-primary);
   font-size: 0.82rem;
   font-weight: 600;
@@ -1341,20 +1353,18 @@ button {
   align-items: center;
   gap: 6px;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04),
-              0 0 12px rgba(255, 255, 255, 0.2),
-              inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 1.5px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 14px rgba(10, 15, 22, 0.06),
+              inset 0 1.8px 2.5px rgba(255, 255, 255, 0.95),
+              inset 0 -1.5px 2px rgba(15, 22, 30, 0.06);
 }
 
 .filter-btn:hover {
-  background: linear-gradient(135deg, rgba(163, 190, 207, 0.38) 0%, rgba(255, 255, 255, 0.45) 100%);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(163, 190, 207, 0.42) 0%, rgba(255, 255, 255, 0.48) 100%);
   border-color: rgba(255, 255, 255, 0.95);
   color: var(--color-primary);
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(71, 107, 130, 0.16),
-              0 0 16px rgba(255, 255, 255, 0.35),
-              inset 0 1.5px 2px #FFFFFF;
+              inset 0 2px 3px #FFFFFF;
 }
 
 .filter-btn:active {
@@ -1362,17 +1372,17 @@ button {
 }
 
 .filter-btn.active {
-  background: linear-gradient(135deg, rgba(52, 85, 108, 0.72) 0%, rgba(82, 120, 145, 0.62) 50%, rgba(138, 172, 195, 0.54) 100%);
-  backdrop-filter: blur(14px) saturate(190%) contrast(105%);
-  -webkit-backdrop-filter: blur(14px) saturate(190%) contrast(105%);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(52, 85, 108, 0.76) 0%, rgba(82, 120, 145, 0.65) 50%, rgba(138, 172, 195, 0.58) 100%);
+  backdrop-filter: blur(8px) saturate(180%) contrast(103%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%) contrast(103%);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 6px 20px rgba(28, 52, 70, 0.22),
-              0 0 16px rgba(163, 190, 207, 0.25),
-              inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 1.5px rgba(35, 60, 78, 0.15);
+              inset 0 1.8px 2.5px rgba(255, 255, 255, 0.95),
+              inset 0 -1px 2px rgba(35, 60, 78, 0.15);
   text-shadow: 0 1px 2px rgba(20, 38, 52, 0.4);
 }
+
 
 .filter-btn .count-badge {
   background-color: rgba(0, 0, 0, 0.08);
@@ -2692,14 +2702,18 @@ button {
   width: calc(100% - 24px);
   max-width: 520px;
   z-index: 85;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.22) 100%);
-  backdrop-filter: blur(32px) saturate(210%) contrast(105%);
-  -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(105%);
+  background: linear-gradient(var(--lens-angle, 135deg), rgba(255, 255, 255, 0.48) 0%, rgba(240, 244, 250, 0.28) 60%, rgba(18, 24, 32, 0.08) 100%);
+  backdrop-filter: blur(8px) saturate(180%) contrast(103%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%) contrast(103%);
   border-radius: var(--radius-xl);
   border: 1px solid rgba(255, 255, 255, 0.85);
-  /* Dark bottom drop shadow completely removed as requested */
-  box-shadow: inset 0 1.5px 2.5px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 2px rgba(255, 255, 255, 0.25);
+  /* Convex Lens Inset Bevels: Top highlight, bottom curve, side edge light */
+  box-shadow: 0 14px 36px rgba(10, 15, 22, 0.12),
+              inset 0 2px 3.5px rgba(255, 255, 255, 0.95),
+              inset 0 -2px 3px rgba(15, 22, 30, 0.08),
+              inset 1px 0 2px rgba(255, 255, 255, 0.5),
+              inset -1px 0 2px rgba(255, 255, 255, 0.3);
+
   padding: 8px 14px;
   overflow: hidden;
   /* Hidden on hero slideshow so it never blocks room card or photo; smoothly reveals on scroll */
@@ -3617,3 +3631,139 @@ button {
   font-style: normal;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   Dropbox-Style Motion System & Soft Rising Blur (Editorial Canvas Dynamics)
+   ========================================================================== */
+
+/* Base state: subtle vertical rise + soft material scale + optical blur */
+.dropbox-reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0) scale(0.982);
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  transition: opacity 0.75s var(--ease-dropbox),
+              transform 0.75s var(--ease-dropbox),
+              filter 0.7s var(--ease-dropbox);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+/* Revealed state: resolves to pure clarity, zero blur, scale 1.0 */
+.dropbox-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
+
+/* Dropbox Editorial Material Canvas Scale (Background containers expand seamlessly) */
+.dropbox-material-scale {
+  opacity: 0;
+  transform: scale(0.978) translate3d(0, 16px, 0);
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+  transition: opacity 0.85s var(--ease-dropbox),
+              transform 0.85s var(--ease-dropbox),
+              filter 0.75s var(--ease-dropbox);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.dropbox-material-scale.is-revealed {
+  opacity: 1;
+  transform: scale(1) translate3d(0, 0, 0);
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
+
+/* Staggered Delay Helpers for Grid Children */
+.stagger-child {
+  transition-delay: calc(var(--stagger-i, 0) * 75ms);
+}
+
+/* Hero Orchestrated Entrance States */
+.hero-entrance-stage {
+  opacity: 0;
+  transform: scale(0.985);
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+  transition: opacity 0.95s var(--ease-dropbox),
+              transform 0.95s var(--ease-dropbox),
+              filter 0.85s var(--ease-dropbox);
+  will-change: opacity, transform, filter;
+}
+
+.hero-entrance-stage.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
+
+.hero-entrance-card {
+  opacity: 0;
+  transform: translate3d(-14px, 16px, 0) scale(0.98);
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  transition: opacity 0.8s var(--ease-dropbox) 0.15s,
+              transform 0.8s var(--ease-dropbox) 0.15s,
+              filter 0.75s var(--ease-dropbox) 0.15s;
+  will-change: opacity, transform, filter;
+}
+
+.hero-entrance-card.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
+
+/* Gallery Marquee Auto-Scroll Track State */
+.gallery-grid.is-auto-scrolling {
+  scroll-behavior: auto !important; /* Continuous pixel-by-pixel drift without stepping */
+  scroll-snap-type: none !important; /* Disable snapping while marquee is active */
+}
+
+/* Mobile / Touch Optimizations for Dropbox Motion */
+@media (max-width: 768px) {
+  .dropbox-reveal {
+    transform: translate3d(0, 14px, 0) scale(0.988);
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    transition: opacity 0.55s var(--ease-dropbox),
+                transform 0.55s var(--ease-dropbox),
+                filter 0.5s var(--ease-dropbox);
+  }
+
+  .dropbox-material-scale {
+    transform: scale(0.985) translate3d(0, 10px, 0);
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    transition: opacity 0.6s var(--ease-dropbox),
+                transform 0.6s var(--ease-dropbox),
+                filter 0.55s var(--ease-dropbox);
+  }
+
+  .hero-entrance-card {
+    transform: translate3d(0, 14px, 0) scale(0.985);
+  }
+}
+
+/* Reduced Motion Preference Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .dropbox-reveal,
+  .dropbox-material-scale,
+  .hero-entrance-stage,
+  .hero-entrance-card {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .gallery-grid.is-auto-scrolling {
+    scroll-behavior: smooth !important;
+    scroll-snap-type: x mandatory !important;
+  }
+}
+
