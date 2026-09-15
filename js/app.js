@@ -487,6 +487,7 @@ function updateHeroDetails() {
 
   const badgeEl = document.getElementById('heroDetailBadge');
   const priceEl = document.getElementById('heroDetailPrice');
+  const statusEl = document.getElementById('heroDetailStatus');
   const titleEl = document.getElementById('heroDetailTitle');
   const captionEl = document.getElementById('heroDetailCaption');
   const btnEl = document.getElementById('heroDetailBtn');
@@ -494,6 +495,15 @@ function updateHeroDetails() {
 
   if (badgeEl) badgeEl.textContent = slide.badge;
   if (priceEl) priceEl.textContent = `฿${slide.price} / เดือน`;
+  if (statusEl) {
+    if (slide.unitId === 'pojana') {
+      statusEl.className = 'hero-occupied-badge available';
+      statusEl.textContent = '🟢 พร้อมเข้าอยู่ 1 ห้อง';
+    } else {
+      statusEl.className = 'hero-occupied-badge';
+      statusEl.textContent = '🔴 มีผู้เช่าแล้ว';
+    }
+  }
   if (titleEl) titleEl.textContent = slide.unitNameTh;
   if (captionEl) {
     let captionText = slide.captionTh || '';
@@ -598,9 +608,12 @@ function initGallery() {
   `;
 
   ROOMS_DATA.units.forEach(unit => {
+    const isPojana = unit.id === 'pojana';
+    const btnClass = isPojana ? 'filter-btn filter-btn-unit filter-btn-pojana active' : 'filter-btn filter-btn-unit';
+    const prefixIcon = isPojana ? '🟢 ' : '';
     filterHtml += `
-      <button class="filter-btn filter-btn-unit" data-filter="unit:${unit.id}">
-        <span>${unit.nameTh.replace('ห้อง ', '')}</span>
+      <button class="${btnClass}" data-filter="unit:${unit.id}">
+        <span>${prefixIcon}${unit.nameTh.replace('ห้อง ', '')}</span>
         <span class="count-badge">${unit.photos.length}</span>
       </button>
     `;
@@ -609,6 +622,12 @@ function initGallery() {
   filterHtml += `</div>`;
 
   filterContainer.innerHTML = filterHtml;
+
+  // Remove active class from 'all' button since Pojana is default active
+  const allCategoryBtn = filterContainer.querySelector('.filter-btn-category[data-filter="all"]');
+  if (allCategoryBtn) {
+    allCategoryBtn.classList.remove('active');
+  }
 
   // Add click listeners to filter buttons
   const buttons = filterContainer.querySelectorAll('.filter-btn');
@@ -621,8 +640,8 @@ function initGallery() {
     });
   });
 
-  // Initial render
-  applyFilter('all');
+  // Initial render: Default to Room Pojana
+  applyFilter('unit:pojana');
 }
 
 function filterByUnit(unitId, scroll = true) {
@@ -700,7 +719,7 @@ function applyFilter(filter) {
         <div>
           <h3 class="unit-detail-title">
             ${selectedUnit.nameTh}${selectedUnit.floorTh ? ` <span class="unit-detail-floor">${selectedUnit.floorTh}</span>` : ''}
-            <span class="unit-detail-occupied-bubble">🔴 มีผู้เช่าแล้ว</span>
+            <span class="unit-detail-occupied-bubble ${selectedUnit.isAvailable ? 'available' : ''}">${selectedUnit.isAvailable ? '🟢 พร้อมเข้าอยู่ 1 ห้อง' : '🔴 มีผู้เช่าแล้ว'}</span>
           </h3>
           <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">${selectedUnit.typeLabelTh} • ขนาด ${selectedUnit.size}</p>
         </div>
@@ -1147,6 +1166,7 @@ function updateLightboxContent() {
   const counterEl = document.getElementById('lightboxCounter');
   const unitNameEl = document.getElementById('lightboxUnitName');
   const unitPriceEl = document.getElementById('lightboxUnitPrice');
+  const statusPillEl = document.getElementById('lightboxStatusPill');
   const inquireBtn = document.getElementById('lightboxInquireBtn');
 
   const roomTitle = photo.unitNameTh || photo.unitName || 'ห้องพัก';
@@ -1166,6 +1186,12 @@ function updateLightboxContent() {
 
   if (unitPriceEl) {
     unitPriceEl.textContent = `฿${photo.price} / เดือน`;
+  }
+
+  if (statusPillEl) {
+    const isAvailable = photo.unitId === 'pojana';
+    statusPillEl.className = isAvailable ? 'lightbox-status-pill available' : 'lightbox-status-pill';
+    statusPillEl.textContent = isAvailable ? '🟢 พร้อมเข้าอยู่ 1 ห้อง' : '🔴 มีผู้เช่าแล้ว';
   }
 
   if (inquireBtn) {
