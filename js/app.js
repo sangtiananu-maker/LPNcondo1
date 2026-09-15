@@ -141,7 +141,9 @@ function initStickyContactBar() {
 /* ==========================================================================
    Hero Highlights Slideshow (Pure Soft Focus Transition & Ambient Fade)
    ========================================================================== */
-let currentHeroSlide = 0;
+let currentHeroSlide = 0; // Real slide index: 0..9
+let currentHeroTrackIndex = 1; // Track index: 0..11 (0 = Clone 9, 1..10 = Real 0..9, 11 = Clone 0)
+let isHeroSliding = false;
 let heroSlideTimer = null;
 let slideMotionTimeout = null;
 let slideSettleTimeout = null;
@@ -192,23 +194,33 @@ function initHeroSlider() {
   }
   currentAmbientTarget = 'A';
 
-  // Build slides into track (Clean Photos ONLY - 100% Unobstructed!)
+  // Build slides with Clones for Infinite Marquee:
+  // [Clone of Slide 10 (idx 9), Slide 1 (idx 0) ... Slide 10 (idx 9), Clone of Slide 1 (idx 0)]
   track.innerHTML = '';
+  const totalReal = heroSlides.length;
+  const slideItems = [
+    { slide: heroSlides[totalReal - 1], realIndex: totalReal - 1, isClone: true },
+    ...heroSlides.map((s, idx) => ({ slide: s, realIndex: idx, isClone: false })),
+    { slide: heroSlides[0], realIndex: 0, isClone: true }
+  ];
 
   let touchStartX = 0;
   let touchStartY = 0;
   let isSwiping = false;
   let hasSwiped = false;
 
-  heroSlides.forEach((slide, index) => {
+  slideItems.forEach((item, trackIdx) => {
+    const slide = item.slide;
     const slideEl = document.createElement('div');
-    slideEl.className = index === 0 ? 'hero-slide is-active' : 'hero-slide';
+    slideEl.className = trackIdx === 1 ? 'hero-slide is-active' : 'hero-slide';
     slideEl.setAttribute('role', 'button');
     slideEl.setAttribute('tabindex', '0');
+    slideEl.setAttribute('data-track-idx', trackIdx);
+    slideEl.setAttribute('data-real-idx', item.realIndex);
     slideEl.setAttribute('aria-label', `ภาพห้อง ${slide.unitNameTh} - แตะเพื่อดูรายละเอียดด้านล่าง`);
     slideEl.innerHTML = `
       <div class="hero-slide-fg-wrap">
-        <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${index === 0 ? 'eager' : 'lazy'}">
+        <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${(trackIdx === 1 || trackIdx === 2) ? 'eager' : 'lazy'}">
       </div>
     `;
     // Clicking/tapping photo scrolls down to feature details banner
@@ -225,18 +237,32 @@ function initHeroSlider() {
     track.appendChild(slideEl);
   });
 
-  // Ensure non-active slides are hidden when settled so no fractional subpixel edge can bleed
+  // Start at track index 1 (Real Slide 1)
+  currentHeroTrackIndex = 1;
+  currentHeroSlide = 0;
+  track.style.transition = 'none';
+  track.style.transform = `translateX(-100%)`;
+  void track.offsetWidth;
+  track.style.transition = '';
+
+  // Ensure non-active slides are hidden initially when settled
   const initialSlides = track.querySelectorAll('.hero-slide');
   initialSlides.forEach((s, idx) => {
-    if (idx !== 0) s.style.visibility = 'hidden';
+    if (idx !== 1) s.style.visibility = 'hidden';
   });
 
   // Initial update of room details bar below photo
   updateHeroDetails();
 
-  // Buttons
-  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
-  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
+  // Buttons: Manual click resets timer from 0
+  if (prevBtn) prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    prevSlide(true);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextSlide(true);
+  });
 
   // Auto slide
   startSlideShow();
@@ -275,93 +301,159 @@ function initHeroSlider() {
       if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
         hasSwiped = true;
         if (diffX > 0) {
-          nextSlide();
+          nextSlide(true);
         } else {
-          prevSlide();
+          prevSlide(true);
         }
+      } else {
+        startSlideShow();
       }
-      startSlideShow();
       setTimeout(() => { hasSwiped = false; }, 300);
     }, { passive: true });
   }
 }
 
-function updateSlideTrack() {
+function updateHeroAmbientBackdrop(slide) {
+  const ambientA = document.getElementById('heroAmbientA');
+  const ambientB = document.getElementById('heroAmbientB');
+  if (!ambientA || !ambientB || !slide) return;
+
+  clearTimeout(ambientCrossfadeTimeout);
+
+  const topLayer = (currentAmbientTarget === 'A') ? ambientB : ambientA;
+  const bottomLayer = (currentAmbientTarget === 'A') ? ambientA : ambientB;
+
+  // 1. Prepare incoming topLayer while 100% invisible (no transition, opacity 0)
+  topLayer.style.transition = 'none';
+  topLayer.style.opacity = '0';
+  topLayer.style.zIndex = '3';
+  topLayer.style.backgroundImage = `url("${slide.src}")`;
+
+  // Ensure bottomLayer stays 100% opaque underneath
+  bottomLayer.style.transition = 'none';
+  bottomLayer.style.opacity = '1';
+  bottomLayer.style.zIndex = '2';
+
+  // 2. Force reflow so browser commits the image and opacity 0
+  void topLayer.offsetWidth;
+
+  // 3. Smoothly fade in topLayer over 4.5s with ultra-gentle curve
+  topLayer.style.transition = 'opacity 4.5s cubic-bezier(0.35, 0, 0.25, 1)';
+  topLayer.style.opacity = '1';
+
+  currentAmbientTarget = (currentAmbientTarget === 'A') ? 'B' : 'A';
+
+  // 4. Once topLayer has fully faded in, silently sync bottomLayer underneath
+  ambientCrossfadeTimeout = setTimeout(() => {
+    bottomLayer.style.backgroundImage = `url("${slide.src}")`;
+    bottomLayer.style.opacity = '1';
+    bottomLayer.style.zIndex = '2';
+    topLayer.style.transition = 'none';
+  }, 4600);
+}
+
+function moveToTrackIndex(newTrackIndex) {
   const track = document.getElementById('heroTrack');
-  const slide = heroSlides[currentHeroSlide];
-  if (!slide) return;
+  if (!track) return;
 
-  // 1. Foreground Push Transition (Clean, slow, graceful glide as in v5.6)
-  if (track) {
-    const slides = track.querySelectorAll('.hero-slide');
-    // Ensure all slides are visible while gliding
-    slides.forEach(s => { s.style.visibility = 'visible'; });
+  // If currently on a clone boundary, instantly complete previous snap
+  if (currentHeroTrackIndex === heroSlides.length + 1) {
+    currentHeroTrackIndex = 1;
+    track.style.transition = 'none';
+    track.style.transform = 'translateX(-100%)';
+    void track.offsetWidth;
+  } else if (currentHeroTrackIndex === 0) {
+    currentHeroTrackIndex = heroSlides.length;
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${heroSlides.length * 100}%)`;
+    void track.offsetWidth;
+  }
 
-    track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
+  isHeroSliding = true;
+  currentHeroTrackIndex = newTrackIndex;
 
+  // Calculate realIndex:
+  let realIndex = 0;
+  if (currentHeroTrackIndex === 0) {
+    realIndex = heroSlides.length - 1;
+  } else if (currentHeroTrackIndex === heroSlides.length + 1) {
+    realIndex = 0;
+  } else {
+    realIndex = currentHeroTrackIndex - 1;
+  }
+  currentHeroSlide = realIndex;
+
+  const slides = track.querySelectorAll('.hero-slide');
+
+  // 1. Ensure slides are visible while gliding
+  slides.forEach(s => { s.style.visibility = 'visible'; });
+
+  // 2. Set is-active class for target slide
+  slides.forEach((s, idx) => {
+    if (idx === currentHeroTrackIndex) {
+      s.classList.add('is-active');
+    } else {
+      s.classList.remove('is-active');
+    }
+  });
+
+  // 3. Sync blur during sliding: Both slide-in and slide-out have identical blur(5px)
+  track.classList.add('is-sliding');
+
+  // 4. Glide track smoothly
+  track.style.transition = 'transform var(--transition-slide)';
+  track.style.transform = `translateX(-${currentHeroTrackIndex * 100}%)`;
+
+  // 5. Halfway through slide (720ms), remove .is-sliding so incoming slide rack-focuses to blur(0px)
+  clearTimeout(slideMotionTimeout);
+  slideMotionTimeout = setTimeout(() => {
+    track.classList.remove('is-sliding');
+  }, 720);
+
+  // 6. Update Ambient Backdrop & Room Details immediately
+  updateHeroAmbientBackdrop(heroSlides[realIndex]);
+  updateHeroDetails();
+  checkStickyBarVisibility();
+
+  // 7. Settle & Silent Clone Reset
+  clearTimeout(slideSettleTimeout);
+  slideSettleTimeout = setTimeout(() => {
+    // If landed on clone of Slide 1 (trackIdx 11):
+    if (currentHeroTrackIndex === heroSlides.length + 1) {
+      currentHeroTrackIndex = 1;
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(-100%)';
+      void track.offsetWidth;
+      track.style.transition = '';
+
+      slides.forEach((s, idx) => {
+        if (idx === 1) s.classList.add('is-active');
+        else s.classList.remove('is-active');
+      });
+    }
+    // If landed on clone of Slide 10 (trackIdx 0):
+    else if (currentHeroTrackIndex === 0) {
+      currentHeroTrackIndex = heroSlides.length; // 10
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${heroSlides.length * 100}%)`;
+      void track.offsetWidth;
+      track.style.transition = '';
+
+      slides.forEach((s, idx) => {
+        if (idx === heroSlides.length) s.classList.add('is-active');
+        else s.classList.remove('is-active');
+      });
+    }
+
+    // Hide non-active slides to prevent any subpixel bleed
     slides.forEach((s, idx) => {
-      if (idx === currentHeroSlide) {
-        s.classList.add('is-active');
-      } else {
-        s.classList.remove('is-active');
+      if (idx !== currentHeroTrackIndex) {
+        s.style.visibility = 'hidden';
       }
     });
 
-    // Once slide transition has completed (~1400ms), hide non-active slides
-    // so no fractional subpixel edge can ever bleed or crack
-    clearTimeout(slideSettleTimeout);
-    slideSettleTimeout = setTimeout(() => {
-      slides.forEach((s, idx) => {
-        if (idx !== currentHeroSlide) {
-          s.style.visibility = 'hidden';
-        }
-      });
-    }, 1450);
-  }
-
-  // 2. Stationary Ambient Background Cross-Fade (Ultra-slow, 100% flicker-free continuous blend)
-  const ambientA = document.getElementById('heroAmbientA');
-  const ambientB = document.getElementById('heroAmbientB');
-  if (ambientA && ambientB) {
-    clearTimeout(ambientCrossfadeTimeout);
-
-    const topLayer = (currentAmbientTarget === 'A') ? ambientB : ambientA;
-    const bottomLayer = (currentAmbientTarget === 'A') ? ambientA : ambientB;
-
-    // 1. Prepare incoming topLayer while 100% invisible (no transition, opacity 0)
-    topLayer.style.transition = 'none';
-    topLayer.style.opacity = '0';
-    topLayer.style.zIndex = '3';
-    topLayer.style.backgroundImage = `url("${slide.src}")`;
-
-    // Ensure bottomLayer stays 100% opaque underneath
-    bottomLayer.style.transition = 'none';
-    bottomLayer.style.opacity = '1';
-    bottomLayer.style.zIndex = '2';
-
-    // 2. Force reflow so browser commits the image and opacity 0
-    void topLayer.offsetWidth;
-
-    // 3. Smoothly fade in topLayer over 4.5s with ultra-gentle curve
-    topLayer.style.transition = 'opacity 4.5s cubic-bezier(0.35, 0, 0.25, 1)';
-    topLayer.style.opacity = '1';
-
-    currentAmbientTarget = (currentAmbientTarget === 'A') ? 'B' : 'A';
-
-    // 4. Once topLayer has fully faded in, silently sync bottomLayer underneath
-    ambientCrossfadeTimeout = setTimeout(() => {
-      bottomLayer.style.backgroundImage = `url("${slide.src}")`;
-      bottomLayer.style.opacity = '1';
-      bottomLayer.style.zIndex = '2';
-      topLayer.style.transition = 'none';
-    }, 4600);
-  }
-
-  // Synchronize room info bar below the photo
-  updateHeroDetails();
-
-  // Re-verify sticky bar overlap on slide change
-  checkStickyBarVisibility();
+    isHeroSliding = false;
+  }, 1450);
 }
 
 function updateHeroDetails() {
@@ -393,28 +485,41 @@ function updateHeroDetails() {
   }
 }
 
-function nextSlide() {
-  currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
-  updateSlideTrack();
+function resetSlideShowTimer() {
+  stopSlideShow();
+  startSlideShow();
 }
 
-function prevSlide() {
-  currentHeroSlide = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
-  updateSlideTrack();
+function nextSlide(isUser = false) {
+  if (isHeroSliding) return;
+  if (isUser) resetSlideShowTimer();
+  moveToTrackIndex(currentHeroTrackIndex + 1);
 }
 
-function goToSlide(index) {
-  currentHeroSlide = index;
-  updateSlideTrack();
+function prevSlide(isUser = false) {
+  if (isHeroSliding) return;
+  if (isUser) resetSlideShowTimer();
+  moveToTrackIndex(currentHeroTrackIndex - 1);
+}
+
+function goToSlide(targetRealIndex, isUser = false) {
+  if (isHeroSliding) return;
+  if (isUser) resetSlideShowTimer();
+  moveToTrackIndex(targetRealIndex + 1);
 }
 
 function startSlideShow() {
   stopSlideShow();
-  heroSlideTimer = setInterval(nextSlide, 6500);
+  heroSlideTimer = setInterval(() => {
+    nextSlide(false);
+  }, 6500);
 }
 
 function stopSlideShow() {
-  if (heroSlideTimer) clearInterval(heroSlideTimer);
+  if (heroSlideTimer) {
+    clearInterval(heroSlideTimer);
+    heroSlideTimer = null;
+  }
 }
 
 

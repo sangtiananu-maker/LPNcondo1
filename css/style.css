@@ -357,6 +357,12 @@ button {
   transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* While sliding: Synchronize blur between slide-in and slide-out edges and bodies */
+.hero-slider-track.is-sliding .hero-slide-fg-img {
+  filter: blur(5px) !important;
+  transition: filter 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
 @media (max-width: 1140px) and (min-width: 901px) {
   .hero-slide-fg-wrap {
     padding-top: 30px;
