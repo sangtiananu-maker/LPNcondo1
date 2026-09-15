@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.scrollTo(0, 0);
   initHeaderScroll();
   initStickyContactBar();
+  initHeroIntroAlignment();
   initHeroSlider();
   initGallery();
   initGalleryScrollControls();
@@ -26,6 +27,49 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiquidGlassRefraction();
   initGalleryAutoScroll();
 });
+
+/* ==========================================================================
+   Hero Intro Text Alignment:
+   - Left edge equals "ห้อง 1 Bedroom (Celida)"
+   - Right edge does not exceed "Scandinavian Warm Minimal • Renovated 100%"
+   ========================================================================== */
+function initHeroIntroAlignment() {
+  const titleEl = document.querySelector('.hero-title');
+  const descEl = document.querySelector('.hero-desc');
+  const roomTitle = document.getElementById('heroDetailTitle');
+  const subText = document.querySelector('.hero-subtitle-text') || document.querySelector('.hero-subtitle-tag');
+  const column = document.querySelector('.hero-floating-column');
+
+  if (!titleEl || !descEl || !roomTitle || !column) return;
+
+  const updateAlignment = () => {
+    if (window.innerWidth > 900) {
+      const columnRect = column.getBoundingClientRect();
+      const roomTitleRect = roomTitle.getBoundingClientRect();
+
+      // 1. Left edge: Exactly matches 'ห้อง 1 Bedroom (Celida)'
+      const targetLeftOffset = Math.max(0, Math.round(roomTitleRect.left - columnRect.left));
+      titleEl.style.paddingLeft = `${targetLeftOffset}px`;
+      descEl.style.paddingLeft = `${targetLeftOffset}px`;
+
+      // 2. Right edge: Must NOT exceed 'Scandinavian Warm Minimal • Renovated 100%'
+      if (subText) {
+        const subTextRect = subText.getBoundingClientRect();
+        const maxAllowedContentWidth = Math.max(240, Math.round(subTextRect.right - roomTitleRect.left));
+        titleEl.style.maxWidth = `${maxAllowedContentWidth + targetLeftOffset}px`;
+        descEl.style.maxWidth = `${maxAllowedContentWidth + targetLeftOffset}px`;
+      }
+    } else {
+      titleEl.style.paddingLeft = '';
+      descEl.style.paddingLeft = '';
+      titleEl.style.maxWidth = '';
+      descEl.style.maxWidth = '';
+    }
+  };
+
+  updateAlignment();
+  window.addEventListener('resize', updateAlignment, { passive: true });
+}
 
 
 /* ==========================================================================
@@ -1385,60 +1429,53 @@ function initDropboxMotion() {
       const centerY = rect.top + rect.height * 0.5;
       const P = centerY / windowH;
 
-      // 1. Ease-In from bottom (P > 0.74)
+      // 1. Ease-In from bottom: reaches 100% settled focus early (at P = 0.90) so user can read immediately
       let enterProgress = 1;
-      if (P > 0.74) {
-        enterProgress = Math.max(0, Math.min(1, (1.12 - P) / 0.38));
+      if (P > 0.90) {
+        enterProgress = Math.max(0, Math.min(1, (1.08 - P) / 0.18));
       }
 
-      // 2. Ease-Out to top (P < 0.26)
+      // 2. Ease-Out to top: stays in 100% settled focus until near the very top (P = 0.10)
       let exitProgress = 1;
-      if (P < 0.26) {
-        exitProgress = Math.max(0, Math.min(1, (P - (-0.12)) / 0.38));
+      if (P < 0.10) {
+        exitProgress = Math.max(0, Math.min(1, (P - (-0.08)) / 0.18));
       }
 
-      // Combined visibility factor V (1 in center reading zone, 0 at top/bottom exit boundaries)
+      // Combined visibility factor V: 1.0 throughout the vast majority of the screen (10% to 90% viewport height)
       const V = Math.min(enterProgress, exitProgress);
 
-      // 3. Scroll-Driven Parallax Depth along Z-Axis:
-      // Distance from viewport vertical center
+      // 3. Scroll-Driven Parallax Depth along Z-Axis (Calm & stable so text is effortless to read):
       const deltaCenter = P - 0.5; // -0.5 (top) to +0.5 (bottom)
+      const parallaxShift = deltaCenter * 14 * (factor - 0.95);
 
-      // Parallax differential travel:
-      // Foreground (factor ~1.32) moves faster along Z-axis than normal scroll
-      // Background (factor ~0.72) lags behind, creating authentic physical depth
-      const parallaxShift = deltaCenter * 32 * (factor - 0.95);
-
-      // Elevation travel at entrance and exit:
+      // Elevation travel at extreme entrance and exit boundaries:
       let elevationTravel = 0;
-      if (P > 0.74) {
-        // Entering from bottom: rises smoothly
-        elevationTravel = (1 - enterProgress) * 36 * factor;
-      } else if (P < 0.26) {
-        // Exiting through top: floats upward
-        elevationTravel = -(1 - exitProgress) * 28 * factor;
+      if (P > 0.90) {
+        elevationTravel = (1 - enterProgress) * 24 * factor;
+      } else if (P < 0.10) {
+        elevationTravel = -(1 - exitProgress) * 20 * factor;
       }
 
       const totalY = elevationTravel + parallaxShift;
 
-      // Opacity: smooth curve
-      const opacity = Math.max(0, Math.min(1, Math.pow(V, 1.25)));
+      // Opacity: 1.0 across 80% of screen
+      const opacity = Math.max(0, Math.min(1, Math.pow(V, 1.2)));
 
-      // Blur: soft optical blur that completely resolves to 0px in focus zone
-      const blur = Math.max(0, (1 - V) * 7.5);
+      // Blur: 0px throughout the entire 80% focus reading zone
+      const blur = Math.max(0, (1 - V) * 6.5);
 
-      // Scale: subtle material breathing scale (0.975 -> 1.0)
-      const scale = 0.975 + 0.025 * V;
+      // Scale: 1.0 throughout the entire 80% focus zone
+      const scale = 0.985 + 0.015 * V;
 
       el.style.setProperty('--p-y', `${totalY.toFixed(1)}px`);
       el.style.setProperty('--p-opacity', opacity.toFixed(3));
       el.style.setProperty('--p-blur', `${blur.toFixed(1)}px`);
       el.style.setProperty('--p-scale', scale.toFixed(3));
 
-      // Toggle focus class for masked headline trigger (animates every time scrolling back and forth)
-      if (V > 0.35) {
+      // Toggle focus class for masked headline trigger
+      if (V > 0.6) {
         el.classList.add('is-in-focus');
-      } else {
+      } else if (V < 0.15) {
         el.classList.remove('is-in-focus');
       }
     });

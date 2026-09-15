@@ -342,12 +342,18 @@ button {
   .hero-title {
     font-size: clamp(1.35rem, 2.1vw, 1.7rem);
     line-height: 1.18;
-    padding: 0;
+    padding-left: 18px;
+    padding-right: 18px;
+    max-width: 295px;
+    box-sizing: border-box;
   }
   .hero-desc {
     font-size: 0.78rem;
     line-height: 1.4;
-    padding: 0;
+    padding-left: 18px;
+    padding-right: 18px;
+    max-width: 295px;
+    box-sizing: border-box;
   }
   .hero-subtitle-tag {
     font-size: clamp(0.58rem, 0.78vw, 0.66rem);
@@ -530,11 +536,19 @@ button {
   margin-bottom: 2px;
 }
 
+.hero-subtitle-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .hero-title {
   width: 100%;
-  max-width: 100%;
+  max-width: 325px;
   box-sizing: border-box;
-  padding: 0;
+  padding-left: 20px;
+  padding-right: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
   font-family: var(--font-th), var(--font-en);
   font-size: clamp(1.65rem, 2.3vw, 2.5rem);
   font-weight: 800;
@@ -564,9 +578,12 @@ button {
 
 .hero-desc {
   width: 100%;
-  max-width: 100%;
+  max-width: 325px;
   box-sizing: border-box;
-  padding: 0;
+  padding-left: 20px;
+  padding-right: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
   font-size: clamp(0.8rem, 0.96vw, 0.92rem);
   color: #2D3A49;
   line-height: 1.5;
