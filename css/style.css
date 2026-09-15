@@ -332,13 +332,17 @@ button {
   object-fit: contain;
   object-position: right center;
   display: block;
-  border-radius: 0;
+  border-radius: 28px;
   box-shadow: none;
   border: none;
   pointer-events: auto;
-  /* Ultra-Soft Atmospheric Blend: Deep progressive feather smoothly dissolves photo into ambient backdrop */
-  -webkit-mask-image: radial-gradient(ellipse 86% 82% at 50% 50%, #000000 45%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.72) 70%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0.15) 92%, transparent 100%);
-  mask-image: radial-gradient(ellipse 86% 82% at 50% 50%, #000000 45%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.72) 70%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0.15) 92%, transparent 100%);
+  /* Squircle Shape Mask with Deep Feathered Edge Blur Blend */
+  -webkit-mask-image: url('../images/hero-squircle-mask.png');
+  mask-image: url('../images/hero-squircle-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
   filter: blur(5px);
   opacity: 1;
   transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
@@ -862,11 +866,16 @@ button {
     height: 100%;
     object-fit: cover;
     aspect-ratio: 4 / 3;
-    border-radius: 0;
+    border-radius: 20px;
     border: none;
     box-shadow: none;
-    -webkit-mask-image: radial-gradient(ellipse 86% 82% at 50% 50%, #000000 45%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.72) 70%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0.15) 92%, transparent 100%);
-    mask-image: radial-gradient(ellipse 86% 82% at 50% 50%, #000000 45%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.72) 70%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0.15) 92%, transparent 100%);
+    /* Squircle Shape Mask with Deep Feathered Edge Blur Blend */
+    -webkit-mask-image: url('../images/hero-squircle-mask.png');
+    mask-image: url('../images/hero-squircle-mask.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
     filter: blur(5px);
     opacity: 1;
     transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);

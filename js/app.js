@@ -171,15 +171,23 @@ function initHeroSlider() {
 
   if (!track || !heroSlides || heroSlides.length === 0) return;
 
+  // Preload all slideshow images for instant, flicker-free rendering
+  heroSlides.forEach(s => {
+    const preImg = new Image();
+    preImg.src = s.src;
+  });
+
   // Initialize Stationary Ambient Blur Backdrop (Layer A active on top)
   if (ambientA) {
     ambientA.style.backgroundImage = `url("${heroSlides[0].src}")`;
-    ambientA.classList.add('active');
+    ambientA.style.opacity = '1';
     ambientA.style.zIndex = '2';
+    ambientA.style.transition = 'none';
   }
   if (ambientB) {
-    ambientB.classList.remove('active');
+    ambientB.style.opacity = '0';
     ambientB.style.zIndex = '1';
+    ambientB.style.transition = 'none';
   }
   currentAmbientTarget = 'A';
 
@@ -290,32 +298,42 @@ function updateSlideTrack() {
     });
   }
 
-  // 2. Stationary Ambient Background Cross-Fade (Ultra-slow, imperceptible, zero brightness dip)
+  // 2. Stationary Ambient Background Cross-Fade (Ultra-slow, 100% flicker-free continuous blend)
   const ambientA = document.getElementById('heroAmbientA');
   const ambientB = document.getElementById('heroAmbientB');
   if (ambientA && ambientB) {
     clearTimeout(ambientCrossfadeTimeout);
-    if (currentAmbientTarget === 'A') {
-      ambientB.style.backgroundImage = `url("${slide.src}")`;
-      ambientB.style.zIndex = '3';
-      ambientA.style.zIndex = '2';
-      ambientB.classList.add('active');
-      currentAmbientTarget = 'B';
-      ambientCrossfadeTimeout = setTimeout(() => {
-        ambientA.classList.remove('active');
-        ambientA.style.zIndex = '1';
-      }, 4400);
-    } else {
-      ambientA.style.backgroundImage = `url("${slide.src}")`;
-      ambientA.style.zIndex = '3';
-      ambientB.style.zIndex = '2';
-      ambientA.classList.add('active');
-      currentAmbientTarget = 'A';
-      ambientCrossfadeTimeout = setTimeout(() => {
-        ambientB.classList.remove('active');
-        ambientB.style.zIndex = '1';
-      }, 4400);
-    }
+
+    const topLayer = (currentAmbientTarget === 'A') ? ambientB : ambientA;
+    const bottomLayer = (currentAmbientTarget === 'A') ? ambientA : ambientB;
+
+    // 1. Prepare incoming topLayer while 100% invisible (no transition, opacity 0)
+    topLayer.style.transition = 'none';
+    topLayer.style.opacity = '0';
+    topLayer.style.zIndex = '3';
+    topLayer.style.backgroundImage = `url("${slide.src}")`;
+
+    // Ensure bottomLayer stays 100% opaque underneath
+    bottomLayer.style.transition = 'none';
+    bottomLayer.style.opacity = '1';
+    bottomLayer.style.zIndex = '2';
+
+    // 2. Force reflow so browser commits the image and opacity 0
+    void topLayer.offsetWidth;
+
+    // 3. Smoothly fade in topLayer over 4.5s with ultra-gentle curve
+    topLayer.style.transition = 'opacity 4.5s cubic-bezier(0.35, 0, 0.25, 1)';
+    topLayer.style.opacity = '1';
+
+    currentAmbientTarget = (currentAmbientTarget === 'A') ? 'B' : 'A';
+
+    // 4. Once topLayer has fully faded in, silently sync bottomLayer underneath
+    ambientCrossfadeTimeout = setTimeout(() => {
+      bottomLayer.style.backgroundImage = `url("${slide.src}")`;
+      bottomLayer.style.opacity = '1';
+      bottomLayer.style.zIndex = '2';
+      topLayer.style.transition = 'none';
+    }, 4600);
   }
 
   // Synchronize room info bar below the photo
