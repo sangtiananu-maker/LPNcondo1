@@ -418,7 +418,6 @@ function filterByType(type, scroll = true) {
 function applyFilter(filter) {
   activeFilter = filter;
   const grid = document.getElementById('galleryGrid');
-  const indicator = document.getElementById('galleryCountIndicator');
   const summaryBox = document.getElementById('activeUnitSummary');
   if (!grid) return;
 
@@ -492,10 +491,6 @@ function applyFilter(filter) {
     item.addEventListener('click', () => openLightbox(idx));
     grid.appendChild(item);
   });
-
-  if (indicator) {
-    indicator.textContent = `แสดงรูปภาพทั้งหมด ${photos.length} รูป (แตะรูปเพื่อดูภาพขยาย)`;
-  }
 
   // Update gallery auto-scroll state based on active filter
   if (typeof updateGalleryAutoScrollState === 'function') {
@@ -1120,6 +1115,159 @@ document.addEventListener('click', function(e) {
 /* ==========================================================================
    1. Dropbox-Style Motion System (Orchestrated Entrance & Scroll Reveals)
    ========================================================================== */
+
+/* Masked Split-Text Headline Reveal */
+function initMaskedHeadlines() {
+  const titles = document.querySelectorAll('.section-title');
+  titles.forEach(title => {
+    if (title.classList.contains('masked-headline')) return;
+    title.classList.add('masked-headline');
+
+    const html = title.innerHTML.trim();
+    if (html.includes('<br>') || html.includes('<br/>')) {
+      const parts = html.split(/<br\s*\/?>/i);
+      title.innerHTML = parts.map((part, i) => 
+        `<span class="headline-mask"><span class="headline-line" style="--line-i: ${i}">${part.trim()}</span></span>`
+      ).join('');
+    } else {
+      title.innerHTML = `<span class="headline-mask"><span class="headline-line" style="--line-i: 0">${html}</span></span>`;
+    }
+  });
+}
+
+/* Dynamic Scroll Velocity & Position Pacing */
+function initScrollVelocityPacing() {
+  let lastY = window.pageYOffset || document.documentElement.scrollTop;
+  let lastTime = performance.now();
+  let resetTimer = null;
+
+  const updatePacing = () => {
+    const currentY = window.pageYOffset || document.documentElement.scrollTop;
+    const now = performance.now();
+    const deltaY = Math.abs(currentY - lastY);
+    const deltaTime = Math.max(1, now - lastTime);
+    const velocity = deltaY / deltaTime; // pixels/ms
+
+    lastY = currentY;
+    lastTime = now;
+
+    // Fast scrolling (> 1.8 px/ms): faster transitions so elements keep up smoothly (0.75s)
+    // Moderate scrolling (0.6 - 1.8 px/ms): 0.95s
+    // Slow, deliberate reading (< 0.6 px/ms) or stopped: 1.25s (rich, slow-motion blur clarity)
+    let dur = 1.25;
+    if (velocity > 1.8) {
+      dur = 0.75;
+    } else if (velocity > 1.0) {
+      dur = 0.92;
+    } else if (velocity > 0.4) {
+      dur = 1.1;
+    } else {
+      dur = 1.25;
+    }
+
+    document.documentElement.style.setProperty('--motion-duration', `${dur}s`);
+    document.documentElement.style.setProperty('--motion-blur-duration', `${(dur * 0.9).toFixed(2)}s`);
+    document.documentElement.style.setProperty('--motion-headline-duration', `${(dur * 0.82).toFixed(2)}s`);
+
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      // Revert to calm, ultra-smooth motion when scrolling stops
+      document.documentElement.style.setProperty('--motion-duration', '1.25s');
+      document.documentElement.style.setProperty('--motion-blur-duration', '1.15s');
+      document.documentElement.style.setProperty('--motion-headline-duration', '0.95s');
+    }, 180);
+  };
+
+  window.addEventListener('scroll', updatePacing, { passive: true });
+}
+
+/* Simulated Ghost Cursor on Direct LINE Contact Card */
+function initGhostCursorSimulation() {
+  const noticeCard = document.getElementById('pricingTrustNotice') || document.querySelector('.pricing-trust-notice');
+  const targetBtn = document.getElementById('btnLineInquireDirect') || document.querySelector('.btn-line-inquire-direct');
+  const cursor = document.getElementById('ghostCursor') || (noticeCard && noticeCard.querySelector('.ghost-cursor'));
+
+  if (!noticeCard || !targetBtn || !cursor) return;
+
+  let hasRun = false;
+  let simulationLoop = null;
+
+  function runSimulation() {
+    const cardRect = noticeCard.getBoundingClientRect();
+    const btnRect = targetBtn.getBoundingClientRect();
+
+    // Calculate center of button relative to the notice card container
+    const targetX = (btnRect.left + btnRect.width * 0.5) - cardRect.left;
+    const targetY = (btnRect.top + btnRect.height * 0.5) - cardRect.top;
+
+    // Start position: entering gracefully from bottom-right of the card
+    const startX = Math.min(cardRect.width - 24, targetX + 130);
+    const startY = Math.min(cardRect.height - 12, targetY + 65);
+
+    // Initial silent reset
+    cursor.style.transition = 'none';
+    cursor.style.transform = `translate3d(${startX}px, ${startY}px, 0)`;
+    cursor.style.opacity = '0';
+    cursor.classList.remove('is-pressing');
+    targetBtn.classList.remove('simulated-click');
+
+    // 1. Fade in and glide smoothly towards the button center
+    requestAnimationFrame(() => {
+      cursor.style.transition = 'opacity 0.4s ease, transform 0.95s cubic-bezier(0.16, 1, 0.3, 1)';
+      cursor.style.opacity = '1';
+      cursor.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+
+      // 2. Arrive at button -> Trigger Click Simulation
+      setTimeout(() => {
+        cursor.classList.add('is-pressing');
+        targetBtn.classList.add('simulated-click');
+
+        // 3. Release click after 220ms
+        setTimeout(() => {
+          cursor.classList.remove('is-pressing');
+          targetBtn.classList.remove('simulated-click');
+
+          // 4. Glide away towards top-right and fade out
+          setTimeout(() => {
+            const exitX = targetX + 45;
+            const exitY = Math.max(6, targetY - 45);
+            cursor.style.transition = 'opacity 0.55s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)';
+            cursor.style.transform = `translate3d(${exitX}px, ${exitY}px, 0)`;
+            cursor.style.opacity = '0';
+          }, 350);
+        }, 220);
+      }, 980);
+    });
+  }
+
+  // Observe when notice card enters viewport
+  if ('IntersectionObserver' in window) {
+    const cursorObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!hasRun) {
+            hasRun = true;
+            // Delay slightly after card's entrance animation finishes
+            setTimeout(runSimulation, 600);
+          }
+
+          if (!simulationLoop) {
+            // Elegant periodic rerun every 12s if user remains on this section
+            simulationLoop = setInterval(() => {
+              const rect = noticeCard.getBoundingClientRect();
+              if (rect.top < window.innerHeight && rect.bottom > 0) {
+                runSimulation();
+              }
+            }, 12000);
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+
+    cursorObserver.observe(noticeCard);
+  }
+}
+
 function initDropboxMotion() {
   // Check reduced motion preference
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1129,8 +1277,16 @@ function initDropboxMotion() {
     return;
   }
 
-  // Identify Sections, Cards, and Elements for Scroll Reveal (excluding hero slideshow)
+  // 1. Initialize Masked Split-Text Headlines
+  initMaskedHeadlines();
 
+  // 2. Dynamic Scroll Velocity & Position Pacing
+  initScrollVelocityPacing();
+
+  // 3. Simulated Ghost Cursor on Direct Inquiry Notice Card
+  initGhostCursorSimulation();
+
+  // 4. Identify Sections, Cards, and Elements for Scroll Reveal (excluding hero slideshow)
   const revealTargets = [
     '.section-head',
     '.pricing-card',
@@ -1155,7 +1311,7 @@ function initDropboxMotion() {
     }
   });
 
-  // Apply Stagger indices to grid groups
+  // Apply Stagger indices to grid groups (80ms spacing)
   const gridContainers = [
     '.pricing-grid',
     '.features-grid',
@@ -1174,11 +1330,18 @@ function initDropboxMotion() {
     });
   });
 
-  // 3. High-Performance IntersectionObserver
+  // 5. High-Performance IntersectionObserver with scroll-position awareness
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // Calculate entry position relative to viewport height to modulate motion
+          const rect = entry.boundingClientRect;
+          const viewportH = window.innerHeight || document.documentElement.clientHeight;
+          const posRatio = Math.max(0, Math.min(1, rect.top / viewportH));
+
+          // Set nuanced entry offset based on position
+          entry.target.style.setProperty('--entry-offset', `${Math.round(18 + posRatio * 18)}px`);
           entry.target.classList.add('is-revealed');
           obs.unobserve(entry.target); // Unobserve to liberate GPU memory
         }

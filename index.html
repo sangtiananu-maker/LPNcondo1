@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="css/style.css?v=5.1">
+  <link rel="stylesheet" href="css/style.css?v=5.2">
 </head>
 <body>
 
@@ -230,14 +230,23 @@
           </div>
         </div>
 
-        <!-- Direct Owner & Waitlist Notice -->
-        <div class="pricing-trust-notice">
+        <!-- Direct Owner & Waitlist Notice (with Simulated Ghost Cursor Interaction) -->
+        <div class="pricing-trust-notice" id="pricingTrustNotice">
+          <!-- Animated Ghost Cursor -->
+          <div class="ghost-cursor" id="ghostCursor" aria-hidden="true">
+            <svg class="ghost-cursor-pointer" width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M4 3L11 20L14 13L21 10L4 3Z" fill="#1C2229" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+            <span class="ghost-click-ripple"></span>
+          </div>
+
           <div class="notice-icon">🛡️</div>
           <div class="notice-text">
             <strong>ดูแลโดยเจ้าของโดยตรง 100%</strong>
             <p>ขณะนี้ยังไม่มีห้องว่าง สนใจจองห้องติดต่อเจ้าของห้องได้โดยตรงครับ</p>
           </div>
-          <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener" class="btn-line-inquire-direct">
+          <a href="https://line.me/ti/p/~sangtian5243?text=%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%20%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%84%E0%B8%AB%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%9A%2F%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener" class="btn-line-inquire-direct" id="btnLineInquireDirect">
+            <span class="btn-ripple-wave"></span>
             <span>💬 ทัก LINE สอบถามคิวว่าง</span>
           </a>
         </div>
@@ -385,11 +394,6 @@
           </button>
         </div>
 
-        <!-- Horizontal Swipe Hint & Counter Indicator -->
-        <div class="gallery-bottom-bar">
-          <p class="photo-count-indicator" id="galleryCountIndicator">
-            กำลังโหลดรูปภาพ...
-          </p>
         </div>
       </div>
     </section>
@@ -900,7 +904,7 @@
   </footer>
 
   <!-- Scripts: Standard relative scripts with cache-busting version -->
-  <script src="js/rooms-data.js?v=5.1"></script>
-  <script src="js/app.js?v=5.1"></script>
+  <script src="js/rooms-data.js?v=5.2"></script>
+  <script src="js/app.js?v=5.2"></script>
 </body>
 </html>

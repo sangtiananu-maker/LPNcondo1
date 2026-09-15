@@ -54,6 +54,10 @@
   --transition-ambient: 2.2s cubic-bezier(0.33, 1, 0.68, 1);
   --ease-dropbox: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --motion-duration: 1.15s;
+  --motion-blur-duration: 1.05s;
+  --motion-headline-duration: 0.95s;
+  --motion-stagger-gap: 80ms;
   --lens-angle: 135deg;
 }
 
@@ -1531,31 +1535,31 @@ button {
   padding: 8px 4px 14px;
   cursor: grab;
   user-select: none;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(179, 134, 97, 0.45) rgba(0, 0, 0, 0.04);
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar IE & Edge */
 }
 
 .gallery-grid:active {
   cursor: grabbing;
 }
 
-/* Custom Sleek Scrollbar */
+/* Completely Hide Gallery Scrollbar (Webkit / Chrome / Safari / Edge) */
 .gallery-grid::-webkit-scrollbar {
-  height: 6px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-.gallery-grid::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: var(--radius-pill);
-}
-
+.gallery-grid::-webkit-scrollbar-track,
 .gallery-grid::-webkit-scrollbar-thumb {
-  background: rgba(179, 134, 97, 0.4);
-  border-radius: var(--radius-pill);
+  display: none !important;
+  background: transparent !important;
 }
 
-.gallery-grid::-webkit-scrollbar-thumb:hover {
-  background: var(--color-wood);
+/* Hide Photo Counter Bar & Indicator Across All Tabs */
+.gallery-bottom-bar,
+.photo-count-indicator {
+  display: none !important;
 }
 
 @media (max-width: 640px) {
@@ -3439,6 +3443,8 @@ button {
 
 /* Pricing Section Trust & Waitlist Banner */
 .pricing-trust-notice {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3479,6 +3485,8 @@ button {
 }
 
 .btn-line-inquire-direct {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -3490,7 +3498,10 @@ button {
   border-radius: var(--radius-pill);
   box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
   white-space: nowrap;
-  transition: all var(--transition-fast);
+  transition: transform 0.22s var(--ease-dropbox),
+              box-shadow 0.22s var(--ease-dropbox),
+              background-color 0.2s ease;
+  will-change: transform, box-shadow;
 }
 
 .btn-line-inquire-direct:hover {
@@ -3498,6 +3509,101 @@ button {
   color: #FFFFFF;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(6, 199, 85, 0.4);
+}
+
+/* Simulated Click on Button: Exactly 2% scale-down with active ripple */
+.btn-line-inquire-direct.simulated-click {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 7px rgba(6, 199, 85, 0.5) !important;
+  background: #05b34c !important;
+}
+
+.btn-line-inquire-direct .btn-ripple-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 72%);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.btn-line-inquire-direct.simulated-click .btn-ripple-wave {
+  animation: btnLineDirectRipple 0.6s ease-out forwards;
+}
+
+@keyframes btnLineDirectRipple {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(9);
+  }
+}
+
+/* Simulated Ghost Cursor */
+.ghost-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.45s ease,
+              transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.28));
+  will-change: left, top, opacity, transform;
+}
+
+.ghost-cursor-pointer {
+  display: block;
+  transform-origin: 4px 3px;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ghost-cursor.is-pressing .ghost-cursor-pointer {
+  transform: scale(0.85);
+}
+
+.ghost-click-ripple {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(6, 199, 85, 0.8);
+  background: rgba(6, 199, 85, 0.22);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.ghost-cursor.is-pressing .ghost-click-ripple {
+  animation: ghostCursorRingPulse 0.52s ease-out forwards;
+}
+
+@keyframes ghostCursorRingPulse {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
 }
 
 /* Gallery Unit Tags & LINE Action */
@@ -3633,12 +3739,12 @@ button {
 /* Base state: subtle vertical rise + soft material scale + optical blur */
 .dropbox-reveal {
   opacity: 0;
-  transform: translate3d(0, 24px, 0) scale(0.982);
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  transition: opacity 0.75s var(--ease-dropbox),
-              transform 0.75s var(--ease-dropbox),
-              filter 0.7s var(--ease-dropbox);
+  transform: translate3d(0, 32px, 0) scale(0.975);
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  transition: opacity var(--motion-duration, 1.15s) var(--ease-dropbox),
+              transform var(--motion-duration, 1.15s) var(--ease-dropbox),
+              filter var(--motion-blur-duration, 1.05s) var(--ease-dropbox);
   will-change: opacity, transform, filter;
   backface-visibility: hidden;
 }
@@ -3654,12 +3760,12 @@ button {
 /* Dropbox Editorial Material Canvas Scale (Background containers expand seamlessly) */
 .dropbox-material-scale {
   opacity: 0;
-  transform: scale(0.978) translate3d(0, 16px, 0);
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
-  transition: opacity 0.85s var(--ease-dropbox),
-              transform 0.85s var(--ease-dropbox),
-              filter 0.75s var(--ease-dropbox);
+  transform: scale(0.972) translate3d(0, 22px, 0);
+  filter: blur(7px);
+  -webkit-filter: blur(7px);
+  transition: opacity calc(var(--motion-duration, 1.15s) * 1.08) var(--ease-dropbox),
+              transform calc(var(--motion-duration, 1.15s) * 1.08) var(--ease-dropbox),
+              filter var(--motion-blur-duration, 1.05s) var(--ease-dropbox);
   will-change: opacity, transform, filter;
   backface-visibility: hidden;
 }
@@ -3671,9 +3777,47 @@ button {
   -webkit-filter: blur(0px);
 }
 
-/* Staggered Delay Helpers for Grid Children */
+/* ==========================================================================
+   Typography: Masked Split-Text Reveal for Headlines
+   ========================================================================== */
+.section-title.masked-headline {
+  overflow: visible;
+}
+
+.headline-mask {
+  display: block;
+  overflow: hidden;
+  line-height: 1.25;
+  padding-top: 2px;
+  padding-bottom: 6px;
+  margin-bottom: -4px;
+}
+
+.headline-line {
+  display: block;
+  transform: translate3d(0, 115%, 0);
+  opacity: 0;
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+  transition: transform var(--motion-headline-duration, 0.95s) var(--ease-dropbox),
+              opacity var(--motion-headline-duration, 0.95s) var(--ease-dropbox),
+              filter calc(var(--motion-headline-duration, 0.95s) * 0.85) var(--ease-dropbox);
+  transition-delay: calc(var(--line-i, 0) * 80ms);
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+.section-head.is-revealed .headline-line,
+.section-title.is-revealed .headline-line {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
+
+/* Staggered Delay Helpers for Grid Children (80ms spacing) */
 .stagger-child {
-  transition-delay: calc(var(--stagger-i, 0) * 75ms);
+  transition-delay: calc(var(--stagger-i, 0) * var(--motion-stagger-gap, 80ms));
 }
 
 /* Gallery Marquee Auto-Scroll Track State */
@@ -3685,28 +3829,33 @@ button {
 /* Mobile / Touch Optimizations for Dropbox Motion */
 @media (max-width: 768px) {
   .dropbox-reveal {
-    transform: translate3d(0, 14px, 0) scale(0.988);
-    filter: blur(3px);
-    -webkit-filter: blur(3px);
-    transition: opacity 0.55s var(--ease-dropbox),
-                transform 0.55s var(--ease-dropbox),
-                filter 0.5s var(--ease-dropbox);
+    transform: translate3d(0, 20px, 0) scale(0.982);
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    transition: opacity calc(var(--motion-duration, 1.15s) * 0.85) var(--ease-dropbox),
+                transform calc(var(--motion-duration, 1.15s) * 0.85) var(--ease-dropbox),
+                filter calc(var(--motion-blur-duration, 1.05s) * 0.85) var(--ease-dropbox);
   }
 
   .dropbox-material-scale {
-    transform: scale(0.985) translate3d(0, 10px, 0);
-    filter: blur(3px);
-    -webkit-filter: blur(3px);
-    transition: opacity 0.6s var(--ease-dropbox),
-                transform 0.6s var(--ease-dropbox),
-                filter 0.55s var(--ease-dropbox);
+    transform: scale(0.98) translate3d(0, 14px, 0);
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    transition: opacity calc(var(--motion-duration, 1.15s) * 0.9) var(--ease-dropbox),
+                transform calc(var(--motion-duration, 1.15s) * 0.9) var(--ease-dropbox),
+                filter calc(var(--motion-blur-duration, 1.05s) * 0.85) var(--ease-dropbox);
+  }
+
+  .headline-mask {
+    padding-bottom: 4px;
   }
 }
 
 /* Reduced Motion Preference Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .dropbox-reveal,
-  .dropbox-material-scale {
+  .dropbox-material-scale,
+  .headline-line {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -3715,6 +3864,9 @@ button {
   .gallery-grid.is-auto-scrolling {
     scroll-behavior: smooth !important;
     scroll-snap-type: x mandatory !important;
+  }
+  .ghost-cursor {
+    display: none !important;
   }
 }
 
