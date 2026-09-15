@@ -1740,6 +1740,27 @@ function initDropboxMotion() {
         const el = item.el;
         const factor = item.factor;
 
+        const isBubbleZoom = el.matches('.feature-item-card, .facility-card');
+
+        if (isBubbleZoom) {
+          // Offscreen below or before entrance trigger
+          if (isOffscreenBelow || secRect.top > windowH * 0.90) {
+            el.classList.remove('is-zoomed-in');
+            el.classList.remove('is-in-focus');
+          } else if (secRect.top <= windowH * 0.88 && secRect.bottom > exitBoundary) {
+            // Inside reading & focus zone: trigger breath in / zoom in sequentially
+            el.classList.add('is-zoomed-in');
+            el.classList.add('is-in-focus');
+          } else if (secRect.bottom <= exitBoundary) {
+            // Respect section exit barrier: don't dismiss until section fully departs
+            if (secRect.bottom < -100) {
+              el.classList.remove('is-zoomed-in');
+              el.classList.remove('is-in-focus');
+            }
+          }
+          return;
+        }
+
         if (isOffscreenBelow) {
           el.style.setProperty('--p-y', `${Math.round(34 * factor)}px`);
           el.style.setProperty('--p-opacity', '0');
@@ -1880,6 +1901,8 @@ function initGalleryAutoScroll() {
   if (!grid) return;
 
   const scrollSpeed = 0.55; // Pixels per frame (buttery-smooth, calm editorial pace)
+  let currentScrollLeft = grid.scrollLeft || 0;
+  let isAccumulatorReady = false;
 
   const stepAutoScroll = () => {
     const now = Date.now();
@@ -1890,17 +1913,27 @@ function initGalleryAutoScroll() {
       const halfWidth = grid.scrollWidth / 2;
 
       if (halfWidth > 20) {
-        // Increment continuous scroll position
-        grid.scrollLeft += scrollSpeed;
+        if (!isAccumulatorReady) {
+          currentScrollLeft = grid.scrollLeft;
+          isAccumulatorReady = true;
+        }
+
+        // Increment continuous float position (maintains sub-pixel precision across WebKit & Blink)
+        currentScrollLeft += scrollSpeed;
 
         // Truly seamless infinite loop: when reaching the end of the original set,
         // subtract halfWidth seamlessly so Column 1 follows continuously with zero cut
-        if (grid.scrollLeft >= halfWidth) {
-          grid.scrollLeft -= halfWidth;
+        if (currentScrollLeft >= halfWidth) {
+          currentScrollLeft -= halfWidth;
         }
+
+        // WebKit (Safari & Chrome on iPad/iOS) truncates sub-pixel scrollLeft to integers.
+        // By rounding the JavaScript float accumulator, WebKit advances every 1-2 frames reliably!
+        grid.scrollLeft = Math.round(currentScrollLeft);
       }
     } else {
       grid.classList.remove('is-auto-scrolling');
+      currentScrollLeft = grid.scrollLeft;
     }
 
     galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
@@ -1908,24 +1941,32 @@ function initGalleryAutoScroll() {
 
   // Bidirectional seamless scroll wrap on manual drag or swipe
   grid.addEventListener('scroll', () => {
+    if (!grid.classList.contains('is-auto-scrolling')) {
+      currentScrollLeft = grid.scrollLeft;
+    }
     const halfWidth = grid.scrollWidth / 2;
     if (halfWidth > 20) {
       if (grid.scrollLeft >= halfWidth * 1.9) {
         grid.scrollLeft -= halfWidth;
+        currentScrollLeft = grid.scrollLeft;
       } else if (grid.scrollLeft <= 1) {
         grid.scrollLeft += halfWidth;
+        currentScrollLeft = grid.scrollLeft;
       }
     }
   }, { passive: true });
 
-  // Hover Pause
-  grid.addEventListener('mouseenter', () => {
+  // Hover Pause (Pointer Events: ignore touch emulations on iPad/iOS so taps don't freeze auto-scroll)
+  grid.addEventListener('pointerenter', (e) => {
+    if (e.pointerType === 'touch') return;
     isUserInteractingGallery = true;
     grid.classList.remove('is-auto-scrolling');
   });
 
-  grid.addEventListener('mouseleave', () => {
+  grid.addEventListener('pointerleave', (e) => {
+    if (e.pointerType === 'touch') return;
     isUserInteractingGallery = false;
+    currentScrollLeft = grid.scrollLeft;
   });
 
   // Touch Interactions
@@ -1937,6 +1978,7 @@ function initGalleryAutoScroll() {
 
   grid.addEventListener('touchend', () => {
     isUserInteractingGallery = false;
+    currentScrollLeft = grid.scrollLeft;
   }, { passive: true });
 
   // Start continuous loop

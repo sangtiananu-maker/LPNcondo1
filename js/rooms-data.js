@@ -110,7 +110,7 @@ const ROOMS_DATA = {
       { icon: "tv", th: "Smart TV จอใหญ่ (รองรับ Netflix, YouTube)", en: "Smart TV (Supports Netflix, YouTube)" },
       { icon: "disc", th: "เครื่องซักผ้า ฝาหน้า/ฝาบน ในห้องส่วนตัว", en: "Private Washing Machine in Unit" },
       { icon: "box", th: "ตู้เย็น 2 ประตู Inverter เย็นฉ่ำ", en: "2-Door Inverter Refrigerator" },
-      { icon: "zap", th: "ไมโครเวฟ + เครื่องทำน้ำอุ่นติดตั้งพร้อม", en: "Microwave Oven + Water Heater in Bathroom" }
+      { icon: "microwave", th: "ไมโครเวฟ + เครื่องทำน้ำอุ่นติดตั้งพร้อม", en: "Microwave Oven + Water Heater in Bathroom" }
     ],
     facilities: [
       { icon: "droplet", titleTh: "สระว่ายน้ำ", titleEn: "Swimming Pool", descTh: "สระว่ายน้ำส่วนกลางขนาดใหญ่ บรรยากาศร่มรื่น", descEn: "Large communal swimming pool with relaxing ambiance" },

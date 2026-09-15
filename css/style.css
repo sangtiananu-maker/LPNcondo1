@@ -3960,10 +3960,55 @@ button {
   transition-delay: calc(var(--stagger-i, 0) * var(--motion-stagger-gap, 80ms));
 }
 
-/* Gallery Marquee Auto-Scroll Track State */
+/* Gallery Marquee Auto-Scroll Track State (WebKit & Standards) */
 .gallery-grid.is-auto-scrolling {
   scroll-behavior: auto !important; /* Continuous pixel-by-pixel drift without stepping */
   scroll-snap-type: none !important; /* Disable snapping while marquee is active */
+  -webkit-scroll-snap-type: none !important;
+}
+
+/* ==========================================================================
+   Breath In / Zoom In Motion for Feature & Facility Cards (Bubbles)
+   - Organic breath-in expansion from scale(0.76) to scale(1)
+   - Crisp blur clearing (blur(8px) -> blur(0px))
+   - Sequential left-to-right cascade (stagger-i * 95ms)
+   ========================================================================== */
+.feature-item-card.parallax-item,
+.facility-card.parallax-item {
+  transform: scale(0.76) translate3d(0, 0, 0);
+  opacity: 0;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  transform-origin: center center;
+  transition: transform 0.65s cubic-bezier(0.2, 1.18, 0.38, 1),
+              opacity 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s ease,
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+  transition-delay: 0s;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+.feature-item-card.parallax-item.is-zoomed-in,
+.facility-card.parallax-item.is-zoomed-in {
+  transform: scale(1) translate3d(0, 0, 0);
+  opacity: 1;
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+  transition-delay: calc(var(--stagger-i, 0) * var(--motion-stagger-gap, 95ms));
+}
+
+/* Instant hover response without stagger delay */
+.feature-item-card.parallax-item.is-zoomed-in:hover,
+.facility-card.parallax-item.is-zoomed-in:hover {
+  transform: scale(1.025) translateY(-2px);
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+  transition-delay: 0s !important;
 }
 
 /* Mobile / Touch Optimizations for Parallax Motion */
@@ -3981,7 +4026,9 @@ button {
 
 /* Reduced Motion Preference Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .parallax-item {
+  .parallax-item,
+  .feature-item-card.parallax-item,
+  .facility-card.parallax-item {
     transform: none !important;
     opacity: 1 !important;
     filter: none !important;
@@ -3996,6 +4043,7 @@ button {
   .gallery-grid.is-auto-scrolling {
     scroll-behavior: smooth !important;
     scroll-snap-type: x mandatory !important;
+    -webkit-scroll-snap-type: x mandatory !important;
   }
   .ghost-cursor {
     display: none !important;
