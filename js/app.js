@@ -1343,141 +1343,253 @@ function initDropboxMotion() {
 
   if (prefersReduced) return;
 
-  // 4. Setup Parallax Elements and Assign Z-Axis Depth Tiers
-  // Depth Factors:
-  // - Foreground (fg, factor ~1.32): floating badges, pills, buttons, icons (move faster along Z-axis)
-  // - Midground (mg, factor ~1.00): cards, headline blocks, feature items (standard elevation)
-  // - Background (bg, factor ~0.72): large canvas containers, feature banners, backdrop cards (slower drift)
-  const parallaxRegistry = [];
-
-  // Register Background tier (Canvas Containers)
-  document.querySelectorAll('.feature-banner, .main-location-card, .terms-card, .pricing-trust-notice, .video-vlog-layout').forEach(el => {
-    el.classList.add('parallax-item');
-    el.setAttribute('data-depth', 'bg');
-    parallaxRegistry.push({ el, factor: 0.72, depth: 'bg' });
-  });
-
-  // Register Midground tier (Cards & Section Heads)
-  document.querySelectorAll('.pricing-card, .feature-item-card, .facility-card, .nearby-card, .term-item, .section-head').forEach((el, i) => {
-    el.classList.add('parallax-item');
-    el.setAttribute('data-depth', 'mg');
-    // Slight individual variance so elements don't move mechanically together
-    const variance = 0.96 + ((i % 5) * 0.02);
-    parallaxRegistry.push({ el, factor: variance, depth: 'mg' });
-  });
-
-  // Register Foreground tier (Floating Badges, CTA buttons, Pills, Icons)
-  document.querySelectorAll('.popular-badge, .card-badge, .banner-pill, .vlog-highlight-item, .btn-line-inquire-direct, .btn-card-action, .facility-icon').forEach((el, i) => {
-    el.classList.add('parallax-item');
-    el.setAttribute('data-depth', 'fg');
-    const variance = 1.25 + ((i % 4) * 0.04);
-    parallaxRegistry.push({ el, factor: variance, depth: 'fg' });
-  });
-
-  // Apply Stagger indices to grid groups (80ms spacing)
-  const gridContainers = [
-    '.pricing-grid',
-    '.features-grid',
-    '.facilities-grid',
-    '.nearby-grid',
-    '.terms-grid'
+  // 4. Section-Unified Definitions
+  // Each section defines a unified boundary where:
+  // - All elements enter together into focus
+  // - NO element eases out until the LAST element of the section exits past the exit boundary
+  // - Multi-column bubble grids animate strictly from LEFT to RIGHT
+  // - Scrolling back up reverses the animation symmetrically in the opposite direction
+  const sectionConfigs = [
+    {
+      id: 'banner',
+      containerSel: '.hero-banner-container',
+      itemSel: '.feature-banner',
+      exitOffset: 70
+    },
+    {
+      id: 'pricing',
+      containerSel: '.pricing-section',
+      itemSel: '.section-head, .pricing-card, .pricing-trust-notice',
+      gridSel: '.pricing-grid',
+      exitOffset: 70
+    },
+    {
+      id: 'vlog',
+      containerSel: '.video-vlog-section',
+      itemSel: '.video-vlog-layout',
+      exitOffset: 70
+    },
+    {
+      id: 'gallery',
+      containerSel: '.gallery-section',
+      itemSel: '.section-head, .gallery-nav, #galleryGrid',
+      exitOffset: 70
+    },
+    {
+      id: 'features',
+      containerSel: '.features-section',
+      itemSel: '.section-head, .feature-item-card',
+      gridSel: '.features-grid',
+      exitOffset: 70
+    },
+    {
+      id: 'facilities',
+      containerSel: '.facilities-section',
+      itemSel: '.section-head, .facility-card',
+      gridSel: '.facilities-grid',
+      exitOffset: 70
+    },
+    {
+      id: 'location',
+      containerSel: '.location-section',
+      itemSel: '.section-head, .main-location-card, .nearby-card',
+      gridSel: '.nearby-grid',
+      exitOffset: 70
+    },
+    {
+      id: 'terms',
+      containerSel: '.terms-section',
+      itemSel: '.section-head, .terms-card',
+      gridSel: '.terms-grid',
+      exitOffset: 70
+    }
   ];
 
-  gridContainers.forEach(gridSel => {
-    const grid = document.querySelector(gridSel);
-    if (!grid) return;
-    const children = grid.querySelectorAll('.parallax-item[data-depth="mg"]');
-    children.forEach((child, i) => {
-      child.classList.add('stagger-child');
-      child.style.setProperty('--stagger-i', i % 6);
+  // Setup Section Models & Elements
+  const sectionModels = [];
+
+  sectionConfigs.forEach(cfg => {
+    const container = document.querySelector(cfg.containerSel);
+    if (!container) return;
+
+    const itemEls = Array.from(container.querySelectorAll(cfg.itemSel));
+    if (!itemEls.length) return;
+
+    const items = itemEls.map((el, i) => {
+      el.classList.add('parallax-item');
+
+      // Determine Depth Tier
+      let depth = 'mg';
+      let factor = 1.0;
+
+      if (el.matches('.feature-banner, .main-location-card, .terms-card, .pricing-trust-notice, .video-vlog-layout')) {
+        depth = 'bg';
+        factor = 0.75;
+      } else if (el.matches('.popular-badge, .card-badge, .banner-pill, .btn-line-inquire-direct, .btn-card-action, .facility-icon')) {
+        depth = 'fg';
+        factor = 1.25;
+      } else {
+        // mg (cards, bubbles, section-heads)
+        factor = 0.98 + ((i % 4) * 0.02);
+      }
+
+      el.setAttribute('data-depth', depth);
+
+      // Also register any nested foreground elements inside cards
+      el.querySelectorAll('.popular-badge, .card-badge, .banner-pill, .btn-line-inquire-direct, .btn-card-action, .facility-icon').forEach(nested => {
+        nested.classList.add('parallax-item');
+        nested.setAttribute('data-depth', 'fg');
+      });
+
+      return { el, factor, depth };
+    });
+
+    sectionModels.push({
+      id: cfg.id,
+      container,
+      items,
+      gridSel: cfg.gridSel,
+      exitOffset: cfg.exitOffset || 70
     });
   });
 
-  // 5. Continuous Bidirectional Scroll-Driven Motion (Animates every time user scrolls up and down)
+  // 5. Left-to-Right Stagger Calculation for all Bubble Grids
+  // Ensures animation wave cascades strictly from leftmost elements to rightmost elements
+  const updateGridStaggers = () => {
+    sectionModels.forEach(sec => {
+      if (!sec.gridSel) return;
+      const grid = sec.container.querySelector(sec.gridSel);
+      if (!grid) return;
+
+      const children = Array.from(grid.children).filter(ch =>
+        ch.classList.contains('parallax-item') ||
+        ch.matches('.pricing-card, .feature-item-card, .facility-card, .nearby-card, .term-item')
+      );
+      if (!children.length) return;
+
+      // Group children by column using their horizontal offset
+      const measured = children.map(el => ({
+        el,
+        left: el.getBoundingClientRect().left
+      }));
+
+      // Sort unique horizontal column positions from left to right (within 20px threshold)
+      const uniqueCols = [];
+      measured.forEach(m => {
+        const found = uniqueCols.find(col => Math.abs(col - m.left) < 20);
+        if (found === undefined) {
+          uniqueCols.push(m.left);
+        }
+      });
+      uniqueCols.sort((a, b) => a - b);
+
+      measured.forEach(({ el, left }) => {
+        let colIdx = uniqueCols.findIndex(col => Math.abs(col - left) < 20);
+        if (colIdx < 0) colIdx = 0;
+        el.classList.add('stagger-child');
+        el.style.setProperty('--stagger-i', colIdx);
+      });
+    });
+  };
+
+  updateGridStaggers();
+
+  // 6. Section-Unified Bidirectional Scroll Motion Engine
+  // Continuous, physics-based, and reversible on scroll up and down
   let ticking = false;
 
   const updateScrollMotion = () => {
     const windowH = window.innerHeight || document.documentElement.clientHeight;
 
-    parallaxRegistry.forEach(item => {
-      const el = item.el;
-      const factor = item.factor;
-      const rect = el.getBoundingClientRect();
+    sectionModels.forEach(sec => {
+      const secRect = sec.container.getBoundingClientRect();
+      const exitBoundary = sec.exitOffset;
 
-      // Skip elements that are far outside the viewport to maximize 60fps performance
-      if (rect.bottom < -160 || rect.top > windowH + 160) {
-        if (rect.top > windowH + 160) {
-          // Offscreen below: ready to ease-in
-          el.style.setProperty('--p-y', `${Math.round(36 * factor)}px`);
+      // Section Entrance Calculation:
+      // Starts when top of section enters bottom 94% of viewport
+      // Reaches 100% settled focus when top reaches 72% of viewport
+      let enterProgress = 1;
+      if (secRect.top > windowH * 0.72) {
+        enterProgress = Math.max(0, Math.min(1, (windowH * 0.94 - secRect.top) / (windowH * 0.22)));
+      }
+
+      // Section Exit Barrier Calculation:
+      // CRITICAL: As long as secRect.bottom > exitBoundary (the last element is still visible),
+      // exitProgress is strictly 1.0 — NO element in the section eases out prematurely!
+      let exitProgress = 1;
+      if (secRect.bottom <= exitBoundary) {
+        // The last element has reached or passed the exit boundary (e.g. 70px)
+        exitProgress = Math.max(0, Math.min(1, (secRect.bottom - (-70)) / (exitBoundary - (-70))));
+      }
+
+      // Combined Visibility Factor V: strictly 1.0 while reading the section
+      const sectionV = Math.min(enterProgress, exitProgress);
+
+      // Check if section is completely offscreen (above or below)
+      const isOffscreenBelow = secRect.top > windowH + 120;
+      const isOffscreenAbove = secRect.bottom < -100;
+
+      sec.items.forEach(item => {
+        const el = item.el;
+        const factor = item.factor;
+
+        if (isOffscreenBelow) {
+          el.style.setProperty('--p-y', `${Math.round(34 * factor)}px`);
           el.style.setProperty('--p-opacity', '0');
           el.style.setProperty('--p-blur', '8px');
-          el.style.setProperty('--p-scale', '0.972');
+          el.style.setProperty('--p-scale', '0.975');
           el.classList.remove('is-in-focus');
-        } else {
-          // Offscreen above: eased out
-          el.style.setProperty('--p-y', `${Math.round(-32 * factor)}px`);
+          return;
+        }
+
+        if (isOffscreenAbove) {
+          el.style.setProperty('--p-y', `${Math.round(-30 * factor)}px`);
           el.style.setProperty('--p-opacity', '0');
           el.style.setProperty('--p-blur', '6px');
           el.style.setProperty('--p-scale', '0.98');
           el.classList.remove('is-in-focus');
+          return;
         }
-        return;
-      }
 
-      // Normalized vertical center of element relative to window height (P)
-      // P = 1.0 (bottom edge of screen), P = 0.5 (center), P = 0.0 (top edge of screen)
-      const centerY = rect.top + rect.height * 0.5;
-      const P = centerY / windowH;
+        // Inside active viewport zone:
+        let elevationTravel = 0;
+        if (secRect.top > windowH * 0.72) {
+          // Entering from bottom (positive Y)
+          elevationTravel = (1 - enterProgress) * 32 * factor;
+        } else if (secRect.bottom <= exitBoundary) {
+          // Exiting to top (negative Y)
+          elevationTravel = -(1 - exitProgress) * 28 * factor;
+        }
 
-      // 1. Ease-In from bottom: reaches 100% settled focus early (at P = 0.90) so user can read immediately
-      let enterProgress = 1;
-      if (P > 0.90) {
-        enterProgress = Math.max(0, Math.min(1, (1.08 - P) / 0.18));
-      }
+        // Subtle calm Z-axis depth drift during focus
+        const itemRect = el.getBoundingClientRect();
+        const centerY = itemRect.top + itemRect.height * 0.5;
+        const normCenter = (centerY - windowH * 0.5) / windowH; // -0.5 to +0.5
+        const zShift = normCenter * 10 * (factor - 1.0);
 
-      // 2. Ease-Out to top: stays in 100% settled focus until near the very top (P = 0.10)
-      let exitProgress = 1;
-      if (P < 0.10) {
-        exitProgress = Math.max(0, Math.min(1, (P - (-0.08)) / 0.18));
-      }
+        const totalY = elevationTravel + zShift;
 
-      // Combined visibility factor V: 1.0 throughout the vast majority of the screen (10% to 90% viewport height)
-      const V = Math.min(enterProgress, exitProgress);
+        // Opacity: 1.0 across focus zone
+        const opacity = Math.max(0, Math.min(1, Math.pow(sectionV, 1.15)));
 
-      // 3. Scroll-Driven Parallax Depth along Z-Axis (Calm & stable so text is effortless to read):
-      const deltaCenter = P - 0.5; // -0.5 (top) to +0.5 (bottom)
-      const parallaxShift = deltaCenter * 14 * (factor - 0.95);
+        // Blur: 0px across focus zone, soft blur at entrance/exit
+        const blur = Math.max(0, (1 - sectionV) * 6.5);
 
-      // Elevation travel at extreme entrance and exit boundaries:
-      let elevationTravel = 0;
-      if (P > 0.90) {
-        elevationTravel = (1 - enterProgress) * 24 * factor;
-      } else if (P < 0.10) {
-        elevationTravel = -(1 - exitProgress) * 20 * factor;
-      }
+        // Scale: 1.0 across focus zone
+        const scale = 0.982 + 0.018 * sectionV;
 
-      const totalY = elevationTravel + parallaxShift;
+        el.style.setProperty('--p-y', `${totalY.toFixed(1)}px`);
+        el.style.setProperty('--p-opacity', opacity.toFixed(3));
+        el.style.setProperty('--p-blur', `${blur.toFixed(1)}px`);
+        el.style.setProperty('--p-scale', scale.toFixed(3));
 
-      // Opacity: 1.0 across 80% of screen
-      const opacity = Math.max(0, Math.min(1, Math.pow(V, 1.2)));
-
-      // Blur: 0px throughout the entire 80% focus reading zone
-      const blur = Math.max(0, (1 - V) * 6.5);
-
-      // Scale: 1.0 throughout the entire 80% focus zone
-      const scale = 0.985 + 0.015 * V;
-
-      el.style.setProperty('--p-y', `${totalY.toFixed(1)}px`);
-      el.style.setProperty('--p-opacity', opacity.toFixed(3));
-      el.style.setProperty('--p-blur', `${blur.toFixed(1)}px`);
-      el.style.setProperty('--p-scale', scale.toFixed(3));
-
-      // Toggle focus class for masked headline trigger
-      if (V > 0.6) {
-        el.classList.add('is-in-focus');
-      } else if (V < 0.15) {
-        el.classList.remove('is-in-focus');
-      }
+        // Masked headline trigger
+        if (sectionV > 0.55) {
+          el.classList.add('is-in-focus');
+        } else if (sectionV < 0.15) {
+          el.classList.remove('is-in-focus');
+        }
+      });
     });
 
     ticking = false;
@@ -1491,7 +1603,10 @@ function initDropboxMotion() {
   };
 
   window.addEventListener('scroll', onScrollParallax, { passive: true });
-  window.addEventListener('resize', onScrollParallax, { passive: true });
+  window.addEventListener('resize', () => {
+    updateGridStaggers();
+    onScrollParallax();
+  }, { passive: true });
 
   // Initial calculation
   updateScrollMotion();
