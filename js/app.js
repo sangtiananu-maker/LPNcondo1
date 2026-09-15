@@ -276,11 +276,8 @@ function updateSlideTrack() {
   const slide = heroSlides[currentHeroSlide];
   if (!slide) return;
 
-  // 1. Foreground Push Transition (Clean, slow, graceful glide with synchronized motion blur)
+  // 1. Foreground Push Transition (Clean, slow, graceful glide as in v5.6)
   if (track) {
-    track.classList.add('is-sliding');
-    clearTimeout(slideMotionTimeout);
-
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
 
     const slides = track.querySelectorAll('.hero-slide');
@@ -291,13 +288,9 @@ function updateSlideTrack() {
         s.classList.remove('is-active');
       }
     });
-
-    slideMotionTimeout = setTimeout(() => {
-      track.classList.remove('is-sliding');
-    }, 1100);
   }
 
-  // 2. Stationary Ambient Background Cross-Fade (Zero brightness dip, seamless crossfade)
+  // 2. Stationary Ambient Background Cross-Fade (Ultra-slow, imperceptible, zero brightness dip)
   const ambientA = document.getElementById('heroAmbientA');
   const ambientB = document.getElementById('heroAmbientB');
   if (ambientA && ambientB) {
@@ -311,7 +304,7 @@ function updateSlideTrack() {
       ambientCrossfadeTimeout = setTimeout(() => {
         ambientA.classList.remove('active');
         ambientA.style.zIndex = '1';
-      }, 1500);
+      }, 4400);
     } else {
       ambientA.style.backgroundImage = `url("${slide.src}")`;
       ambientA.style.zIndex = '3';
@@ -321,7 +314,7 @@ function updateSlideTrack() {
       ambientCrossfadeTimeout = setTimeout(() => {
         ambientB.classList.remove('active');
         ambientB.style.zIndex = '1';
-      }, 1500);
+      }, 4400);
     }
   }
 
@@ -1489,27 +1482,35 @@ function initDropboxMotion() {
       );
       if (!children.length) return;
 
-      // Group children by column using their horizontal offset
-      const measured = children.map(el => ({
-        el,
-        left: el.getBoundingClientRect().left
-      }));
-
-      // Sort unique horizontal column positions from left to right (within 20px threshold)
-      const uniqueCols = [];
-      measured.forEach(m => {
-        const found = uniqueCols.find(col => Math.abs(col - m.left) < 20);
-        if (found === undefined) {
-          uniqueCols.push(m.left);
-        }
+      // Measure geometric positions of all children
+      const measured = children.map(el => {
+        const rect = el.getBoundingClientRect();
+        return { el, top: rect.top, left: rect.left };
       });
-      uniqueCols.sort((a, b) => a - b);
 
-      measured.forEach(({ el, left }) => {
-        let colIdx = uniqueCols.findIndex(col => Math.abs(col - left) < 20);
-        if (colIdx < 0) colIdx = 0;
-        el.classList.add('stagger-child');
-        el.style.setProperty('--stagger-i', colIdx);
+      // Group children into rows (items within 25px vertical difference belong to same row)
+      const rows = [];
+      measured.forEach(m => {
+        let row = rows.find(r => Math.abs(r.top - m.top) < 25);
+        if (!row) {
+          row = { top: m.top, items: [] };
+          rows.push(row);
+        }
+        row.items.push(m);
+      });
+
+      // Sort rows strictly from top to bottom
+      rows.sort((a, b) => a.top - b.top);
+
+      // Within each row, sort items strictly from left to right, then assign sequential stagger index
+      let seqIdx = 0;
+      rows.forEach(row => {
+        row.items.sort((a, b) => a.left - b.left);
+        row.items.forEach(({ el }) => {
+          el.classList.add('stagger-child');
+          el.style.setProperty('--stagger-i', seqIdx);
+          seqIdx++;
+        });
       });
     });
   };
