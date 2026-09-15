@@ -498,7 +498,7 @@ function updateHeroDetails() {
   if (statusEl) {
     if (slide.unitId === 'pojana') {
       statusEl.className = 'hero-occupied-badge available';
-      statusEl.textContent = '🟢 พร้อมเข้าอยู่ 1 ห้อง';
+      statusEl.textContent = '🟢 พร้อมเข้าอยู่';
     } else {
       statusEl.className = 'hero-occupied-badge';
       statusEl.textContent = '🔴 มีผู้เช่าแล้ว';
