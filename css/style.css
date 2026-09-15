@@ -1386,14 +1386,22 @@ button {
 
 .filter-scroll-wrapper {
   display: flex;
+  flex-direction: column;
   gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  width: 100%;
 }
 
-.filter-scroll-wrapper::-webkit-scrollbar {
+.filter-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-row::-webkit-scrollbar {
   display: none;
 }
 
@@ -1442,7 +1450,6 @@ button {
   text-shadow: 0 1px 2px rgba(20, 38, 52, 0.4);
 }
 
-
 .filter-btn .count-badge {
   background-color: rgba(0, 0, 0, 0.08);
   font-size: 0.72rem;
@@ -1455,6 +1462,64 @@ button {
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+}
+
+/* Row 1: Category Tabs (Slightly thicker & prominent) */
+.filter-btn.filter-btn-category {
+  padding: 9px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-width: 1.5px;
+  box-shadow: 0 4px 14px rgba(10, 15, 22, 0.08),
+              inset 0 1.8px 2.5px rgba(255, 255, 255, 0.95),
+              inset 0 -1.5px 2px rgba(15, 22, 30, 0.08);
+}
+
+.filter-btn.filter-btn-category .count-badge {
+  font-weight: 800;
+  padding: 3px 8px;
+}
+
+/* Row 2: Individual Room Tabs (Soft Pastel Red signifying 100% occupied / leased) */
+.filter-btn.filter-btn-unit {
+  background: linear-gradient(135deg, rgba(254, 242, 242, 0.88) 0%, rgba(255, 241, 242, 0.72) 100%);
+  border: 1px solid rgba(252, 165, 165, 0.6);
+  color: #991B1B;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.06),
+              inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+}
+
+.filter-btn.filter-btn-unit:hover {
+  background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(254, 205, 211, 0.88) 100%);
+  border-color: rgba(248, 113, 113, 0.85);
+  color: #7F1D1D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.14), inset 0 1.5px 2px #FFFFFF;
+}
+
+.filter-btn.filter-btn-unit .count-badge {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #991B1B;
+  font-weight: 700;
+  border: 1px solid rgba(252, 165, 165, 0.45);
+}
+
+.filter-btn.filter-btn-unit.active {
+  background: linear-gradient(135deg, #DC2626 0%, #E11D48 60%, #F43F5E 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.28),
+              inset 0 1.8px 2.5px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(120, 15, 15, 0.45);
+}
+
+.filter-btn.filter-btn-unit.active .count-badge {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4);
 }
 
 /* Active Room Detail Box */
@@ -1490,6 +1555,25 @@ button {
 .unit-detail-title {
   font-size: 1.2rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.unit-detail-occupied-bubble {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #991B1B;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.08);
+  letter-spacing: 0.02em;
+  vertical-align: middle;
 }
 
 .unit-detail-price {

@@ -142,13 +142,16 @@ function initStickyContactBar() {
    Hero Highlights Slideshow (Pure Soft Focus Transition & Ambient Fade)
    ========================================================================== */
 let currentHeroSlide = 0; // Real slide index: 0..9
-let currentHeroTrackIndex = 1; // Track index: 0..11 (0 = Clone 9, 1..10 = Real 0..9, 11 = Clone 0)
-let isHeroSliding = false;
+let currentHeroTrackIndex = 10; // Track index in 3-set architecture (0..29; Set 2 is 10..19)
 let heroSlideTimer = null;
 let slideMotionTimeout = null;
 let slideSettleTimeout = null;
 let ambientCrossfadeTimeout = null;
+let ambientDebounceTimer = null;
 let currentAmbientTarget = 'A';
+let currentAmbientSrc = '';
+let lastUserSlideTime = 0;
+let lastMoveTime = 0;
 const heroSlides = ROOMS_DATA.heroHighlights;
 
 function scrollToHeroDetails() {
@@ -186,6 +189,7 @@ function initHeroSlider() {
     ambientA.style.opacity = '1';
     ambientA.style.zIndex = '2';
     ambientA.style.transition = 'none';
+    currentAmbientSrc = heroSlides[0].src;
   }
   if (ambientB) {
     ambientB.style.opacity = '0';
@@ -194,25 +198,32 @@ function initHeroSlider() {
   }
   currentAmbientTarget = 'A';
 
-  // Build slides with Clones for Infinite Marquee:
-  // [Clone of Slide 10 (idx 9), Slide 1 (idx 0) ... Slide 10 (idx 9), Clone of Slide 1 (idx 0)]
+  // 3-Set Infinite Track Architecture (30 slides: Set 1 [0..9], Set 2 [10..19], Set 3 [20..29])
+  // Allows unlimited rapid clicking/swiping in either direction with zero stutter or edge clipping!
   track.innerHTML = '';
-  const totalReal = heroSlides.length;
-  const slideItems = [
-    { slide: heroSlides[totalReal - 1], realIndex: totalReal - 1, isClone: true },
-    ...heroSlides.map((s, idx) => ({ slide: s, realIndex: idx, isClone: false })),
-    { slide: heroSlides[0], realIndex: 0, isClone: true }
-  ];
+  const totalReal = heroSlides.length; // 10
+
+  const slideItems = [];
+  for (let set = 0; set < 3; set++) {
+    heroSlides.forEach((s, idx) => {
+      slideItems.push({
+        slide: s,
+        realIndex: idx,
+        trackIdx: set * totalReal + idx
+      });
+    });
+  }
 
   let touchStartX = 0;
   let touchStartY = 0;
   let isSwiping = false;
   let hasSwiped = false;
 
-  slideItems.forEach((item, trackIdx) => {
+  slideItems.forEach((item) => {
     const slide = item.slide;
+    const trackIdx = item.trackIdx;
     const slideEl = document.createElement('div');
-    slideEl.className = trackIdx === 1 ? 'hero-slide is-active' : 'hero-slide';
+    slideEl.className = trackIdx === totalReal ? 'hero-slide is-active' : 'hero-slide';
     slideEl.setAttribute('role', 'button');
     slideEl.setAttribute('tabindex', '0');
     slideEl.setAttribute('data-track-idx', trackIdx);
@@ -220,7 +231,7 @@ function initHeroSlider() {
     slideEl.setAttribute('aria-label', `ภาพห้อง ${slide.unitNameTh} - แตะเพื่อดูรายละเอียดด้านล่าง`);
     slideEl.innerHTML = `
       <div class="hero-slide-fg-wrap">
-        <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${(trackIdx === 1 || trackIdx === 2) ? 'eager' : 'lazy'}">
+        <img class="hero-slide-fg-img" src="${slide.src}" alt="${slide.captionTh}" loading="${(trackIdx >= totalReal && trackIdx <= totalReal + 2) ? 'eager' : 'lazy'}">
       </div>
     `;
     // Clicking/tapping photo scrolls down to feature details banner
@@ -237,24 +248,28 @@ function initHeroSlider() {
     track.appendChild(slideEl);
   });
 
-  // Start at track index 1 (Real Slide 1)
-  currentHeroTrackIndex = 1;
+  // Start at track index 10 (Real Slide 1 of Set 2)
+  currentHeroTrackIndex = totalReal;
   currentHeroSlide = 0;
   track.style.transition = 'none';
-  track.style.transform = `translateX(-100%)`;
+  track.style.transform = `translateX(-${totalReal * 100}%)`;
   void track.offsetWidth;
   track.style.transition = '';
 
-  // Ensure non-active slides are hidden initially when settled
+  // Ensure non-adjacent slides are hidden initially when settled
   const initialSlides = track.querySelectorAll('.hero-slide');
   initialSlides.forEach((s, idx) => {
-    if (idx !== 1) s.style.visibility = 'hidden';
+    if (Math.abs(idx - totalReal) > 1) {
+      s.style.visibility = 'hidden';
+    } else {
+      s.style.visibility = 'visible';
+    }
   });
 
   // Initial update of room details bar below photo
   updateHeroDetails();
 
-  // Buttons: Manual click resets timer from 0
+  // Buttons: Manual click resets timer from 0 & allows rapid clicks
   if (prevBtn) prevBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     prevSlide(true);
@@ -271,7 +286,7 @@ function initHeroSlider() {
     sliderContainer.addEventListener('mouseenter', stopSlideShow);
     sliderContainer.addEventListener('mouseleave', startSlideShow);
 
-    // Mobile Touch Swipe Handling
+    // Mobile Touch Swipe Handling (Supports rapid swiping without stutter)
     sliderContainer.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
@@ -284,7 +299,7 @@ function initHeroSlider() {
       if (!isSwiping) return;
       const currentX = e.touches[0].clientX;
       const currentY = e.touches[0].clientY;
-      if (Math.abs(currentX - touchStartX) > 12 || Math.abs(currentY - touchStartY) > 12) {
+      if (Math.abs(currentX - touchStartX) > 10 || Math.abs(currentY - touchStartY) > 10) {
         hasSwiped = true;
       }
     }, { passive: true });
@@ -297,8 +312,8 @@ function initHeroSlider() {
       const diffX = touchStartX - touchEndX;
       const diffY = touchStartY - touchEndY;
 
-      // Only trigger if horizontal swipe is dominant and > 35px
-      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      // Only trigger if horizontal swipe is dominant and > 30px
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
         hasSwiped = true;
         if (diffX > 0) {
           nextSlide(true);
@@ -308,20 +323,41 @@ function initHeroSlider() {
       } else {
         startSlideShow();
       }
-      setTimeout(() => { hasSwiped = false; }, 300);
+      setTimeout(() => { hasSwiped = false; }, 250);
     }, { passive: true });
   }
 }
 
-function updateHeroAmbientBackdrop(slide) {
+function updateHeroAmbientBackdrop(slide, isRapid = false) {
   const ambientA = document.getElementById('heroAmbientA');
   const ambientB = document.getElementById('heroAmbientB');
   if (!ambientA || !ambientB || !slide) return;
 
+  clearTimeout(ambientDebounceTimer);
+
+  if (isRapid) {
+    // Coalesce rapid clicks so decoders don't choke; crossfade smoothly to latest slide
+    ambientDebounceTimer = setTimeout(() => {
+      executeAmbientCrossfade(slide, true);
+    }, 180);
+  } else {
+    executeAmbientCrossfade(slide, false);
+  }
+}
+
+function executeAmbientCrossfade(slide, isRapid) {
+  const ambientA = document.getElementById('heroAmbientA');
+  const ambientB = document.getElementById('heroAmbientB');
+  if (!ambientA || !ambientB || !slide) return;
+  if (currentAmbientSrc === slide.src) return;
+
   clearTimeout(ambientCrossfadeTimeout);
+  currentAmbientSrc = slide.src;
 
   const topLayer = (currentAmbientTarget === 'A') ? ambientB : ambientA;
   const bottomLayer = (currentAmbientTarget === 'A') ? ambientA : ambientB;
+
+  const fadeDuration = isRapid ? '1.2s' : '3.8s';
 
   // 1. Prepare incoming topLayer while 100% invisible (no transition, opacity 0)
   topLayer.style.transition = 'none';
@@ -329,7 +365,7 @@ function updateHeroAmbientBackdrop(slide) {
   topLayer.style.zIndex = '3';
   topLayer.style.backgroundImage = `url("${slide.src}")`;
 
-  // Ensure bottomLayer stays 100% opaque underneath
+  // Ensure bottomLayer stays rock-solid 100% opaque underneath (zero flicker)
   bottomLayer.style.transition = 'none';
   bottomLayer.style.opacity = '1';
   bottomLayer.style.zIndex = '2';
@@ -337,8 +373,8 @@ function updateHeroAmbientBackdrop(slide) {
   // 2. Force reflow so browser commits the image and opacity 0
   void topLayer.offsetWidth;
 
-  // 3. Smoothly fade in topLayer over 4.5s with ultra-gentle curve
-  topLayer.style.transition = 'opacity 4.5s cubic-bezier(0.35, 0, 0.25, 1)';
+  // 3. Smoothly fade in topLayer
+  topLayer.style.transition = `opacity ${fadeDuration} cubic-bezier(0.25, 1, 0.35, 1)`;
   topLayer.style.opacity = '1';
 
   currentAmbientTarget = (currentAmbientTarget === 'A') ? 'B' : 'A';
@@ -349,44 +385,42 @@ function updateHeroAmbientBackdrop(slide) {
     bottomLayer.style.opacity = '1';
     bottomLayer.style.zIndex = '2';
     topLayer.style.transition = 'none';
-  }, 4600);
+  }, isRapid ? 1300 : 4000);
 }
 
-function moveToTrackIndex(newTrackIndex) {
+function moveToTrackIndex(newTrackIndex, isRapid = false) {
   const track = document.getElementById('heroTrack');
   if (!track) return;
 
-  // If currently on a clone boundary, instantly complete previous snap
-  if (currentHeroTrackIndex === heroSlides.length + 1) {
-    currentHeroTrackIndex = 1;
-    track.style.transition = 'none';
-    track.style.transform = 'translateX(-100%)';
-    void track.offsetWidth;
-  } else if (currentHeroTrackIndex === 0) {
-    currentHeroTrackIndex = heroSlides.length;
-    track.style.transition = 'none';
-    track.style.transform = `translateX(-${heroSlides.length * 100}%)`;
-    void track.offsetWidth;
-  }
+  const now = Date.now();
+  if (now - lastMoveTime < 90) return; // Ignore hardware micro-jitter (<90ms)
+  lastMoveTime = now;
 
-  isHeroSliding = true;
-  currentHeroTrackIndex = newTrackIndex;
+  const totalReal = heroSlides.length; // 10
 
-  // Calculate realIndex:
-  let realIndex = 0;
-  if (currentHeroTrackIndex === 0) {
-    realIndex = heroSlides.length - 1;
-  } else if (currentHeroTrackIndex === heroSlides.length + 1) {
-    realIndex = 0;
+  // Safety wrap if user has navigated past Set 3 or before Set 1 without settling
+  if (newTrackIndex >= totalReal * 2 + 5 || newTrackIndex < 5) {
+    const safeIndex = ((newTrackIndex % totalReal) + totalReal) % totalReal + totalReal;
+    currentHeroTrackIndex = safeIndex;
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${safeIndex * 100}%)`;
+    void track.offsetWidth;
   } else {
-    realIndex = currentHeroTrackIndex - 1;
+    currentHeroTrackIndex = newTrackIndex;
   }
+
+  // Calculate realIndex: 0..9
+  const realIndex = ((currentHeroTrackIndex % totalReal) + totalReal) % totalReal;
   currentHeroSlide = realIndex;
 
   const slides = track.querySelectorAll('.hero-slide');
 
-  // 1. Ensure slides are visible while gliding
-  slides.forEach(s => { s.style.visibility = 'visible'; });
+  // 1. Ensure neighboring slides are visible while gliding
+  slides.forEach((s, idx) => {
+    if (Math.abs(idx - currentHeroTrackIndex) <= 2) {
+      s.style.visibility = 'visible';
+    }
+  });
 
   // 2. Set is-active class for target slide
   slides.forEach((s, idx) => {
@@ -400,60 +434,51 @@ function moveToTrackIndex(newTrackIndex) {
   // 3. Sync blur during sliding: Both slide-in and slide-out have identical blur(5px)
   track.classList.add('is-sliding');
 
-  // 4. Glide track smoothly
-  track.style.transition = 'transform var(--transition-slide)';
+  // 4. Slide track smoothly (snappy 0.42s for rapid clicks, luxurious 1.15s for normal)
+  const slideDuration = isRapid ? '0.42s' : '1.15s';
+  const slideEase = isRapid ? 'cubic-bezier(0.16, 1, 0.3, 1)' : 'cubic-bezier(0.25, 1, 0.35, 1)';
+  track.style.transition = `transform ${slideDuration} ${slideEase}`;
   track.style.transform = `translateX(-${currentHeroTrackIndex * 100}%)`;
 
-  // 5. Halfway through slide (720ms), remove .is-sliding so incoming slide rack-focuses to blur(0px)
+  // 5. Halfway through slide, remove .is-sliding so incoming slide rack-focuses to blur(0px)
   clearTimeout(slideMotionTimeout);
+  const blurHold = isRapid ? 200 : 650;
   slideMotionTimeout = setTimeout(() => {
     track.classList.remove('is-sliding');
-  }, 720);
+  }, blurHold);
 
   // 6. Update Ambient Backdrop & Room Details immediately
-  updateHeroAmbientBackdrop(heroSlides[realIndex]);
+  updateHeroAmbientBackdrop(heroSlides[realIndex], isRapid);
   updateHeroDetails();
   checkStickyBarVisibility();
 
-  // 7. Settle & Silent Clone Reset
+  // 7. Settle & Silent Normalize to Set 2 (indices 10..19)
   clearTimeout(slideSettleTimeout);
+  const settleWait = isRapid ? 460 : 1200;
   slideSettleTimeout = setTimeout(() => {
-    // If landed on clone of Slide 1 (trackIdx 11):
-    if (currentHeroTrackIndex === heroSlides.length + 1) {
-      currentHeroTrackIndex = 1;
+    const normalizedIndex = ((currentHeroTrackIndex % totalReal) + totalReal) % totalReal + totalReal;
+    if (normalizedIndex !== currentHeroTrackIndex) {
+      currentHeroTrackIndex = normalizedIndex;
       track.style.transition = 'none';
-      track.style.transform = 'translateX(-100%)';
+      track.style.transform = `translateX(-${normalizedIndex * 100}%)`;
       void track.offsetWidth;
       track.style.transition = '';
 
       slides.forEach((s, idx) => {
-        if (idx === 1) s.classList.add('is-active');
-        else s.classList.remove('is-active');
-      });
-    }
-    // If landed on clone of Slide 10 (trackIdx 0):
-    else if (currentHeroTrackIndex === 0) {
-      currentHeroTrackIndex = heroSlides.length; // 10
-      track.style.transition = 'none';
-      track.style.transform = `translateX(-${heroSlides.length * 100}%)`;
-      void track.offsetWidth;
-      track.style.transition = '';
-
-      slides.forEach((s, idx) => {
-        if (idx === heroSlides.length) s.classList.add('is-active');
+        if (idx === currentHeroTrackIndex) s.classList.add('is-active');
         else s.classList.remove('is-active');
       });
     }
 
-    // Hide non-active slides to prevent any subpixel bleed
+    // Hide distant slides to keep GPU optimized
     slides.forEach((s, idx) => {
       if (idx !== currentHeroTrackIndex) {
         s.style.visibility = 'hidden';
+      } else {
+        s.style.visibility = 'visible';
       }
     });
-
-    isHeroSliding = false;
-  }, 1450);
+  }, settleWait);
 }
 
 function updateHeroDetails() {
@@ -491,21 +516,29 @@ function resetSlideShowTimer() {
 }
 
 function nextSlide(isUser = false) {
-  if (isHeroSliding) return;
   if (isUser) resetSlideShowTimer();
-  moveToTrackIndex(currentHeroTrackIndex + 1);
+
+  const now = Date.now();
+  const isRapid = (now - lastUserSlideTime) < 600;
+  lastUserSlideTime = now;
+
+  moveToTrackIndex(currentHeroTrackIndex + 1, isRapid);
 }
 
 function prevSlide(isUser = false) {
-  if (isHeroSliding) return;
   if (isUser) resetSlideShowTimer();
-  moveToTrackIndex(currentHeroTrackIndex - 1);
+
+  const now = Date.now();
+  const isRapid = (now - lastUserSlideTime) < 600;
+  lastUserSlideTime = now;
+
+  moveToTrackIndex(currentHeroTrackIndex - 1, isRapid);
 }
 
 function goToSlide(targetRealIndex, isUser = false) {
-  if (isHeroSliding) return;
   if (isUser) resetSlideShowTimer();
-  moveToTrackIndex(targetRealIndex + 1);
+  const totalReal = heroSlides.length;
+  moveToTrackIndex(targetRealIndex + totalReal, false);
 }
 
 function startSlideShow() {
@@ -547,28 +580,33 @@ function initGallery() {
   const countStudio = ROOMS_DATA.units.filter(u => u.type === 'studio').reduce((acc, u) => acc + u.photos.length, 0);
 
   let filterHtml = `
-    <button class="filter-btn active" data-filter="all">
-      <span>ทุกห้อง</span>
-      <span class="count-badge">${totalPhotosCount}</span>
-    </button>
-    <button class="filter-btn" data-filter="type:1bed">
-      <span>1 Bedroom (7,500.-)</span>
-      <span class="count-badge">${count1Bed}</span>
-    </button>
-    <button class="filter-btn" data-filter="type:studio">
-      <span>Studio (6,500.-)</span>
-      <span class="count-badge">${countStudio}</span>
-    </button>
+    <div class="filter-row filter-row-categories">
+      <button class="filter-btn filter-btn-category active" data-filter="all">
+        <span>ทุกห้อง</span>
+        <span class="count-badge">${totalPhotosCount}</span>
+      </button>
+      <button class="filter-btn filter-btn-category" data-filter="type:1bed">
+        <span>1 Bedroom (7,500.-)</span>
+        <span class="count-badge">${count1Bed}</span>
+      </button>
+      <button class="filter-btn filter-btn-category" data-filter="type:studio">
+        <span>Studio (6,500.-)</span>
+        <span class="count-badge">${countStudio}</span>
+      </button>
+    </div>
+    <div class="filter-row filter-row-units">
   `;
 
   ROOMS_DATA.units.forEach(unit => {
     filterHtml += `
-      <button class="filter-btn" data-filter="unit:${unit.id}">
+      <button class="filter-btn filter-btn-unit" data-filter="unit:${unit.id}">
         <span>${unit.nameTh.replace('ห้อง ', '')}</span>
         <span class="count-badge">${unit.photos.length}</span>
       </button>
     `;
   });
+
+  filterHtml += `</div>`;
 
   filterContainer.innerHTML = filterHtml;
 
@@ -660,7 +698,10 @@ function applyFilter(filter) {
     summaryBox.innerHTML = `
       <div class="unit-detail-header">
         <div>
-          <h3 class="unit-detail-title">${selectedUnit.nameTh}${selectedUnit.floorTh ? ` <span class="unit-detail-floor">${selectedUnit.floorTh}</span>` : ''}</h3>
+          <h3 class="unit-detail-title">
+            ${selectedUnit.nameTh}${selectedUnit.floorTh ? ` <span class="unit-detail-floor">${selectedUnit.floorTh}</span>` : ''}
+            <span class="unit-detail-occupied-bubble">🔴 มีผู้เช่าแล้ว</span>
+          </h3>
           <p style="font-size: 0.8rem; color: var(--color-wood-dark); font-weight: 600;">${selectedUnit.typeLabelTh} • ขนาด ${selectedUnit.size}</p>
         </div>
         <div class="unit-detail-price">฿${selectedUnit.priceLabel} <span style="font-size: 0.8rem; color: var(--color-slate); font-weight: normal;">/ เดือน</span></div>
@@ -677,7 +718,6 @@ function applyFilter(filter) {
         <a href="${prefilledLineUrl}" target="_blank" rel="noopener" class="unit-line-btn">
           💬 ทัก LINE สอบถามสถานะห้องนี้
         </a>
-        <span class="detail-tag tag-occupied">🔴 มีผู้เช่าแล้ว</span>
         <span class="detail-tag tag-owner">🛡️ เจ้าของดูแลโดยตรง</span>
       </div>
     `;
