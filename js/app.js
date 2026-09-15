@@ -144,6 +144,7 @@ function initStickyContactBar() {
 let currentHeroSlide = 0;
 let heroSlideTimer = null;
 let slideMotionTimeout = null;
+let ambientCrossfadeTimeout = null;
 let currentAmbientTarget = 'A';
 const heroSlides = ROOMS_DATA.heroHighlights;
 
@@ -170,13 +171,15 @@ function initHeroSlider() {
 
   if (!track || !heroSlides || heroSlides.length === 0) return;
 
-  // Initialize Stationary Ambient Blur Backdrop (Layer A active)
+  // Initialize Stationary Ambient Blur Backdrop (Layer A active on top)
   if (ambientA) {
     ambientA.style.backgroundImage = `url("${heroSlides[0].src}")`;
     ambientA.classList.add('active');
+    ambientA.style.zIndex = '2';
   }
   if (ambientB) {
     ambientB.classList.remove('active');
+    ambientB.style.zIndex = '1';
   }
   currentAmbientTarget = 'A';
 
@@ -294,20 +297,31 @@ function updateSlideTrack() {
     }, 1100);
   }
 
-  // 2. Stationary Ambient Background Cross-Fade (Zero sliding, pure slow fade)
+  // 2. Stationary Ambient Background Cross-Fade (Zero brightness dip, seamless crossfade)
   const ambientA = document.getElementById('heroAmbientA');
   const ambientB = document.getElementById('heroAmbientB');
   if (ambientA && ambientB) {
+    clearTimeout(ambientCrossfadeTimeout);
     if (currentAmbientTarget === 'A') {
       ambientB.style.backgroundImage = `url("${slide.src}")`;
+      ambientB.style.zIndex = '3';
+      ambientA.style.zIndex = '2';
       ambientB.classList.add('active');
-      ambientA.classList.remove('active');
       currentAmbientTarget = 'B';
+      ambientCrossfadeTimeout = setTimeout(() => {
+        ambientA.classList.remove('active');
+        ambientA.style.zIndex = '1';
+      }, 1500);
     } else {
       ambientA.style.backgroundImage = `url("${slide.src}")`;
+      ambientA.style.zIndex = '3';
+      ambientB.style.zIndex = '2';
       ambientA.classList.add('active');
-      ambientB.classList.remove('active');
       currentAmbientTarget = 'A';
+      ambientCrossfadeTimeout = setTimeout(() => {
+        ambientB.classList.remove('active');
+        ambientB.style.zIndex = '1';
+      }, 1500);
     }
   }
 
