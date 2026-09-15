@@ -143,6 +143,7 @@ function initStickyContactBar() {
    ========================================================================== */
 let currentHeroSlide = 0;
 let heroSlideTimer = null;
+let slideMotionTimeout = null;
 let currentAmbientTarget = 'A';
 const heroSlides = ROOMS_DATA.heroHighlights;
 
@@ -272,8 +273,11 @@ function updateSlideTrack() {
   const slide = heroSlides[currentHeroSlide];
   if (!slide) return;
 
-  // 1. Foreground Push Transition (Clean, slow, graceful glide with soft optical rack focus)
+  // 1. Foreground Push Transition (Clean, slow, graceful glide with synchronized motion blur)
   if (track) {
+    track.classList.add('is-sliding');
+    clearTimeout(slideMotionTimeout);
+
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
 
     const slides = track.querySelectorAll('.hero-slide');
@@ -284,6 +288,10 @@ function updateSlideTrack() {
         s.classList.remove('is-active');
       }
     });
+
+    slideMotionTimeout = setTimeout(() => {
+      track.classList.remove('is-sliding');
+    }, 1100);
   }
 
   // 2. Stationary Ambient Background Cross-Fade (Zero sliding, pure slow fade)
