@@ -1610,6 +1610,8 @@ button {
   position: relative;
   width: 100%;
   margin: 0 auto;
+  overflow: hidden; /* Clips the infinite horizontal photo belt */
+  touch-action: pan-y; /* Allows seamless vertical page scrolling on mobile/iPad */
 }
 
 /* Nav Arrows (Liquid Glass Floating Lenses) */
@@ -1665,23 +1667,25 @@ button {
   }
 }
 
-/* Photo Gallery: 3 Rows, Horizontal Scrolling */
+/* Photo Gallery: 3 Rows, GPU-Accelerated Hardware Marquee */
 .gallery-grid {
   display: grid;
   grid-template-rows: repeat(3, 145px); /* Exactly 3 rows */
   grid-auto-flow: column; /* Items flow column by column horizontally */
   grid-auto-columns: 195px; /* Width per photo column (approx 4:3 ratio) */
   gap: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  width: max-content;
+  overflow: visible;
   padding: 8px 4px 14px;
   cursor: grab;
   user-select: none;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
-  -ms-overflow-style: none; /* Hide scrollbar IE & Edge */
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .gallery-grid:active {

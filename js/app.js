@@ -726,13 +726,14 @@ function applyFilter(filter) {
     summaryBox.innerHTML = '';
   }
 
-  // Render gallery photos with seamless infinite marquee duplication
+  // Render gallery photos with GPU Hardware Marquee
   grid.innerHTML = '';
-  grid.scrollLeft = 0; // Reset horizontal scroll to start
+  grid.style.transform = 'translate3d(0, 0, 0)';
+  galleryCurrentX = 0;
 
   const originalCount = photos.length;
-  // Duplicate array so Column 1 follows immediately after the last column seamlessly
-  const renderPhotos = (photos.length > 0) ? [...photos, ...photos] : [];
+  // If 'all' tab (64 photos), duplicate for infinite loop; otherwise single set
+  const renderPhotos = (filter === 'all' && photos.length > 0) ? [...photos, ...photos] : [...photos];
 
   renderPhotos.forEach((photo, idx) => {
     const item = document.createElement('div');
@@ -747,7 +748,13 @@ function applyFilter(filter) {
       </div>
     `;
     const targetIdx = idx % originalCount;
-    item.addEventListener('click', () => openLightbox(targetIdx));
+    item.addEventListener('click', (e) => {
+      if (galleryHasMoved) {
+        e.stopPropagation();
+        return;
+      }
+      openLightbox(targetIdx);
+    });
     grid.appendChild(item);
   });
 
@@ -757,69 +764,9 @@ function applyFilter(filter) {
   }
 }
 
-
-/* Horizontal Gallery Scroll Controls & Desktop Drag */
+/* Horizontal Gallery Scroll Controls & Desktop Drag (Coordinated by Unified Engine) */
 function initGalleryScrollControls() {
-  const grid = document.getElementById('galleryGrid');
-  const prevBtn = document.getElementById('galleryScrollPrev');
-  const nextBtn = document.getElementById('galleryScrollNext');
-  if (!grid) return;
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      pauseGalleryAutoScroll(20000);
-      grid.scrollBy({ left: -420, behavior: 'smooth' });
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      pauseGalleryAutoScroll(20000);
-      grid.scrollBy({ left: 420, behavior: 'smooth' });
-    });
-  }
-
-  // Desktop Mouse Drag-to-Scroll
-  let isDown = false;
-  let startX = 0;
-  let scrollLeft = 0;
-  let hasDragged = false;
-
-  grid.addEventListener('mousedown', (e) => {
-    isDown = true;
-    hasDragged = false;
-    startX = e.pageX - grid.offsetLeft;
-    scrollLeft = grid.scrollLeft;
-    pauseGalleryAutoScroll(20000);
-  });
-
-  window.addEventListener('mouseup', () => {
-    isDown = false;
-  });
-
-  grid.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - grid.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    if (Math.abs(walk) > 6) {
-      hasDragged = true;
-    }
-    grid.scrollLeft = scrollLeft - walk;
-  });
-
-  grid.addEventListener('touchstart', () => {
-    pauseGalleryAutoScroll(20000);
-  }, { passive: true });
-
-  // Prevent opening lightbox if user was dragging
-  grid.addEventListener('click', (e) => {
-    if (hasDragged) {
-      e.stopPropagation();
-      e.preventDefault();
-      hasDragged = false;
-    }
-  }, true);
+  // Handled by initGalleryMotion()
 }
 
 
@@ -1155,8 +1102,8 @@ function openLightbox(index) {
   if (!currentFilteredPhotos || currentFilteredPhotos.length === 0) return;
   currentLightboxIndex = index;
 
-  // Pause gallery auto-scroll and trigger 20s cooldown
-  pauseGalleryAutoScroll(20000);
+  // Pause gallery auto-scroll while viewing photo in lightbox
+  pauseGalleryAutoScroll(60000);
 
   const modal = document.getElementById('lightboxModal');
   if (!modal) return;
@@ -1167,7 +1114,6 @@ function openLightbox(index) {
   document.body.style.overflow = 'hidden';
 }
 
-
 function closeLightbox() {
   const modal = document.getElementById('lightboxModal');
   if (!modal) return;
@@ -1175,6 +1121,8 @@ function closeLightbox() {
   modal.classList.remove('active');
   modal.classList.remove('is-zoomed');
   document.body.style.overflow = '';
+  // Resume auto-drift after 1.5s
+  pauseGalleryAutoScroll(1500);
 }
 
 function nextLightboxPhoto() {
@@ -1868,121 +1816,246 @@ function initLiquidGlassRefraction() {
 }
 
 /* ==========================================================================
-   3. Gallery Continuous Marquee Auto-Scroll (Tab "ทุกห้อง" - 64 Photos only)
-   - Continuous subtle drift
-   - Seamless loop
-   - Pauses on hover, touch, or when opening any lightbox photo
-   - When paused by photo view, stays paused for 20 seconds before resuming
-   - Disabled on 1-bed, studio, or individual unit tabs
+   3. Gallery Hardware Motion Engine (GPU Transform translate3d, 60fps/120fps)
+   - Zero Layout Thrashing (No scrollLeft / reflow / scroll-event loops)
+   - Sub-pixel floating point translation via translate3d(-Xpx, 0, 0)
+   - 100% smooth, native performance on iPad (Chrome & Safari), iPhone, Android & Windows
+   - Seamless Infinite Marquee loop on "ทุกห้อง" tab
+   - Direct Touch Swipe (Allows natural vertical page scroll on iPad/tablets)
+   - Desktop Mouse Drag with cursor feedback
+   - Left/Right Liquid Glass Nav Arrows
+   - Lightbox Click Guard
    ========================================================================== */
+let galleryCurrentX = 0;
+let galleryHalfWidth = 0;
 let galleryAutoScrollActive = true;
-let galleryAutoScrollRaf = null;
 let galleryPauseUntil = 0;
-let isUserInteractingGallery = false;
+let isGalleryUserInteracting = false;
+let isGalleryDragging = false;
+let galleryHasMoved = false;
+let galleryLastFrameTime = 0;
+let galleryRafId = null;
 
-function pauseGalleryAutoScroll(durationMs = 20000) {
+function pauseGalleryAutoScroll(durationMs = 1800) {
   galleryPauseUntil = Date.now() + durationMs;
+}
+
+function recomputeGalleryDimensions() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  if (galleryAutoScrollActive) {
+    galleryHalfWidth = Math.round(grid.scrollWidth / 2);
+  } else {
+    galleryHalfWidth = grid.scrollWidth;
+  }
 }
 
 function updateGalleryAutoScrollState(isAllTab) {
   galleryAutoScrollActive = isAllTab;
   const grid = document.getElementById('galleryGrid');
-  if (grid) {
-    if (galleryAutoScrollActive && Date.now() >= galleryPauseUntil && !isUserInteractingGallery) {
-      grid.classList.add('is-auto-scrolling');
-    } else {
-      grid.classList.remove('is-auto-scrolling');
-    }
+  if (!grid) return;
+
+  galleryCurrentX = 0;
+  grid.style.transition = 'none';
+  grid.style.transform = 'translate3d(0, 0, 0)';
+
+  requestAnimationFrame(() => {
+    recomputeGalleryDimensions();
+  });
+}
+
+function glideGalleryBy(deltaPx) {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  pauseGalleryAutoScroll(2200);
+  grid.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
+
+  if (galleryAutoScrollActive && galleryHalfWidth > 100) {
+    galleryCurrentX += deltaPx;
+    while (galleryCurrentX < 0) galleryCurrentX += galleryHalfWidth;
+    while (galleryCurrentX >= galleryHalfWidth) galleryCurrentX -= galleryHalfWidth;
+  } else {
+    const containerW = grid.parentElement ? grid.parentElement.clientWidth : 800;
+    const maxScroll = Math.max(0, grid.scrollWidth - containerW);
+    galleryCurrentX = Math.max(0, Math.min(maxScroll, galleryCurrentX + deltaPx));
   }
+
+  grid.style.transform = `translate3d(-${galleryCurrentX.toFixed(2)}px, 0, 0)`;
+
+  setTimeout(() => {
+    grid.style.transition = 'none';
+    galleryLastFrameTime = performance.now();
+  }, 560);
 }
 
 function initGalleryAutoScroll() {
   const grid = document.getElementById('galleryGrid');
+  const prevBtn = document.getElementById('galleryScrollPrev');
+  const nextBtn = document.getElementById('galleryScrollNext');
   if (!grid) return;
 
-  const scrollSpeed = 0.55; // Pixels per frame (buttery-smooth, calm editorial pace)
-  let currentScrollLeft = grid.scrollLeft || 0;
-  let isAccumulatorReady = false;
+  // Recompute dimensions on load & resize
+  recomputeGalleryDimensions();
+  window.addEventListener('resize', recomputeGalleryDimensions, { passive: true });
 
-  const stepAutoScroll = () => {
-    const now = Date.now();
-    const canScroll = galleryAutoScrollActive && (now >= galleryPauseUntil) && !isUserInteractingGallery;
+  // 1. Liquid Glass Nav Arrows
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      glideGalleryBy(-420);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      glideGalleryBy(420);
+    });
+  }
 
-    if (canScroll) {
-      grid.classList.add('is-auto-scrolling');
-      const halfWidth = grid.scrollWidth / 2;
+  // 2. Desktop Mouse Drag-to-Scroll
+  let mouseStartX = 0;
+  let mouseStartCurrentX = 0;
 
-      if (halfWidth > 20) {
-        if (!isAccumulatorReady) {
-          currentScrollLeft = grid.scrollLeft;
-          isAccumulatorReady = true;
-        }
+  grid.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    isGalleryDragging = true;
+    galleryHasMoved = false;
+    mouseStartX = e.clientX;
+    mouseStartCurrentX = galleryCurrentX;
+    isGalleryUserInteracting = true;
+    grid.style.transition = 'none';
+    grid.style.cursor = 'grabbing';
+  });
 
-        // Increment continuous float position (maintains sub-pixel precision across WebKit & Blink)
-        currentScrollLeft += scrollSpeed;
+  window.addEventListener('mousemove', (e) => {
+    if (!isGalleryDragging) return;
+    const dx = mouseStartX - e.clientX;
+    if (Math.abs(dx) > 4) galleryHasMoved = true;
 
-        // Truly seamless infinite loop: when reaching the end of the original set,
-        // subtract halfWidth seamlessly so Column 1 follows continuously with zero cut
-        if (currentScrollLeft >= halfWidth) {
-          currentScrollLeft -= halfWidth;
-        }
-
-        // WebKit (Safari & Chrome on iPad/iOS) truncates sub-pixel scrollLeft to integers.
-        // By rounding the JavaScript float accumulator, WebKit advances every 1-2 frames reliably!
-        grid.scrollLeft = Math.round(currentScrollLeft);
-      }
+    if (galleryAutoScrollActive && galleryHalfWidth > 100) {
+      galleryCurrentX = mouseStartCurrentX + dx;
+      while (galleryCurrentX < 0) galleryCurrentX += galleryHalfWidth;
+      while (galleryCurrentX >= galleryHalfWidth) galleryCurrentX -= galleryHalfWidth;
     } else {
-      grid.classList.remove('is-auto-scrolling');
-      currentScrollLeft = grid.scrollLeft;
+      const containerW = grid.parentElement ? grid.parentElement.clientWidth : 800;
+      const maxScroll = Math.max(0, grid.scrollWidth - containerW);
+      galleryCurrentX = Math.max(0, Math.min(maxScroll, mouseStartCurrentX + dx));
     }
 
-    galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
-  };
+    grid.style.transform = `translate3d(-${galleryCurrentX.toFixed(2)}px, 0, 0)`;
+  });
 
-  // Bidirectional seamless scroll wrap on manual drag or swipe
-  grid.addEventListener('scroll', () => {
-    if (!grid.classList.contains('is-auto-scrolling')) {
-      currentScrollLeft = grid.scrollLeft;
-    }
-    const halfWidth = grid.scrollWidth / 2;
-    if (halfWidth > 20) {
-      if (grid.scrollLeft >= halfWidth * 1.9) {
-        grid.scrollLeft -= halfWidth;
-        currentScrollLeft = grid.scrollLeft;
-      } else if (grid.scrollLeft <= 1) {
-        grid.scrollLeft += halfWidth;
-        currentScrollLeft = grid.scrollLeft;
+  window.addEventListener('mouseup', () => {
+    if (!isGalleryDragging) return;
+    isGalleryDragging = false;
+    isGalleryUserInteracting = false;
+    grid.style.cursor = 'grab';
+    pauseGalleryAutoScroll(1600);
+    galleryLastFrameTime = performance.now();
+    setTimeout(() => { galleryHasMoved = false; }, 120);
+  });
+
+  // 3. Mobile & iPad Touch Handling (Allows natural vertical page scroll)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartCurrentX = 0;
+  let isHorizontalSwiping = false;
+  let isVerticalScrolling = false;
+
+  grid.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartCurrentX = galleryCurrentX;
+    isHorizontalSwiping = false;
+    isVerticalScrolling = false;
+    isGalleryUserInteracting = true;
+    grid.style.transition = 'none';
+  }, { passive: true });
+
+  grid.addEventListener('touchmove', (e) => {
+    if (isVerticalScrolling || e.touches.length !== 1) return;
+    const dx = touchStartX - e.touches[0].clientX;
+    const dy = touchStartY - e.touches[0].clientY;
+
+    if (!isHorizontalSwiping && !isVerticalScrolling) {
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 5) {
+        // User scrolling down the web page: do not block or pause!
+        isVerticalScrolling = true;
+        isGalleryUserInteracting = false;
+        return;
+      } else if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+        isHorizontalSwiping = true;
+        galleryHasMoved = true;
       }
+    }
+
+    if (isHorizontalSwiping) {
+      if (galleryAutoScrollActive && galleryHalfWidth > 100) {
+        galleryCurrentX = touchStartCurrentX + dx;
+        while (galleryCurrentX < 0) galleryCurrentX += galleryHalfWidth;
+        while (galleryCurrentX >= galleryHalfWidth) galleryCurrentX -= galleryHalfWidth;
+      } else {
+        const containerW = grid.parentElement ? grid.parentElement.clientWidth : 800;
+        const maxScroll = Math.max(0, grid.scrollWidth - containerW);
+        galleryCurrentX = Math.max(0, Math.min(maxScroll, touchStartCurrentX + dx));
+      }
+      grid.style.transform = `translate3d(-${galleryCurrentX.toFixed(2)}px, 0, 0)`;
     }
   }, { passive: true });
 
-  // Hover Pause (Pointer Events: ignore touch emulations on iPad/iOS so taps don't freeze auto-scroll)
+  grid.addEventListener('touchend', () => {
+    isGalleryUserInteracting = false;
+    if (isHorizontalSwiping) {
+      pauseGalleryAutoScroll(1600);
+    }
+    galleryLastFrameTime = performance.now();
+    setTimeout(() => {
+      galleryHasMoved = false;
+      isHorizontalSwiping = false;
+    }, 120);
+  }, { passive: true });
+
+  // 4. Desktop Hover Pause (Ignores iPad/mobile synthetic touch)
   grid.addEventListener('pointerenter', (e) => {
     if (e.pointerType === 'touch') return;
-    isUserInteractingGallery = true;
-    grid.classList.remove('is-auto-scrolling');
+    isGalleryUserInteracting = true;
   });
 
   grid.addEventListener('pointerleave', (e) => {
     if (e.pointerType === 'touch') return;
-    isUserInteractingGallery = false;
-    currentScrollLeft = grid.scrollLeft;
+    isGalleryUserInteracting = false;
+    galleryLastFrameTime = performance.now();
   });
 
-  // Touch Interactions
-  grid.addEventListener('touchstart', () => {
-    isUserInteractingGallery = true;
-    pauseGalleryAutoScroll(20000);
-    grid.classList.remove('is-auto-scrolling');
-  }, { passive: true });
+  // 5. Buttery-Smooth Continuous Drift Loop (Hardware GPU Composited 60/120fps)
+  const driftSpeed = 34; // 34px per second (luxurious, calm editorial drift)
 
-  grid.addEventListener('touchend', () => {
-    isUserInteractingGallery = false;
-    currentScrollLeft = grid.scrollLeft;
-  }, { passive: true });
+  const stepMarquee = (timestamp) => {
+    if (!galleryLastFrameTime) galleryLastFrameTime = timestamp;
+    const dt = Math.min((timestamp - galleryLastFrameTime) / 1000, 0.1);
+    galleryLastFrameTime = timestamp;
 
-  // Start continuous loop
-  galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
+    const canDrift = galleryAutoScrollActive &&
+                     (Date.now() >= galleryPauseUntil) &&
+                     !isGalleryUserInteracting &&
+                     galleryHalfWidth > 100;
+
+    if (canDrift) {
+      galleryCurrentX += driftSpeed * dt;
+
+      if (galleryCurrentX >= galleryHalfWidth) {
+        galleryCurrentX -= galleryHalfWidth;
+      }
+
+      grid.style.transform = `translate3d(-${galleryCurrentX.toFixed(2)}px, 0, 0)`;
+    }
+
+    galleryRafId = requestAnimationFrame(stepMarquee);
+  };
+
+  galleryRafId = requestAnimationFrame(stepMarquee);
 }
 
 // Global exposure
