@@ -3,7 +3,18 @@
  * Mobile-First Interactive Gallery, Smooth Slider & Lightbox
  */
 
+// 1. Force window to always start at top on page refresh
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+  window.scrollTo(0, 0);
   initHeaderScroll();
   initStickyContactBar();
   initHeroSlider();
@@ -472,11 +483,15 @@ function applyFilter(filter) {
     summaryBox.innerHTML = '';
   }
 
-  // Render gallery photos
+  // Render gallery photos with seamless infinite marquee duplication
   grid.innerHTML = '';
   grid.scrollLeft = 0; // Reset horizontal scroll to start
 
-  photos.forEach((photo, idx) => {
+  const originalCount = photos.length;
+  // Duplicate array so Column 1 follows immediately after the last column seamlessly
+  const renderPhotos = (photos.length > 0) ? [...photos, ...photos] : [];
+
+  renderPhotos.forEach((photo, idx) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
     item.innerHTML = `
@@ -488,7 +503,8 @@ function applyFilter(filter) {
         </div>
       </div>
     `;
-    item.addEventListener('click', () => openLightbox(idx));
+    const targetIdx = idx % originalCount;
+    item.addEventListener('click', () => openLightbox(targetIdx));
     grid.appendChild(item);
   });
 
@@ -1270,12 +1286,7 @@ function initGhostCursorSimulation() {
 
 function initDropboxMotion() {
   // Check reduced motion preference
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.dropbox-reveal, .dropbox-material-scale').forEach(el => {
-      el.classList.add('is-revealed');
-    });
-    return;
-  }
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // 1. Initialize Masked Split-Text Headlines
   initMaskedHeadlines();
@@ -1286,29 +1297,37 @@ function initDropboxMotion() {
   // 3. Simulated Ghost Cursor on Direct Inquiry Notice Card
   initGhostCursorSimulation();
 
-  // 4. Identify Sections, Cards, and Elements for Scroll Reveal (excluding hero slideshow)
-  const revealTargets = [
-    '.section-head',
-    '.pricing-card',
-    '.pricing-trust-notice',
-    '.video-vlog-layout',
-    '.feature-banner',
-    '.feature-item-card',
-    '.facility-card',
-    '.main-location-card',
-    '.nearby-card',
-    '.terms-card',
-    '.term-item'
-  ];
+  if (prefersReduced) return;
 
-  const elements = document.querySelectorAll(revealTargets.join(', '));
-  elements.forEach((el) => {
-    // Large container boxes use material canvas scale
-    if (el.matches('.feature-banner, .main-location-card, .terms-card, .pricing-trust-notice')) {
-      el.classList.add('dropbox-material-scale');
-    } else {
-      el.classList.add('dropbox-reveal');
-    }
+  // 4. Setup Parallax Elements and Assign Z-Axis Depth Tiers
+  // Depth Factors:
+  // - Foreground (fg, factor ~1.32): floating badges, pills, buttons, icons (move faster along Z-axis)
+  // - Midground (mg, factor ~1.00): cards, headline blocks, feature items (standard elevation)
+  // - Background (bg, factor ~0.72): large canvas containers, feature banners, backdrop cards (slower drift)
+  const parallaxRegistry = [];
+
+  // Register Background tier (Canvas Containers)
+  document.querySelectorAll('.feature-banner, .main-location-card, .terms-card, .pricing-trust-notice, .video-vlog-layout').forEach(el => {
+    el.classList.add('parallax-item');
+    el.setAttribute('data-depth', 'bg');
+    parallaxRegistry.push({ el, factor: 0.72, depth: 'bg' });
+  });
+
+  // Register Midground tier (Cards & Section Heads)
+  document.querySelectorAll('.pricing-card, .feature-item-card, .facility-card, .nearby-card, .term-item, .section-head').forEach((el, i) => {
+    el.classList.add('parallax-item');
+    el.setAttribute('data-depth', 'mg');
+    // Slight individual variance so elements don't move mechanically together
+    const variance = 0.96 + ((i % 5) * 0.02);
+    parallaxRegistry.push({ el, factor: variance, depth: 'mg' });
+  });
+
+  // Register Foreground tier (Floating Badges, CTA buttons, Pills, Icons)
+  document.querySelectorAll('.popular-badge, .card-badge, .banner-pill, .vlog-highlight-item, .btn-line-inquire-direct, .btn-card-action, .facility-icon').forEach((el, i) => {
+    el.classList.add('parallax-item');
+    el.setAttribute('data-depth', 'fg');
+    const variance = 1.25 + ((i % 4) * 0.04);
+    parallaxRegistry.push({ el, factor: variance, depth: 'fg' });
   });
 
   // Apply Stagger indices to grid groups (80ms spacing)
@@ -1323,40 +1342,122 @@ function initDropboxMotion() {
   gridContainers.forEach(gridSel => {
     const grid = document.querySelector(gridSel);
     if (!grid) return;
-    const children = grid.querySelectorAll('.dropbox-reveal');
+    const children = grid.querySelectorAll('.parallax-item[data-depth="mg"]');
     children.forEach((child, i) => {
       child.classList.add('stagger-child');
       child.style.setProperty('--stagger-i', i % 6);
     });
   });
 
-  // 5. High-Performance IntersectionObserver with scroll-position awareness
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Calculate entry position relative to viewport height to modulate motion
-          const rect = entry.boundingClientRect;
-          const viewportH = window.innerHeight || document.documentElement.clientHeight;
-          const posRatio = Math.max(0, Math.min(1, rect.top / viewportH));
+  // 5. Continuous Bidirectional Scroll-Driven Motion (Animates every time user scrolls up and down)
+  let ticking = false;
 
-          // Set nuanced entry offset based on position
-          entry.target.style.setProperty('--entry-offset', `${Math.round(18 + posRatio * 18)}px`);
-          entry.target.classList.add('is-revealed');
-          obs.unobserve(entry.target); // Unobserve to liberate GPU memory
+  const updateScrollMotion = () => {
+    const windowH = window.innerHeight || document.documentElement.clientHeight;
+
+    parallaxRegistry.forEach(item => {
+      const el = item.el;
+      const factor = item.factor;
+      const rect = el.getBoundingClientRect();
+
+      // Skip elements that are far outside the viewport to maximize 60fps performance
+      if (rect.bottom < -160 || rect.top > windowH + 160) {
+        if (rect.top > windowH + 160) {
+          // Offscreen below: ready to ease-in
+          el.style.setProperty('--p-y', `${Math.round(36 * factor)}px`);
+          el.style.setProperty('--p-opacity', '0');
+          el.style.setProperty('--p-blur', '8px');
+          el.style.setProperty('--p-scale', '0.972');
+          el.classList.remove('is-in-focus');
+        } else {
+          // Offscreen above: eased out
+          el.style.setProperty('--p-y', `${Math.round(-32 * factor)}px`);
+          el.style.setProperty('--p-opacity', '0');
+          el.style.setProperty('--p-blur', '6px');
+          el.style.setProperty('--p-scale', '0.98');
+          el.classList.remove('is-in-focus');
         }
-      });
-    }, {
-      root: null,
-      rootMargin: '0px 0px -4% 0px',
-      threshold: 0.08
+        return;
+      }
+
+      // Normalized vertical center of element relative to window height (P)
+      // P = 1.0 (bottom edge of screen), P = 0.5 (center), P = 0.0 (top edge of screen)
+      const centerY = rect.top + rect.height * 0.5;
+      const P = centerY / windowH;
+
+      // 1. Ease-In from bottom (P > 0.74)
+      let enterProgress = 1;
+      if (P > 0.74) {
+        enterProgress = Math.max(0, Math.min(1, (1.12 - P) / 0.38));
+      }
+
+      // 2. Ease-Out to top (P < 0.26)
+      let exitProgress = 1;
+      if (P < 0.26) {
+        exitProgress = Math.max(0, Math.min(1, (P - (-0.12)) / 0.38));
+      }
+
+      // Combined visibility factor V (1 in center reading zone, 0 at top/bottom exit boundaries)
+      const V = Math.min(enterProgress, exitProgress);
+
+      // 3. Scroll-Driven Parallax Depth along Z-Axis:
+      // Distance from viewport vertical center
+      const deltaCenter = P - 0.5; // -0.5 (top) to +0.5 (bottom)
+
+      // Parallax differential travel:
+      // Foreground (factor ~1.32) moves faster along Z-axis than normal scroll
+      // Background (factor ~0.72) lags behind, creating authentic physical depth
+      const parallaxShift = deltaCenter * 32 * (factor - 0.95);
+
+      // Elevation travel at entrance and exit:
+      let elevationTravel = 0;
+      if (P > 0.74) {
+        // Entering from bottom: rises smoothly
+        elevationTravel = (1 - enterProgress) * 36 * factor;
+      } else if (P < 0.26) {
+        // Exiting through top: floats upward
+        elevationTravel = -(1 - exitProgress) * 28 * factor;
+      }
+
+      const totalY = elevationTravel + parallaxShift;
+
+      // Opacity: smooth curve
+      const opacity = Math.max(0, Math.min(1, Math.pow(V, 1.25)));
+
+      // Blur: soft optical blur that completely resolves to 0px in focus zone
+      const blur = Math.max(0, (1 - V) * 7.5);
+
+      // Scale: subtle material breathing scale (0.975 -> 1.0)
+      const scale = 0.975 + 0.025 * V;
+
+      el.style.setProperty('--p-y', `${totalY.toFixed(1)}px`);
+      el.style.setProperty('--p-opacity', opacity.toFixed(3));
+      el.style.setProperty('--p-blur', `${blur.toFixed(1)}px`);
+      el.style.setProperty('--p-scale', scale.toFixed(3));
+
+      // Toggle focus class for masked headline trigger (animates every time scrolling back and forth)
+      if (V > 0.35) {
+        el.classList.add('is-in-focus');
+      } else {
+        el.classList.remove('is-in-focus');
+      }
     });
 
-    elements.forEach(el => observer.observe(el));
-  } else {
-    // Fallback if IntersectionObserver is unavailable
-    elements.forEach(el => el.classList.add('is-revealed'));
-  }
+    ticking = false;
+  };
+
+  const onScrollParallax = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateScrollMotion);
+    }
+  };
+
+  window.addEventListener('scroll', onScrollParallax, { passive: true });
+  window.addEventListener('resize', onScrollParallax, { passive: true });
+
+  // Initial calculation
+  updateScrollMotion();
 }
 
 /* ==========================================================================
@@ -1427,15 +1528,16 @@ function initGalleryAutoScroll() {
 
     if (canScroll) {
       grid.classList.add('is-auto-scrolling');
-      const maxScroll = grid.scrollWidth - grid.clientWidth;
+      const halfWidth = grid.scrollWidth / 2;
 
-      if (maxScroll > 10) {
-        // Increment scroll position
+      if (halfWidth > 20) {
+        // Increment continuous scroll position
         grid.scrollLeft += scrollSpeed;
 
-        // Seamless loop wrap: when reached near end, softly reset to beginning
-        if (grid.scrollLeft >= maxScroll - 2) {
-          grid.scrollLeft = 0;
+        // Truly seamless infinite loop: when reaching the end of the original set,
+        // subtract halfWidth seamlessly so Column 1 follows continuously with zero cut
+        if (grid.scrollLeft >= halfWidth) {
+          grid.scrollLeft -= halfWidth;
         }
       }
     } else {
@@ -1444,6 +1546,18 @@ function initGalleryAutoScroll() {
 
     galleryAutoScrollRaf = requestAnimationFrame(stepAutoScroll);
   };
+
+  // Bidirectional seamless scroll wrap on manual drag or swipe
+  grid.addEventListener('scroll', () => {
+    const halfWidth = grid.scrollWidth / 2;
+    if (halfWidth > 20) {
+      if (grid.scrollLeft >= halfWidth * 1.9) {
+        grid.scrollLeft -= halfWidth;
+      } else if (grid.scrollLeft <= 1) {
+        grid.scrollLeft += halfWidth;
+      }
+    }
+  }, { passive: true });
 
   // Hover Pause
   grid.addEventListener('mouseenter', () => {
