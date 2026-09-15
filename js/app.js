@@ -1123,29 +1123,14 @@ document.addEventListener('click', function(e) {
 function initDropboxMotion() {
   // Check reduced motion preference
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.dropbox-reveal, .dropbox-material-scale, .hero-entrance-stage, .hero-entrance-card').forEach(el => {
+    document.querySelectorAll('.dropbox-reveal, .dropbox-material-scale').forEach(el => {
       el.classList.add('is-revealed');
     });
     return;
   }
 
-  // 1. Hero Orchestrated Entrance on First Paint
-  const heroStage = document.querySelector('.hero-showcase-stage');
-  const heroFloatingCol = document.querySelector('.hero-floating-column');
-  const featureBanner = document.querySelector('.feature-banner');
+  // Identify Sections, Cards, and Elements for Scroll Reveal (excluding hero slideshow)
 
-  if (heroStage) heroStage.classList.add('hero-entrance-stage');
-  if (heroFloatingCol) heroFloatingCol.classList.add('hero-entrance-card');
-
-  // Trigger hero entrance via requestAnimationFrame
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      if (heroStage) heroStage.classList.add('is-revealed');
-      if (heroFloatingCol) heroFloatingCol.classList.add('is-revealed');
-    }, 60);
-  });
-
-  // 2. Identify Sections, Cards, and Elements for Scroll Reveal
   const revealTargets = [
     '.section-head',
     '.pricing-card',
