@@ -144,6 +144,7 @@ function initStickyContactBar() {
 let currentHeroSlide = 0;
 let heroSlideTimer = null;
 let slideMotionTimeout = null;
+let slideSettleTimeout = null;
 let ambientCrossfadeTimeout = null;
 let currentAmbientTarget = 'A';
 const heroSlides = ROOMS_DATA.heroHighlights;
@@ -224,6 +225,12 @@ function initHeroSlider() {
     track.appendChild(slideEl);
   });
 
+  // Ensure non-active slides are hidden when settled so no fractional subpixel edge can bleed
+  const initialSlides = track.querySelectorAll('.hero-slide');
+  initialSlides.forEach((s, idx) => {
+    if (idx !== 0) s.style.visibility = 'hidden';
+  });
+
   // Initial update of room details bar below photo
   updateHeroDetails();
 
@@ -286,9 +293,12 @@ function updateSlideTrack() {
 
   // 1. Foreground Push Transition (Clean, slow, graceful glide as in v5.6)
   if (track) {
+    const slides = track.querySelectorAll('.hero-slide');
+    // Ensure all slides are visible while gliding
+    slides.forEach(s => { s.style.visibility = 'visible'; });
+
     track.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
 
-    const slides = track.querySelectorAll('.hero-slide');
     slides.forEach((s, idx) => {
       if (idx === currentHeroSlide) {
         s.classList.add('is-active');
@@ -296,6 +306,17 @@ function updateSlideTrack() {
         s.classList.remove('is-active');
       }
     });
+
+    // Once slide transition has completed (~1400ms), hide non-active slides
+    // so no fractional subpixel edge can ever bleed or crack
+    clearTimeout(slideSettleTimeout);
+    slideSettleTimeout = setTimeout(() => {
+      slides.forEach((s, idx) => {
+        if (idx !== currentHeroSlide) {
+          s.style.visibility = 'hidden';
+        }
+      });
+    }, 1450);
   }
 
   // 2. Stationary Ambient Background Cross-Fade (Ultra-slow, 100% flicker-free continuous blend)
